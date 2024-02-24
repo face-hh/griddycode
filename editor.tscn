@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://bj6s526sep4xw"]
+
+[ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="1_cd7xi"]
+[ext_resource type="Script" path="res://Scripts/file_manager.gd" id="1_x00ag"]
+[ext_resource type="Script" path="res://Scripts/settings.gd" id="2_7x3ll"]
+[ext_resource type="Shader" path="res://Shaders/codeedit_blur.gdshader" id="2_a0bkg"]
+[ext_resource type="Script" path="res://Scripts/file_dialog.gd" id="5_bhd70"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_johqt"]
+shader = ExtResource("2_a0bkg")
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_p2au2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_elmks"]
+
+[node name="Editor" type="Node2D"]
+script = ExtResource("1_x00ag")
+
+[node name="Code" type="CodeEdit" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_johqt")
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
+theme_override_colors/background_color = Color(0, 0, 0, 1)
+theme_override_colors/caret_color = Color(0.321569, 0.545098, 1, 1)
+theme_override_fonts/font = ExtResource("1_cd7xi")
+text = "function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function generateHighlightedText() {
+  const paragraph = document.createElement('p');
+  const words = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit'];
+
+  words.forEach(word => {
+    const span = document.createElement('span');
+    span.textContent = word + ' ';
+    span.style.color = getRandomColor();
+    paragraph.appendChild(span);
+  });
+
+  document.body.appendChild(paragraph);
+}
+
+generateHighlightedText();
+"
+context_menu_enabled = false
+scroll_smooth = true
+scroll_v_scroll_speed = 100.0
+minimap_draw = true
+caret_blink = true
+syntax_highlighter = SubResource("CodeHighlighter_p2au2")
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_tabs = true
+gutters_draw_line_numbers = true
+code_completion_enabled = true
+indent_automatic = true
+auto_brace_completion_highlight_matching = true
+script = ExtResource("2_7x3ll")
+
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="FileDialog" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_elmks")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = 13.0
+offset_right = 342.0
+offset_bottom = 643.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("1_cd7xi")
+text = "gpake
+gka
+ekga
+eogka
+ek g
+paekga
+epk 
+gake 
+g"
+autowrap_mode = 0
+script = ExtResource("5_bhd70")
+
+[node name="AutoSaveTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]
+[connection signal="code_completion_requested" from="Code" to="Code" method="_on_code_completion_requested"]
+[connection signal="text_changed" from="Code" to="Code" method="_on_text_changed"]
+[connection signal="ui_close" from="FileDialog" to="Code" method="_on_file_dialog_ui_close"]
+[connection signal="timeout" from="AutoSaveTimer" to="." method="_on_auto_save_timer_timeout"]
