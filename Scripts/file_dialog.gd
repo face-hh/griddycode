@@ -1,6 +1,7 @@
 extends RichTextLabel
 
 @onready var editor: FileManager = $".."
+@onready var code = %Code
 
 var selected_index: int = 0
 var dir: DirAccess
@@ -89,6 +90,8 @@ func handle_enter_key() -> void:
 	if is_file:
 		editor.current_dir = dir.get_current_dir();
 		editor.open_file(editor.current_dir + "/" + item)
+		%Intro.hide()
+		code.setup_highlighter()
 		LuaSingleton.setup(item.split(".")[-1])
 
 		ui_close.emit()

@@ -7,19 +7,27 @@ const FUNCTION = preload("res://Icons/function.png")
 
 var show = false;
 var file_modified = false;
+var active_overlay: Variant;
 
 func _ready() -> void:
-	%Background.color = LuaSingleton.bg;
+	LuaSingleton.on_theme_load.connect(setup_theme)
+
 	tween_fade(%FileDialog, 0)
+	tween_fade(%SettingsList, 0)
 
-	code.add_theme_color_override("background_color", LuaSingleton.bg)
-	code.add_theme_color_override("current_line_color", LuaSingleton.lg)
-	code.add_theme_color_override("selection_color", LuaSingleton.hl)
-	code.add_theme_color_override("font_color", LuaSingleton.fc)
-	code.add_theme_color_override("word_highlighted_color", LuaSingleton.whc)
-	code.add_theme_color_override("completion_background_color", LuaSingleton.cbc)
-
+	setup_theme()
 	setup_highlighter()
+
+func setup_theme() -> void:
+	%Background.color = LuaSingleton.gui.background_color;
+
+	code.add_theme_color_override("background_color", LuaSingleton.gui.background_color)
+	code.add_theme_color_override("current_line_color", LuaSingleton.gui.current_line_color)
+	code.add_theme_color_override("selection_color", LuaSingleton.gui.selection_color)
+	code.add_theme_color_override("font_color", LuaSingleton.gui.font_color)
+	code.add_theme_color_override("word_highlighted_color", LuaSingleton.gui.word_highlighted_color)
+	code.add_theme_color_override("completion_background_color", LuaSingleton.gui.completion_background_color)
+	code.add_theme_color_override("caret_color", LuaSingleton.gui.caret_color)
 
 func setup_highlighter() -> void:
 	var CH: CodeHighlighter = CodeHighlighter.new();
@@ -42,6 +50,7 @@ func setup_highlighter() -> void:
 	for entry in crth:
 		CH.add_color_region(entry[0], entry[1], LuaSingleton.keywords[entry[2]], entry[3])
 
+# CodeEdit functionality
 func _on_code_completion_requested() -> void:
 	var function_names = LuaSingleton.lua.call_function("detect_functions", [text])
 	var variable_names = LuaSingleton.lua.call_function("detect_variables", [text])
@@ -58,17 +67,23 @@ func _on_text_changed() -> void:
 	file_modified = true;
 	request_code_completion()
 
+# UI animations
 func toggle(node: Object) -> void:
+	print(active_overlay) # weird ass shit happening here
+	if active_overlay != node and active_overlay != null: return
+
 	if show:
 		tween_fade(node, 0)
 		slide_from_left(node, 0)
 		tween_fade(%Background, 0)
 		code.grab_focus()
+		active_overlay = node;
 	else:
 		tween_fade(node, 1)
 		slide_from_left(node, 1)
 		tween_fade(%Background, 1)
 		code.release_focus()
+		active_overlay = null;
 
 	show = !show;
 
@@ -103,6 +118,8 @@ func slide_from_left(node: Object, show: bool) -> void:
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_open"):
 		toggle(%FileDialog)
+	if Input.is_action_just_pressed("ui_settings"):
+		toggle(%SettingsList)
 	if Input.is_action_just_pressed("ui_cancel"):
 		toggle(%FileDialog)
 

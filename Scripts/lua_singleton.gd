@@ -1,72 +1,158 @@
 extends Node
 
-var background_color: String = "#23272e";
-var current_line_color: String;
-var selection_color: String;
-# --
-var font_color: String;
-var word_highlighted_color: String;
-var completion_background_color: String;
+var theme: String = "One Dark Pro Darker";
 
-var bg = str_to_clr(background_color);
-var lg = str_to_clr(current_line_color) if current_line_color else modulate_color(bg, 0.05)
-var hl = str_to_clr(selection_color) if selection_color else modulate_color(bg, 0.25)
-var fc = str_to_clr(font_color) if font_color else get_opposite_color(bg)
-var whc = str_to_clr(word_highlighted_color) if word_highlighted_color else hl
-var cbc = str_to_clr(completion_background_color) if completion_background_color else modulate_color(bg, 5)
+var gui: Dictionary = {
+	"background_color":            str_to_clr("#23272e"),
+	"current_line_color":          str_to_clr("#23272e"),
+	"selection_color":             str_to_clr("#23272e"),
+	"font_color":                  str_to_clr("#23272e"),
+	"word_highlighted_color":      str_to_clr("#23272e"),
+	"completion_background_color": str_to_clr("#23272e"),
+	"caret_color": str_to_clr("#23272e")
+}
 
+var settings: Array = [
+	{
+		"property": "caret_type",
+		"display": "Caret type",
+		"options": [{"display": "Line", "value": 0}, {"display": "Block", "value": 1}],
+		"icon": "",
+		"value": CodeEdit.CARET_TYPE_LINE
+	},
+	{
+		"property": "caret_blink",
+		"display": "Caret blink",
+		"options": [],
+		"icon": "|",
+		"value": true
+	},
+	{
+		"property": "caret_interval",
+		"display": "Caret blink interval",
+		"options": [],
+		"icon": "",
+		"value": 0.6,
+		"unit": "sec."
+	},
+	{
+		"property": "draw_line_numbers",
+		"display": "Draw Line Number",
+		"options": [],
+		"icon": "",
+		"value": true
+	},
+	{
+		"property": "code_completion",
+		"display": "Code Completion",
+		"options": [],
+		"icon": "",
+		"value": true
+	},
+	{
+		"property": "indentation_size",
+		"display": "Indentation Size",
+		"options": [],
+		"icon": "󰌒",
+		"value": 4,
+		"unit": "tabs"
+	},
+	{
+		"property": "indentation_automatic",
+		"display": "Automatic Indentation",
+		"options": [],
+		"icon": "󰁨",
+		"value": true
+	},
+	{
+		"property": "indentation_use_spaces",
+		"display": "Indentation: use spaces",
+		"options": [],
+		"icon": "󱁐",
+		"value": false
+	},
+	{
+		"property": "auto_brace_completion",
+		"display": "Auto Brace Completion",
+		"options": [],
+		"icon": "󰅩",
+		"value": true
+	},
+	{
+		"property": "auto_brace_highlight_matching",
+		"display": "Highlight Matching Braces",
+		"options": [],
+		"icon": "󱃖",
+		"value": true
+	},
+	{
+		"property": "smooth_scrolling",
+		"display": "Smooth Scrolling",
+		"options": [],
+		"icon": "󱕒",
+		"value": true
+	},
+	{
+		"property": "v_scroll_speed",
+		"display": "Scrolling Speed",
+		"options": [],
+		"icon": "",
+		"value": 150,
+		"unit": "px/s"
+	},
+	{
+		"property": "minimap",
+		"display": "Minimap",
+		"options": [],
+		"icon": "󰍍",
+		"value": true
+	},
+	{
+		"property": "minimap_width",
+		"display": "Minimap Width",
+		"options": [],
+		"icon": "",
+		"value": 80,
+		"unit": "px",
+	},
+];
 
 var keywords: Dictionary = {
 	"reserved": str_to_clr("c678cc"),
-	"string": str_to_clr("98c379"),
-	"binary": str_to_clr("d19a66"),
-	"symbol": str_to_clr("839fb6"),
+	"string":   str_to_clr("98c379"),
+	"binary":   str_to_clr("d19a66"),
+	"symbol":   str_to_clr("839fb6"),
 	"variable": str_to_clr("e5c07b"),
 	"operator": str_to_clr("56b6c2"),
 	"comments": str_to_clr("7f848e"),
-	"error": str_to_clr("d31820"),
+	"error":    str_to_clr("d31820"),
 	"function": str_to_clr("437ed9"),
-	"member": str_to_clr("e06c75")
+	"member":   str_to_clr("e06c75")
 }
 
 var keywords_to_highlight: Dictionary = {}
 var color_regions_to_highlight: Array = []
 
 signal done_parsing;
+signal on_theme_load;
 
+func change_setting(property: String, value: Variant) -> void:
+	for setting in settings:
+		if setting["property"] == property:
+			setting["value"] = value
+			return
+
+# LUA
 var lua: LuaAPI = LuaAPI.new()
-
-func modulate_color(color: Color, multiplier: float = 0.1) -> Color:
-	var r : float = color.r
-	var g : float = color.g
-	var b : float = color.b
-
-	r += multiplier
-	g += multiplier
-	b += multiplier
-
-	r = clamp(r, 0, 1)
-	g = clamp(g, 0, 1)
-	b = clamp(b, 0, 1)
-
-	color = Color(r, g, b, color.a)
-
-	return color;
-
-func get_opposite_color(original_color: Color) -> Color:
-	var r : float = 1.0 - original_color.r
-	var g : float = 1.0 - original_color.g
-	var b : float = 1.0 - original_color.b
-
-	return Color(r, g, b, original_color.a)
+var theme_lua: LuaAPI = LuaAPI.new()
 
 func str_to_clr(string: String) -> Color:
-	return Color.from_string(string, string);
+	return Color.from_string(string, "#ff0000");
 
 
 func _lua_highlight(keyword: String, color: String):
 	if !(color in keywords.keys()):
-		print("ERROR: provided color (\"%s\") at \"%s\" is invalid." % [color, keyword])
+		print("ERROR: provided color property (\"%s\") at \"%s\" is invalid." % [color, keyword])
 		return
 
 	keywords_to_highlight[keyword] = color;
@@ -77,6 +163,20 @@ func _lua_highlight_region(start: String, end: String, color: String, line_only:
 		return
 
 	color_regions_to_highlight.append([start, end, color, line_only])
+
+func _lua_set_keywords(property: String, new_color: String) -> void:
+	if !(property in keywords.keys()):
+		print("ERROR: provided color property (\"%s\") in theme (KEYWORD) is invalid." % [property])
+		return
+
+	keywords[property] = str_to_clr(new_color)
+
+func _lua_set_gui(property: String, new_color: String) -> void:
+	if !(property in gui.keys()):
+		print("ERROR: provided color property (\"%s\") in theme (GUI) is invalid." % [property])
+		return
+
+	gui[property] = str_to_clr(new_color)
 
 func _splitstr(input: String, separator: String):
 	return input.split(separator)
@@ -93,14 +193,26 @@ func setup(extension):
 
 	lua.push_variant("highlight", _lua_highlight)
 	lua.push_variant("highlight_region", _lua_highlight_region)
+
 	lua.push_variant("splitstr", _splitstr)
 	lua.push_variant("trim", _trim)
 
-	# Most methods return a LuaError in case of an error
+
+
+	theme_lua.bind_libraries(["base", "table", "string"])
+
+	theme_lua.push_variant("set_keywords", _lua_set_keywords)
+	theme_lua.push_variant("set_gui", _lua_set_gui)
 
 	var err: LuaError = lua.do_file("user://langs/" + extension + ".lua")
 	if err is LuaError:
 		print("ERROR %d: %s" % [err.type, err.message])
 		return
 
+	var theme_err: LuaError = theme_lua.do_file("user://themes/" + theme + ".lua")
+	if theme_err is LuaError:
+		print("ERROR %d: %s" % [err.type, err.message])
+		return
+
 	done_parsing.emit()
+	on_theme_load.emit()

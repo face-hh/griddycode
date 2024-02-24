@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dk43uvvc3j228"]
+
+[ext_resource type="Script" path="res://Scripts/settings_list.gd" id="1_kx2vs"]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+offset_right = 162.68
+offset_bottom = 42.665
+theme_override_constants/separation = 30
+script = ExtResource("1_kx2vs")

@@ -1,13 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj6s526sep4xw"]
+[gd_scene load_steps=8 format=3 uid="uid://bj6s526sep4xw"]
 
 [ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="1_cd7xi"]
 [ext_resource type="Script" path="res://Scripts/file_manager.gd" id="1_x00ag"]
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="2_7x3ll"]
-[ext_resource type="Shader" path="res://Shaders/codeedit_blur.gdshader" id="2_a0bkg"]
+[ext_resource type="PackedScene" uid="uid://dk43uvvc3j228" path="res://Scenes/settings_list.tscn" id="5_6usn0"]
 [ext_resource type="Script" path="res://Scripts/file_dialog.gd" id="5_bhd70"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_johqt"]
-shader = ExtResource("2_a0bkg")
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_p2au2"]
 
@@ -18,7 +15,6 @@ script = ExtResource("1_x00ag")
 
 [node name="Code" type="CodeEdit" parent="."]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_johqt")
 offset_right = 1920.0
 offset_bottom = 1080.0
 theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
@@ -52,7 +48,7 @@ generateHighlightedText();
 "
 context_menu_enabled = false
 scroll_smooth = true
-scroll_v_scroll_speed = 100.0
+scroll_v_scroll_speed = 150.0
 minimap_draw = true
 caret_blink = true
 syntax_highlighter = SubResource("CodeHighlighter_p2au2")
@@ -62,6 +58,7 @@ draw_tabs = true
 gutters_draw_line_numbers = true
 code_completion_enabled = true
 indent_automatic = true
+auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
 script = ExtResource("2_7x3ll")
 
@@ -102,6 +99,53 @@ script = ExtResource("5_bhd70")
 [node name="AutoSaveTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="SettingsList" parent="." instance=ExtResource("5_6usn0")]
+unique_name_in_owner = true
+offset_left = -121.31
+offset_top = 13.0
+offset_right = 41.37
+offset_bottom = 55.665
+
+[node name="Intro" type="Node2D" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Intro"]
+auto_translate_mode = 1
+offset_left = 836.0
+offset_top = 112.0
+offset_right = 3336.0
+offset_bottom = 2112.0
+scale = Vector2(0.235, 0.235)
+theme_override_fonts/normal_font = ExtResource("1_cd7xi")
+theme_override_font_sizes/normal_font_size = 376
+bbcode_enabled = true
+text = "Greetings!"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Intro"]
+auto_translate_mode = 1
+offset_left = 841.0
+offset_top = 244.0
+offset_right = 3341.0
+offset_bottom = 2244.0
+scale = Vector2(0.235, 0.235)
+theme_override_fonts/normal_font = ExtResource("1_cd7xi")
+theme_override_font_sizes/normal_font_size = 146
+bbcode_enabled = true
+text = "You're currently using [color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Intro"]
+auto_translate_mode = 1
+offset_left = 841.0
+offset_top = 380.0
+offset_right = 3341.0
+offset_bottom = 2380.0
+scale = Vector2(0.235, 0.235)
+theme_override_fonts/normal_font = ExtResource("1_cd7xi")
+theme_override_font_sizes/normal_font_size = 106
+bbcode_enabled = true
+text = "To get started, please choose a file."
 
 [connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]
 [connection signal="code_completion_requested" from="Code" to="Code" method="_on_code_completion_requested"]

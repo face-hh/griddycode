@@ -15,6 +15,10 @@ func _ready():
 	LuaSingleton.setup(current_file.split(".")[-1])
 	file_dialog.setup()
 
+	if !current_file:
+		Code.toggle(%FileDialog)
+		%Intro.show()
+
 func check_for_reserved() -> void:
 	var folders = ["langs", "themes"]
 
@@ -24,6 +28,7 @@ func check_for_reserved() -> void:
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	open_file(path)
+	%Intro.hide()
 
 func open_file(path: String) -> void:
 	var src = Fs._load(path)
@@ -37,6 +42,7 @@ func _notification(what):
 		var save_dict = {
 			"current_file": current_file,
 			"current_dir": current_dir,
+			"settings": LuaSingleton.settings
 		}
 		save_data(save_dict)
 		Fs.save(current_file, Code.text)
@@ -72,6 +78,8 @@ func load_game():
 
 		current_dir = node_data["current_dir"]
 		current_file = node_data["current_file"]
+
+		LuaSingleton.settings = node_data["settings"]
 
 func _on_auto_save_timer_timeout():
 	if !current_file: return

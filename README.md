@@ -8,9 +8,10 @@ GriddyCode allows you to extend its functionality via **Lua**.
 
 ## Where?
 To open the folder with Lua scripts, go to:
-- Windows: %APPDATA%\Bussin GriddyCode
-- macOS: ~/Library/Application Support/Bussin GriddyCode
-- Linux: ~/.local/share/Bussin GriddyCode
+- Windows: `%APPDATA%\Bussin GriddyCode`
+- macOS: `~/Library/Application Support/Bussin GriddyCode`
+- Linux: `~/.local/share/Bussin GriddyCode`
+
 *Note: since the paths might change, we recommend you manually search for GriddyCode in the AppData of your OS.*
 
 ## How?
@@ -23,7 +24,7 @@ You may see the folders **"langs"** and **"themes"**.
 ## Docs?
 ### Langs
 #### Introduction
-To extend the functionality of GriddyCode for a specific **file extension**, create a file with the name of it. (i.e. `toml.lua`)
+To extend the functionality of GriddyCode for a specific **file extension**, create a file with its name. (i.e. `toml.lua`)
 
 #### Methods
 #### Methods
@@ -35,6 +36,7 @@ To extend the functionality of GriddyCode for a specific **file extension**, cre
 | `detect_functions(content: String) -> Array[String]` | `detect_functions("const test = 3; function main() {}; async init() => { main() }")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["main", "init"]). |
 | `detect_variables(content: String) -> Array[String]` | `detect_variables("const test = 3;")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["test"]). |
 
+*Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them as preset values in the array you return. GriddyCode will handle the rest!*
 ### Themes
 #### Introduction
 To add a theme, create a file in the **"themes"** folder with any name. (i.e. "dracula.lua"). You will be able to choose it within GriddyCode.
@@ -43,4 +45,6 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 | Method | Example | Description | Notes |
 | -------- | -------- | -------- | -------- |
 | `set_keywords(property: String, new_color: String)` | `set_keywords("reserved", "#ff00ff")` | Set the color of syntax highlighting. | The second argument must be a hex, `#` being optional. Available colors/properties listed above at `langs`. |
-| `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & set all the values. |
+| `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
+
+*Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
