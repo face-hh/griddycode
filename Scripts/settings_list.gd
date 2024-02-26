@@ -6,12 +6,23 @@ const SETTING = preload("res://Scenes/setting.tscn")
 func _ready():
 	await LuaSingleton.on_theme_load;
 
+	setup_settings()
+
+	LuaSingleton.on_settings_change.connect(setup_settings);
+
+func setup_settings() -> void:
+	for child in get_children():
+		child.queue_free()
+
 	for setting in LuaSingleton.settings:
 		var unit = setting.unit if setting.has("unit") else "";
+		var _min = setting.min if setting.has("min") else 0;
+		var _max = setting.max if setting.has("max") else 0;
+		var precision = setting.precision if setting.has("precision") else false;
 
-		create_setting(setting.display, setting.icon, setting.value, setting.options, setting.property, unit)
+		create_setting(setting.display, setting.icon, setting.value, setting.options, setting.property, unit, _min, _max, precision)
 
-func create_setting(text: String, icon: String, value: Variant, options: Array, property: String, unit: String) -> void:
+func create_setting(text: String, icon: String, value: Variant, options: Array, property: String, unit: String, _min: float, _max: float, precision: bool) -> void:
 	var node = SETTING.instantiate()
 
 	add_child(node)
@@ -23,6 +34,9 @@ func create_setting(text: String, icon: String, value: Variant, options: Array, 
 	var value_label: RichTextLabel = node.get_node("Control4/Value");
 	var dropdown: OptionButton = node.get_node("Control5/OptionButton");
 
+	label.add_theme_color_override("default_color", LuaSingleton.gui.font_color);
+	value_label.add_theme_color_override("default_color", LuaSingleton.gui.font_color);
+
 	label.clear()
 
 	label.push_color(LuaSingleton.keywords.values().pick_random())
@@ -30,6 +44,12 @@ func create_setting(text: String, icon: String, value: Variant, options: Array, 
 	label.pop()
 
 	label.add_text("  %s" % text)
+
+	if !precision:
+		slider.step = 1
+
+	slider.max_value = _max
+	slider.min_value = _min
 
 	checkbutton.hide()
 	slider.hide()
@@ -57,6 +77,7 @@ func create_setting(text: String, icon: String, value: Variant, options: Array, 
 
 	slider.value_changed.connect(_slider_value_change.bind(property, value_label, unit))
 	checkbutton.toggled.connect(_check_button_change.bind(property))
+	dropdown.item_selected.connect(_dropdown_change.bind(property))
 
 func set_label(value_label: RichTextLabel, unit: String, value: float) -> void:
 	value_label.clear()
@@ -74,3 +95,6 @@ func _slider_value_change(value: float, property: String, value_label: RichTextL
 
 func _check_button_change(toggled_on: bool, property: String) -> void:
 	LuaSingleton.change_setting(property, toggled_on)
+
+func _dropdown_change(index: int, property: String):
+	LuaSingleton.change_setting(property, index)

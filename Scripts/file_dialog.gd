@@ -1,3 +1,5 @@
+class_name FileDialogType
+
 extends RichTextLabel
 
 @onready var editor: FileManager = $".."
@@ -8,6 +10,7 @@ var dir: DirAccess
 var dirs: Array[String]
 var files: Array[String]
 
+var active: bool = false;
 signal ui_close
 
 func change_dir(path) -> void:
@@ -20,11 +23,13 @@ func change_dir(path) -> void:
 	files.append_array(dir.get_files());
 
 func setup() -> void:
+	active = true
 	change_dir(editor.current_dir)
 
 	update_ui()
 
 func _input(event: InputEvent) -> void:
+	if !active: return
 	if !(event is InputEventKey): return
 
 	var key_event = event as InputEventKey
@@ -50,15 +55,15 @@ func show_items() -> void:
 
 func show_item(item: String) -> void:
 	if is_selected(item):
-		push_bgcolor(Color.from_string("#444", "#444"))
+		push_bgcolor(LuaSingleton.gui.selection_color)
 	else:
 		push_bgcolor(Color(0, 0, 0, 0))  # Reset background color if not selected
 
 	if item == "..":
-		push_color(Color.from_string("#ffffff", "#ffffff"))
+		push_color(LuaSingleton.gui.font_color)
 		add_text("󰕌")
 	elif dir.get_directories().find(item) != -1:
-		push_color(Color.from_string("#575757", "#575757"))
+		push_color(LuaSingleton.gui.completion_selected_color)
 		add_text("")
 	else:
 		var extension = item.split(".")[-1]
@@ -90,10 +95,11 @@ func handle_enter_key() -> void:
 	if is_file:
 		editor.current_dir = dir.get_current_dir();
 		editor.open_file(editor.current_dir + "/" + item)
-		%Intro.hide()
-		code.setup_highlighter()
-		LuaSingleton.setup(item.split(".")[-1])
 
+		%Intro.hide()
+		LuaSingleton.setup_extension(item.split(".")[-1])
+
+		code.setup_highlighter()
 		ui_close.emit()
 	else:
 		dir.change_dir(item)

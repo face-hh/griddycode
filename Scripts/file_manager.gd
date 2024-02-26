@@ -12,7 +12,12 @@ func _ready():
 
 	load_game()
 	open_file(current_file)
-	LuaSingleton.setup(current_file.split(".")[-1])
+
+	LuaSingleton.themes = list_themes()
+
+	LuaSingleton.setup_extension(current_file.split(".")[-1])
+	LuaSingleton.setup_theme(LuaSingleton.theme)
+
 	file_dialog.setup()
 
 	if !current_file:
@@ -37,12 +42,23 @@ func open_file(path: String) -> void:
 
 	current_file = path;
 
+func list_themes() -> Array:
+	var themes_folder = DirAccess.open("user://themes");
+
+	var curated = [];
+
+	for theme_file in themes_folder.get_files():
+		curated.append(theme_file.replace(".lua", ""))
+
+	return curated;
+
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		var save_dict = {
 			"current_file": current_file,
 			"current_dir": current_dir,
-			"settings": LuaSingleton.settings
+			"settings": LuaSingleton.settings,
+			"theme": LuaSingleton.theme
 		}
 		save_data(save_dict)
 		Fs.save(current_file, Code.text)
@@ -78,8 +94,11 @@ func load_game():
 
 		current_dir = node_data["current_dir"]
 		current_file = node_data["current_file"]
+		LuaSingleton.theme = node_data["theme"]
 
 		LuaSingleton.settings = node_data["settings"]
+
+		LuaSingleton.on_settings_change.emit()
 
 func _on_auto_save_timer_timeout():
 	if !current_file: return
@@ -87,3 +106,18 @@ func _on_auto_save_timer_timeout():
 
 	Fs.save(current_file, Code.text)
 	Code.file_modified = false;
+
+func preview_theme(index: int) -> void:
+	var theme_picker: OptionButton = %ThemeChooser
+	var theme = theme_picker.get_item_text(index)
+
+	LuaSingleton.setup_theme(theme)
+	LuaSingleton.on_settings_change.emit()
+
+func _on_theme_chooser_item_focused(index):
+	preview_theme(index)
+
+
+func _on_theme_chooser_item_selected(index):
+	preview_theme(index)
+	LuaSingleton.theme = %ThemeChooser.get_item_text(index)

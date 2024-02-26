@@ -1,6 +1,7 @@
 extends Node
 
-var theme: String = "One Dark Pro Darker";
+var themes: Array = ["One Dark Pro Darker"];
+var theme: String = "One Dark Pro Darker"; # default
 
 var gui: Dictionary = {
 	"background_color":            str_to_clr("#23272e"),
@@ -9,20 +10,34 @@ var gui: Dictionary = {
 	"font_color":                  str_to_clr("#23272e"),
 	"word_highlighted_color":      str_to_clr("#23272e"),
 	"completion_background_color": str_to_clr("#23272e"),
-	"caret_color": str_to_clr("#23272e")
+	"completion_selected_color":   str_to_clr("#23272e"),
+	"caret_color":                 str_to_clr("#23272e")
 }
 
+# #### SETTINGS ####
+# # Info:
+# Property = identifier
+# Display = the setting name to display.
+# Options = dropdown options. Leave empty for no dropdown.
+# Icon = nerdfont unicode for the icon
+# Value = initial value. Reminder this gets overwritten by the save file.
+# Unit = the unit to display after the slider.
+# Min = the minimum slider value.
+# Max = the maximum slider value.
+# Precision = whether or not the slider should go from int to float.
+
+# BUG: to apply changes to these settings, it's required to delete your save data. Contributions fixing that are appreciated.
 var settings: Array = [
 	{
 		"property": "caret_type",
 		"display": "Caret type",
 		"options": [{"display": "Line", "value": 0}, {"display": "Block", "value": 1}],
 		"icon": "",
-		"value": CodeEdit.CARET_TYPE_LINE
+		"value": CodeEdit.CARET_TYPE_LINE,
 	},
 	{
 		"property": "caret_blink",
-		"display": "Caret blink",
+		"display": "Caret blink interval",
 		"options": [],
 		"icon": "|",
 		"value": true
@@ -33,7 +48,9 @@ var settings: Array = [
 		"options": [],
 		"icon": "",
 		"value": 0.6,
-		"unit": "sec."
+		"unit": "sec.",
+		"min": 0.1, "max": 3,
+		"precision": true,
 	},
 	{
 		"property": "draw_line_numbers",
@@ -55,7 +72,8 @@ var settings: Array = [
 		"options": [],
 		"icon": "󰌒",
 		"value": 4,
-		"unit": "tabs"
+		"unit": "tabs",
+		"min": 1, "max": 8,
 	},
 	{
 		"property": "indentation_automatic",
@@ -98,7 +116,8 @@ var settings: Array = [
 		"options": [],
 		"icon": "",
 		"value": 150,
-		"unit": "px/s"
+		"unit": "px/s",
+		"min": 10, "max": 900,
 	},
 	{
 		"property": "minimap",
@@ -114,6 +133,7 @@ var settings: Array = [
 		"icon": "",
 		"value": 80,
 		"unit": "px",
+		"min": 20, "max": 500,
 	},
 ];
 
@@ -133,14 +153,52 @@ var keywords: Dictionary = {
 var keywords_to_highlight: Dictionary = {}
 var color_regions_to_highlight: Array = []
 
+@onready var code: CodeEdit = $/root/Editor/Code;
+
 signal done_parsing;
 signal on_theme_load;
+signal on_settings_change;
 
 func change_setting(property: String, value: Variant) -> void:
 	for setting in settings:
 		if setting["property"] == property:
 			setting["value"] = value
+			handle_internal_setting_change(property, value)
 			return
+
+func handle_internal_setting_change(property: String, value: Variant) -> void:
+	# oh my god he's about to do it
+	var p = property;
+
+	if p == "caret_type":
+		code.caret_type = value
+		print("set caret to ", value)
+	if p == "caret_blink":
+		code.caret_blink = value
+	if p == "caret_interval":
+		code.caret_blink_interval = value;
+	if p == "draw_line_numbers":
+		code.gutters_draw_line_numbers = value;
+	if p == "code_completion":
+		code.code_completion_enabled = value
+	if p == "indentation_size":
+		code.indent_size = value
+	if p == "indentation_automatic":
+		code.indent_automatic = value
+	if p == "indentation_use_spaces":
+		code.indent_use_spaces = value
+	if p == "auto_brace_completion":
+		code.auto_brace_completion_enabled = value
+	if p == "auto_brace_highlight_matching":
+		code.auto_brace_completion_highlight_matching = value
+	if p == "smooth_scrolling":
+		code.scroll_smooth = value
+	if p == "v_scroll_speed":
+		code.scroll_v_scroll_speed = value
+	if p == "minimap":
+		code.minimap_draw = value
+	if p == "minimap_width":
+		code.minimap_width = value
 
 # LUA
 var lua: LuaAPI = LuaAPI.new()
@@ -184,11 +242,11 @@ func _splitstr(input: String, separator: String):
 func _trim(input: String):
 	return input.strip_edges()
 
-func setup(extension):
+func setup_extension(extension):
 	keywords_to_highlight = {}
 	color_regions_to_highlight = []
 
-	# All builtin libraries are available to bind with. Use Debug, OS and IO at your own risk.
+	# FILE EXTENSIONS
 	lua.bind_libraries(["base", "table", "string"])
 
 	lua.push_variant("highlight", _lua_highlight)
@@ -197,22 +255,22 @@ func setup(extension):
 	lua.push_variant("splitstr", _splitstr)
 	lua.push_variant("trim", _trim)
 
-
-
-	theme_lua.bind_libraries(["base", "table", "string"])
-
-	theme_lua.push_variant("set_keywords", _lua_set_keywords)
-	theme_lua.push_variant("set_gui", _lua_set_gui)
-
 	var err: LuaError = lua.do_file("user://langs/" + extension + ".lua")
 	if err is LuaError:
 		print("ERROR %d: %s" % [err.type, err.message])
 		return
 
-	var theme_err: LuaError = theme_lua.do_file("user://themes/" + theme + ".lua")
+	done_parsing.emit()
+
+func setup_theme(given_theme: String) -> void:
+	theme_lua.bind_libraries(["base", "table", "string"])
+
+	theme_lua.push_variant("set_keywords", _lua_set_keywords)
+	theme_lua.push_variant("set_gui", _lua_set_gui)
+
+	var theme_err: LuaError = theme_lua.do_file("user://themes/" + given_theme + ".lua")
 	if theme_err is LuaError:
-		print("ERROR %d: %s" % [err.type, err.message])
+		print("ERROR %d: %s" % [theme_err.type, theme_err.message])
 		return
 
-	done_parsing.emit()
 	on_theme_load.emit()
