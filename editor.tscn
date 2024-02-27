@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bj6s526sep4xw"]
+[gd_scene load_steps=16 format=3 uid="uid://bj6s526sep4xw"]
 
 [ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="1_cd7xi"]
 [ext_resource type="Script" path="res://Scripts/file_manager.gd" id="1_x00ag"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" path="res://Shaders/greenscreen.gdshader" id="7_gkiie"]
 [ext_resource type="Script" path="res://Scripts/theme_chooser.gd" id="9_ba634"]
 [ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="11_m1mse"]
+[ext_resource type="Script" path="res://Scripts/camera.gd" id="12_x8fwh"]
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_p2au2"]
 
@@ -26,6 +27,14 @@ shader_parameter/spill = 0.04
 [node name="Editor" type="Node2D"]
 script = ExtResource("1_x00ag")
 
+[node name="ExternalBackground" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_left = -266.0
+offset_top = -234.0
+offset_right = 2290.0
+offset_bottom = 1428.0
+color = Color(0, 0, 0, 1)
+
 [node name="Code" type="CodeEdit" parent="."]
 unique_name_in_owner = true
 offset_right = 1920.0
@@ -34,6 +43,7 @@ theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1
 theme_override_colors/background_color = Color(0, 0, 0, 1)
 theme_override_colors/caret_color = Color(0.321569, 0.545098, 1, 1)
 theme_override_fonts/font = ExtResource("2_wpuu1")
+theme_override_font_sizes/font_size = 0
 text = "function getRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -246,8 +256,9 @@ script = ExtResource("11_m1mse")
 [node name="Misc" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="Misc"]
-position = Vector2(188, 121)
-zoom = Vector2(3.4, 3.4)
+position = Vector2(92, 48)
+zoom = Vector2(10, 10)
+script = ExtResource("12_x8fwh")
 
 [connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]
 [connection signal="code_completion_requested" from="Code" to="Code" method="_on_code_completion_requested"]

@@ -30,6 +30,7 @@ func setup_theme() -> void:
 	setup_highlighter()
 
 	%Background.color = LuaSingleton.gui.background_color;
+	%ExternalBackground.color = LuaSingleton.gui.background_color;
 
 	code.add_theme_color_override("background_color", LuaSingleton.gui.background_color)
 	code.add_theme_color_override("current_line_color", LuaSingleton.gui.current_line_color)
@@ -165,3 +166,8 @@ func _process(_delta) -> void:
 	if Input.is_action_just_pressed("ui_info"):      toggle(%Info, true, 1500)
 	if Input.is_action_just_pressed("ui_theme"):     toggle(%ThemeChooser, false, (18 * 28))
 	if Input.is_action_just_pressed("ui_cancel"):    toggle(%FileDialog)
+
+# MISC
+
+func get_line_by_index(index: int) -> String:
+	return text.split("\n")[index]
