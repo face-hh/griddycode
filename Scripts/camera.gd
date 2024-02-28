@@ -7,35 +7,38 @@ extends Camera2D
 @export var transition_speed: float = 1.0
 @onready var code = %Code
 
-signal get_busy
-
 var max_zoom = Vector2(10.0, 10.0);
 var min_zoom = Vector2(1.0, 1.0);
 
 # Ignore mouse movement? \/
 var busy = false;
-var initial_pos = Vector2(952, 536); # cry about it
 
-func _ready() -> void:
-	get_busy.connect(func() -> void:
-		busy = !busy
+var shake_strength: float = 15.0;
 
-		if !busy:
-			back_to_normal()
-		else:
-			back_to_init()
+var d := 0.0;
+var radius := 4.0
+var speed := 2.0
+
+func _process(delta: float) -> void:
+	d += delta;
+
+	offset = Vector2(
+		sin(d * speed) * radius,
+		cos(d * speed) * radius
 	)
 
-# Called every frame.
-func _process(delta: float) -> void:
 	if busy: return;
 
-	var line = code.get_caret_line()
-	var chars = code.get_line_by_index(line).length();
-
-	var target_zoom = 3 / ((chars + 1) * 0.75);
-
 	var tween = create_tween()
+
+	var chars = code.get_longest_line().length();
+
+	var target_zoom = (chars + 1) / 7.0;
+
+	target_zoom = max_zoom.x - target_zoom
+
+	if(target_zoom < min_zoom.x):
+		target_zoom = min_zoom.x
 
 	tween.parallel().tween_property(self, "zoom", Vector2(target_zoom, target_zoom), 1.0);
 
@@ -50,16 +53,29 @@ func _process(delta: float) -> void:
 func gp() -> Vector2:
 	return Vector2(code.get_caret_column(), code.get_caret_line()) * code.get_line_height();
 
-func back_to_normal() -> void:
+func focus_on(pos: Vector2, _zoom: Vector2) -> void:
 	busy = true;
 	var tween = create_tween()
 
-	tween.parallel().tween_property(self, "global_position", initial_pos, transition_speed)
-	tween.parallel().tween_property(self, "zoom", min_zoom, transition_speed)
+	tween.parallel().tween_property(self, "global_position", pos, transition_speed)
+	tween.parallel().tween_property(self, "zoom", _zoom, transition_speed)
 
-func back_to_init() -> void:
-	busy = false;
+func focus_die() -> void:
+	busy = false
 	var tween = create_tween()
 
 	tween.parallel().tween_property(self, "global_position", gp(), transition_speed)
-	tween.parallel().tween_property(self, "zoom", max_zoom, transition_speed)
+
+func shake_camera(_shake_strength):
+	return Vector2(randf_range(-_shake_strength, _shake_strength), randf_range(-_shake_strength, _shake_strength))
+
+func to_zoom(num: float) -> Vector2:
+	print(num)
+	if num > 40:
+		num += 120;
+
+	num /= 100 # 44 -> 0.44
+
+	num = 4 - num;
+
+	return Vector2(num, num)

@@ -10,7 +10,10 @@ var dir: DirAccess
 var dirs: Array[String]
 var files: Array[String]
 
+var zoom: Vector2;
+
 var active: bool = false;
+
 signal ui_close
 
 func change_dir(path) -> void:
@@ -22,8 +25,13 @@ func change_dir(path) -> void:
 
 	files.append_array(dir.get_files());
 
+	zoom = %Cam.to_zoom(code.get_longest_line(dirs).length())
+
+	if active:
+		%Cam.focus_on(gp(), zoom)
+
 func setup() -> void:
-	active = true
+	active = false
 	change_dir(editor.current_dir)
 
 	update_ui()
@@ -75,6 +83,8 @@ func show_item(item: String) -> void:
 	pop()
 	add_text(" " + item + '\n')
 
+	if active: %Cam.focus_on(Vector2(gp().x, global_position.y + (selected_index * 30)), zoom)
+
 # i gave up at that point, sorry for what you're about to witness
 func is_selected(item: String) -> bool:
 	var dir_item = dirs.find(item);
@@ -105,3 +115,11 @@ func handle_enter_key() -> void:
 		dir.change_dir(item)
 		change_dir(item)
 	update_ui()
+
+# global_position is slightly off, so we customize it a little.
+func gp() -> Vector2:
+	var vec = global_position;
+
+	vec.x += 100;
+
+	return vec;

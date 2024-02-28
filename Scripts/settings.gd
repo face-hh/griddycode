@@ -99,26 +99,27 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 	if active_overlay == node && !_show: return # if the active overlay is the node trying to toggle, and it wants to show even tho it's already shown, it shall fuck off
 	if node_is_transitioning: return # node is already trying to go, stop spamming the keys; DO NOT FUCKING REMOVE.
 
+	var opacity = 0 if _show else 1;
+
+	tween_fade(node, opacity)
+
+	var future_pos = slide_from_left(node, opacity, factor)
+
+	if node is FileDialogType:
+		print("setting to ", !_show)
+		node.active = !_show;
+
+	if apply_background:
+		tween_fade(%Background, opacity, !_show)
+	elif not apply_background and !_show:
+		node.grab_focus()
+
 	if _show:
-		tween_fade(node, 0)
-		slide_from_left(node, 0, factor)
-		if apply_background:
-			tween_fade(%Background, 0)
+		%Cam.focus_die()
 		code.grab_focus()
-
-		if node is FileDialogType:
-			node.active = false;
 	else:
-		tween_fade(node, 1)
-		slide_from_left(node, 1, factor)
-
-		if apply_background: tween_fade(%Background, 1, true)
-		else: node.grab_focus()
-
+		%Cam.focus_on(future_pos, node.zoom)
 		code.release_focus()
-
-		if node is FileDialogType:
-			node.active = true;
 
 	_show = !_show;
 
@@ -143,11 +144,11 @@ func tween_fade(node: Object, opacity: float, ignore_gui: bool = false) -> void:
 			if !ignore_gui: active_overlay = node;
 	)
 
-func slide_from_left(node: Object, __show: bool, factor: float) -> void:
+func slide_from_left(node: Object, __show: bool, factor: float) -> Vector2:
 	node_is_transitioning = true;
 
 	var tween = create_tween()
-	var pos = node.position;
+	var pos = node.global_position;
 
 	var future_pos = Vector2(pos.x + factor, pos.y) if __show else Vector2(pos.x - factor, pos.y)
 
@@ -156,18 +157,26 @@ func slide_from_left(node: Object, __show: bool, factor: float) -> void:
 		node_is_transitioning = false;
 	)
 
+	return future_pos
+
 func _on_file_dialog_ui_close():
 	toggle(%FileDialog)
 
 
 func _process(_delta) -> void:
 	if Input.is_action_just_pressed("ui_open"):      toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_settings"):  toggle(%Settings)
+	if Input.is_action_just_pressed("ui_settings"):  toggle(%Settings, true, (18 * 7.5) * 2)
 	if Input.is_action_just_pressed("ui_info"):      toggle(%Info, true, 1500)
 	if Input.is_action_just_pressed("ui_theme"):     toggle(%ThemeChooser, false, (18 * 28))
 	if Input.is_action_just_pressed("ui_cancel"):    toggle(%FileDialog)
 
 # MISC
 
-func get_line_by_index(index: int) -> String:
-	return text.split("\n")[index]
+func get_longest_line(lines: Array = text.split("\n")) -> String:
+	var longestLine := ""
+
+	for line in lines:
+		if line.length() > longestLine.length():
+			longestLine = line
+
+	return longestLine

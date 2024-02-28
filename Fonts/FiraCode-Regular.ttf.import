@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/FiraCode-Regular.ttf-004dbb665d4c8f806183734c
 [params]
 
 Rendering=null
-antialiasing=1
+antialiasing=2
 generate_mipmaps=false
 multichannel_signed_distance_field=true
 msdf_pixel_range=8
