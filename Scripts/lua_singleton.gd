@@ -135,6 +135,13 @@ var settings: Array = [
 		"unit": "px",
 		"min": 20, "max": 500,
 	},
+	{
+		"property": "wind",
+		"display": "Shader: Wind",
+		"options": [],
+		"icon": "",
+		"value": false,
+	},
 ];
 
 var keywords: Dictionary = {
@@ -197,6 +204,10 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		code.scroll_v_scroll_speed = value
 	if p == "minimap":
 		code.minimap_draw = value
+	if p == "minimap_width":
+		code.minimap_width = value
+
+	# SHADERS
 	if p == "minimap_width":
 		code.minimap_width = value
 
