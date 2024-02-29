@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Bussin GriddyCode"
-run/main_scene="res://editor.tscn"
+run/main_scene="res://Scenes/editor.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/fullsize=false

@@ -106,7 +106,6 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 	var future_pos = slide_from_left(node, opacity, factor)
 
 	if node is FileDialogType:
-		print("setting to ", !_show)
 		node.active = !_show;
 
 	if apply_background:
@@ -118,7 +117,14 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 		%Cam.focus_die()
 		code.grab_focus()
 	else:
-		%Cam.focus_on(future_pos, node.zoom)
+		if node.name == "Info":
+			future_pos.x += 700
+			future_pos.y += 500
+		if node.name == "Settings":
+			future_pos.x += 200
+			future_pos.y += 300
+
+		%Cam.focus_on(future_pos, node.zoom if ("zoom" in node) else Vector2(1,1))
 		code.release_focus()
 
 	_show = !_show;

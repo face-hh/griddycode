@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dk43uvvc3j228" path="res://Scenes/settings_list.tscn" id="5_6usn0"]
 [ext_resource type="Script" path="res://Scripts/file_dialog.gd" id="5_bhd70"]
 [ext_resource type="PackedScene" uid="uid://c2gyvklbna1ss" path="res://Scenes/theme_chooser.tscn" id="6_10xx2"]
-[ext_resource type="VideoStream" path="res://output.ogv" id="7_aq7lb"]
+[ext_resource type="VideoStream" path="res://Videos/jumping_cat.ogv" id="7_aq7lb"]
 [ext_resource type="Shader" path="res://Shaders/greenscreen.gdshader" id="7_gkiie"]
 [ext_resource type="Script" path="res://Scripts/theme_chooser.gd" id="9_ba634"]
 [ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="11_m1mse"]
@@ -31,10 +31,10 @@ script = ExtResource("1_x00ag")
 
 [node name="ExternalBackground" type="ColorRect" parent="."]
 unique_name_in_owner = true
-offset_left = -1166.0
-offset_top = -678.0
-offset_right = 3252.0
-offset_bottom = 5190.0
+offset_left = -2046.0
+offset_top = -742.0
+offset_right = 4452.0
+offset_bottom = 5126.0
 color = Color(0, 0, 0, 1)
 
 [node name="Code" type="CodeEdit" parent="."]
@@ -170,10 +170,10 @@ unique_name_in_owner = true
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Settings"]
 material = SubResource("ShaderMaterial_h17vr")
-offset_left = 1194.0
-offset_top = 248.0
-offset_right = 1674.0
-offset_bottom = 712.0
+offset_left = 535.0
+offset_top = 178.0
+offset_right = 1015.0
+offset_bottom = 642.0
 audio_track = 128
 stream = ExtResource("7_aq7lb")
 autoplay = true
@@ -192,15 +192,17 @@ unique_name_in_owner = true
 
 [node name="ThemeChooser" parent="ThemePicker" instance=ExtResource("6_10xx2")]
 unique_name_in_owner = true
-offset_left = -1264.0
-offset_top = 56.0
-offset_right = -1232.0
-offset_bottom = 76.0
+modulate = Color(1, 1, 1, 0)
+offset_left = -750.0
+offset_top = 17.0
+offset_right = -718.0
+offset_bottom = 37.0
 script = ExtResource("9_ba634")
 
 [node name="Info" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-2603.54, 0)
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-1691.12, 0)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Info"]
 auto_translate_mode = 1

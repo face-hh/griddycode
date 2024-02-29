@@ -61,6 +61,6 @@ Stuff we are currently looking for: (this doesn't mean you can't contribute with
 - An option in the settings menu (`CTRL` + `,`) to change the font!
 - Making the cat jumping video in the settings menu fade in/out along the actual menu. Currently it ignores the transition
 - Heavy cleanup of `settings.gd`!
-- The file picker (`CTRL` + `O`) stores the position of the selected item even after entering/exiting a directory. However, if the directory's file size is lower than it, it will disappear until you move it up. This can be fixed by setting its selected item to the last item if it exceeds dirs.size()
+- The file picker (`CTRL` + `O`) stores the position of the selected item even after entering/exiting a directory. However, if the directory's file size is lower than it, it will disappear until you move it up. This can be fixed by setting its selected item to the last item if it exceeds dirs.size(). This indirectly affects the zoom too when it goes from a high index to 1.
 
 Please note that creating a Pull Request to fix these features does *not* guarantee its merge. Please don't open a Pull Request unless you are confident you've done a good job.
