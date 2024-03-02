@@ -47,6 +47,8 @@ func find_volume_at_timestamp(timestamp: float) -> Dictionary:
 	return {};
 
 func play_effects() -> void:
+	if !enabled: return timer.stop()
+
 	iter += 1;
 
 	var res = find_volume_at_timestamp(iter * 0.5)

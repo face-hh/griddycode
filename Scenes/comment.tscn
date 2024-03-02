@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp8qdakc47pva"]
+
+[ext_resource type="Shader" path="res://Shaders/circle_mask.gdshader" id="1_1jr08"]
+[ext_resource type="Texture2D" uid="uid://d1ir28m0qiqtp" path="res://Misc/2024-03-02_17-37.png" id="2_416oe"]
+[ext_resource type="FontFile" uid="uid://d1v66naqhhggj" path="res://Fonts/FiraCode-Regular.ttf" id="3_r26eh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gok1n"]
+shader = ExtResource("1_1jr08")
+shader_parameter/circle_size = 0.4
+shader_parameter/ratio_width = 1.0
+shader_parameter/ratio_height = 1.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1305.0
+offset_bottom = -632.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_gok1n")
+position = Vector2(99, 94)
+scale = Vector2(0.308581, 0.308581)
+texture = ExtResource("2_416oe")
+
+[node name="Name" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 21.0
+offset_right = 603.0
+offset_bottom = 107.0
+theme_override_fonts/normal_font = ExtResource("3_r26eh")
+theme_override_font_sizes/normal_font_size = 41
+bbcode_enabled = true
+text = "kgpoakgp3 3d"
+
+[node name="Comment" type="RichTextLabel" parent="."]
+auto_translate_mode = 1
+layout_mode = 0
+offset_left = 195.0
+offset_top = 87.0
+offset_right = 579.0
+offset_bottom = 426.0
+theme_override_fonts/normal_font = ExtResource("3_r26eh")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "This is literally the most unbearable, unreadable and shitty piece of code I've ever had the chance to read.
+
+1,345 likes"

@@ -22,7 +22,7 @@ Coding has never been more lit!
 	  - [LOW PRIORITY](#low-priority)
 
 
-# Lua modding
+# ⌨️ Lua modding
 GriddyCode allows you to extend its functionality via **Lua**.
 
 ## Where?
@@ -68,14 +68,10 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
 
-# Known issues
-## Visual bugs
-- The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
-
 # Contributions
 Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
 
-## Current bugs/needed features:
+## 🐛 Current bugs/needed features:
 ### HIGH PRIORITY
 - To apply changes to the settings (i.e. adding a new setting), it's required to delete your save data;
 - The `VHS & CRT` shader, on certain themes (One Dark Pro, etc.), becomes completely white. Works good on GitHub Dark;
@@ -89,3 +85,4 @@ Contributions are heavily appreciated, whether it's for adding Lua plugins, them
 - Making the cat jumping video in the settings menu fade in/out along the actual menu. Currently it ignores the transition;
 - `CTRL` + `P` to open a **quick file picker**, similar to [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.).
 - Selecting a setting with the property "shader" *should* disable previously-enabled settings with "shader".
+- The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
