@@ -25,6 +25,7 @@ var gui: Dictionary = {
 # Min = the minimum slider value.
 # Max = the maximum slider value.
 # Precision = whether or not the slider should go from int to float.
+# Shader = whether or not to disable the previously-enabled shader setting, as they can't be stacked.
 
 # BUG: to apply changes to these settings, it's required to delete your save data. Contributions fixing that are appreciated.
 var settings: Array = [
@@ -136,11 +137,27 @@ var settings: Array = [
 		"min": 20, "max": 500,
 	},
 	{
-		"property": "wind",
-		"display": "Shader: Wind",
+		"property": "glow",
+		"display": "Glow",
 		"options": [],
-		"icon": "",
+		"icon": "󰌶",
+		"value": true,
+	},
+	{
+		"property": "sunlight",
+		"display": "Shader: Sunlight",
+		"options": [],
+		"icon": "",
 		"value": false,
+		"shader": true
+	},
+	{
+		"property": "vhs",
+		"display": "Shader: VHS and CRT",
+		"options": [],
+		"icon": "",
+		"value": false,
+		"shader": true
 	},
 ];
 
@@ -160,7 +177,12 @@ var keywords: Dictionary = {
 var keywords_to_highlight: Dictionary = {}
 var color_regions_to_highlight: Array = []
 
+const SUNLIGHT = preload("res://Shaders/sunlight.gdshader")
+const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
+
 @onready var code: CodeEdit = $/root/Editor/Code;
+@onready var world_environment: WorldEnvironment = $/root/Editor/WorldEnvironment
+@onready var shader_layer: ColorRect = $/root/Editor/ShaderLayer
 
 signal done_parsing;
 signal on_theme_load;
@@ -173,13 +195,20 @@ func change_setting(property: String, value: Variant) -> void:
 			handle_internal_setting_change(property, value)
 			return
 
+func toggle_shader(shader: Shader, value: bool) -> void:
+	if value:
+		shader_layer.show()
+		shader_layer.material.shader = shader
+	else:
+		shader_layer.material.shader = null
+		shader_layer.hide()
+
 func handle_internal_setting_change(property: String, value: Variant) -> void:
 	# oh my god he's about to do it
 	var p = property;
 
 	if p == "caret_type":
 		code.caret_type = value
-		print("set caret to ", value)
 	if p == "caret_blink":
 		code.caret_blink = value
 	if p == "caret_interval":
@@ -208,8 +237,12 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		code.minimap_width = value
 
 	# SHADERS
-	if p == "minimap_width":
-		code.minimap_width = value
+	if p == "glow":
+		world_environment.environment.glow_enabled = value
+	if p == "sunlight":
+		toggle_shader(SUNLIGHT, value)
+	if p == "vhs":
+		toggle_shader(VHS_AND_CRT, value)
 
 # LUA
 var lua: LuaAPI = LuaAPI.new()

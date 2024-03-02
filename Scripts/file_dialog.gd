@@ -112,6 +112,7 @@ func handle_enter_key() -> void:
 		code.setup_highlighter()
 		ui_close.emit()
 	else:
+		selected_index = 0;
 		dir.change_dir(item)
 		change_dir(item)
 	update_ui()

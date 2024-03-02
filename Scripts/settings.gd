@@ -19,6 +19,7 @@ var active_overlay: Variant;
 var node_is_transitioning: bool;
 
 func _ready() -> void:
+	print(analyze_volume("res://Music/ES_Social Feedia - Heyson.mp3"))
 	LuaSingleton.on_theme_load.connect(setup_theme)
 
 	tween_fade(%FileDialog, 0)
@@ -186,3 +187,15 @@ func get_longest_line(lines: Array = text.split("\n")) -> String:
 			longestLine = line
 
 	return longestLine
+
+func analyze_volume(path: String) -> Array:
+	var volume_data = []
+
+	# Load the MP3 file
+	var file = FileAccess.open(path, FileAccess.READ)
+
+	var decoder = AudioStreamMP3.new()
+	decoder.data = file.get_buffer(file.get_length())
+
+	print(decoder.data)
+	return []

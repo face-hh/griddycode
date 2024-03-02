@@ -70,7 +70,6 @@ func shake_camera(_shake_strength):
 	return Vector2(randf_range(-_shake_strength, _shake_strength), randf_range(-_shake_strength, _shake_strength))
 
 func to_zoom(num: float) -> Vector2:
-	print(num)
 	if num > 40:
 		num += 120;
 

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cctkq71hxjj8s"
+path="res://.godot/imported/ES_Social Feedia - Heyson.mp3-11cfab85ca9b8900274bcf1a24ee9098.mp3str"
+
+[deps]
+
+source_file="res://Music/ES_Social Feedia - Heyson.mp3"
+dest_files=["res://.godot/imported/ES_Social Feedia - Heyson.mp3-11cfab85ca9b8900274bcf1a24ee9098.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
