@@ -83,6 +83,7 @@ Contributions are heavily appreciated, whether it's for adding Lua plugins, them
 
 ### MEDIUM PRIORITY
 - An option in the settings menu (`CTRL` + `,`) to change the font;
+- The current limit for lines is ~1600. If the cursor moves past that amount, the `CodeEdit` node will activate its scrolling, making the camera bug & go out of view. A limit should be implemented so that the camera won't go out of screen.
 
 ### LOW PRIORITY
 - Making the cat jumping video in the settings menu fade in/out along the actual menu. Currently it ignores the transition;

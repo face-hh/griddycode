@@ -23,6 +23,7 @@ config/icon="res://icon.svg"
 Icons="*res://Scripts/icons.gd"
 LuaSingleton="*res://Scripts/lua_singleton.gd"
 Fs="*res://Scripts/fs.gd"
+Music="*res://Scripts/music.gd"
 
 [display]
 

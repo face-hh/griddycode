@@ -159,6 +159,22 @@ var settings: Array = [
 		"value": false,
 		"shader": true
 	},
+	{
+		"property": "music",
+		"display": "Music",
+		"options": [],
+		"icon": "󰝚",
+		"value": true,
+	},
+	{
+		"property": "music_volume",
+		"display": "Music: Volume",
+		"options": [],
+		"icon": "",
+		"value": 100,
+		"unit": "%",
+		"min": 0, "max": 100,
+	},
 ];
 
 var keywords: Dictionary = {
@@ -243,6 +259,11 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		toggle_shader(SUNLIGHT, value)
 	if p == "vhs":
 		toggle_shader(VHS_AND_CRT, value)
+	# MUSIC
+	if p == "music":
+		Music.set_enabled(value)
+	if p == "music_volume":
+		Music.set_volume(value)
 
 # LUA
 var lua: LuaAPI = LuaAPI.new()

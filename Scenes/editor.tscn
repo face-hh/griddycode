@@ -1,8 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://bj6s526sep4xw"]
+[gd_scene load_steps=20 format=3 uid="uid://bj6s526sep4xw"]
 
 [ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="1_cd7xi"]
 [ext_resource type="Script" path="res://Scripts/file_manager.gd" id="1_x00ag"]
-[ext_resource type="Shader" path="res://Shaders/sunlight.gdshader" id="2_1wn0i"]
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="2_7x3ll"]
 [ext_resource type="FontFile" uid="uid://d1v66naqhhggj" path="res://Fonts/FiraCode-Regular.ttf" id="2_wpuu1"]
 [ext_resource type="PackedScene" uid="uid://dk43uvvc3j228" path="res://Scenes/settings_list.tscn" id="5_6usn0"]
@@ -13,7 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/theme_chooser.gd" id="9_ba634"]
 [ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="11_m1mse"]
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="12_x8fwh"]
-[ext_resource type="AudioStream" uid="uid://cctkq71hxjj8s" path="res://Music/ES_Social Feedia - Heyson.mp3" id="14_lwgyr"]
+[ext_resource type="AudioStream" uid="uid://bw4elmrq7utxl" path="res://Music/ES_Social Feedia - Heyson.wav" id="14_tdfqv"]
 
 [sub_resource type="Environment" id="Environment_7g1iw"]
 background_mode = 3
@@ -35,20 +34,6 @@ shader_parameter/spill = 0.04
 [sub_resource type="Curve2D" id="Curve2D_stitx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wbxv0"]
-shader = ExtResource("2_1wn0i")
-shader_parameter/angle = -0.125
-shader_parameter/position = 0.06
-shader_parameter/spread = 0.565
-shader_parameter/cutoff = 0.15
-shader_parameter/falloff = 0.12
-shader_parameter/edge_fade = 0.185
-shader_parameter/speed = 1.055
-shader_parameter/ray1_density = 4.0
-shader_parameter/ray2_density = 15.0
-shader_parameter/ray2_intensity = 0.085
-shader_parameter/color = Color(1, 0.9, 0.65, 0.3)
-shader_parameter/hdr = true
-shader_parameter/seed = 5.0
 
 [node name="Editor" type="Node2D"]
 script = ExtResource("1_x00ag")
@@ -61,13 +46,13 @@ unique_name_in_owner = true
 offset_left = -2046.0
 offset_top = -742.0
 offset_right = 4452.0
-offset_bottom = 5126.0
+offset_bottom = 51258.0
 color = Color(0, 0, 0, 1)
 
 [node name="Code" type="CodeEdit" parent="."]
 unique_name_in_owner = true
-offset_right = 1916.0
-offset_bottom = 4146.0
+offset_right = 2044.0
+offset_bottom = 44630.0
 theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
 theme_override_colors/background_color = Color(0, 0, 0, 1)
 theme_override_colors/caret_color = Color(0.321569, 0.545098, 1, 1)
@@ -299,6 +284,7 @@ curve = SubResource("Curve2D_stitx")
 
 [node name="ShaderLayer" type="ColorRect" parent="."]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_wbxv0")
 offset_left = -2011.0
 offset_top = -700.0
@@ -308,8 +294,10 @@ mouse_filter = 2
 color = Color(0.46455, 0.475028, 0.740924, 1)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_lwgyr")
-autoplay = true
+stream = ExtResource("14_tdfqv")
+
+[node name="AudioTimer" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]
 [connection signal="code_completion_requested" from="Code" to="Code" method="_on_code_completion_requested"]

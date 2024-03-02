@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bw4elmrq7utxl"
+path="res://.godot/imported/ES_Social Feedia - Heyson.wav-96c1183fb728103d97a93214b6a539dc.sample"
+
+[deps]
+
+source_file="res://Music/ES_Social Feedia - Heyson.wav"
+dest_files=["res://.godot/imported/ES_Social Feedia - Heyson.wav-96c1183fb728103d97a93214b6a539dc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

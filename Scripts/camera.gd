@@ -1,7 +1,7 @@
 # Info:
 # "Caret" refers to the "cursor" of where text is being inserted/deleted in the CodeEdit node.
 # "11" refers to the number of characters able to fit on the screen without zooming out.
-
+class_name Camera
 extends Camera2D
 
 @export var transition_speed: float = 1.0
@@ -12,6 +12,7 @@ var min_zoom = Vector2(1.0, 1.0);
 
 # Ignore mouse movement? \/
 var busy = false;
+var boundaries_exceeded = null;
 
 var shake_strength: float = 15.0;
 
@@ -65,6 +66,13 @@ func focus_die() -> void:
 	var tween = create_tween()
 
 	tween.parallel().tween_property(self, "global_position", gp(), transition_speed)
+
+func focus_temp(intensity: float) -> void:
+	if busy: return
+
+	var tween = create_tween()
+
+	tween.parallel().tween_property(self, "zoom", zoom + Vector2(intensity, intensity), 0.5)
 
 func shake_camera(_shake_strength):
 	return Vector2(randf_range(-_shake_strength, _shake_strength), randf_range(-_shake_strength, _shake_strength))
