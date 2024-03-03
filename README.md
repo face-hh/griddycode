@@ -79,6 +79,11 @@ If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/
 # Contributions
 Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
 
+## Notice
+- You will need to install the [Godot Engine](https://godotengine.org/) to run your proposed change & make sure it runs flawlessly.
+- You don't have to submit executables.
+- Use the v4.2 of the engine (currently Latest)
+
 ## 🐛 Current bugs/needed features:
 ### HIGH PRIORITY
 - The `VHS & CRT` shader, on certain themes (One Dark Pro, GitHub Light, etc.), becomes completely white. Works good on GitHub Dark;
