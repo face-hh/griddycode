@@ -1,5 +1,28 @@
-[gd_scene format=3 uid="uid://2nmb0cwntgpq"]
+[gd_scene load_steps=4 format=3 uid="uid://bjnhor4pywtgc"]
 
-[node name="VBoxContainer" type="VBoxContainer"]
-offset_right = 267.0
-offset_bottom = 294.0
+[ext_resource type="PackedScene" uid="uid://2nmb0cwntgpq" path="res://Scenes/comment_list.tscn" id="1_5m2ww"]
+[ext_resource type="Shader" path="res://Shaders/border_radius.gdshader" id="2_yj5ls"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onjnb"]
+shader = ExtResource("2_yj5ls")
+shader_parameter/radius = 1.0
+shader_parameter/animate = false
+shader_parameter/square_scale = 0.1
+
+[node name="comments" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_onjnb")
+layout_mode = 0
+offset_right = 392.0
+offset_bottom = 534.0
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" parent="." instance=ExtResource("1_5m2ww")]
+layout_mode = 0

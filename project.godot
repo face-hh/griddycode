@@ -24,6 +24,7 @@ Icons="*res://Scripts/icons.gd"
 LuaSingleton="*res://Scripts/lua_singleton.gd"
 Fs="*res://Scripts/fs.gd"
 Music="*res://Scripts/music.gd"
+CommentsData="*res://Scripts/comments_data.gd"
 
 [display]
 

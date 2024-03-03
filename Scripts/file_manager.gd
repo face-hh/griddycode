@@ -8,6 +8,7 @@ var current_file: String;
 var current_dir: String = "/";
 
 func _ready():
+	inject_lua()
 	check_for_reserved()
 
 	load_game()
@@ -34,6 +35,23 @@ func check_for_reserved() -> void:
 func _on_file_dialog_file_selected(path: String) -> void:
 	open_file(path)
 	%Intro.hide()
+
+func inject_lua() -> void:
+	var themes = DirAccess.open("res://Lua/Themes").get_files()
+	var plugins = DirAccess.open("res://Lua/Plugins").get_files()
+
+	for theme in themes:
+		copy_if_not_exist("themes", "Themes", theme)
+	for plugin in plugins:
+		copy_if_not_exist("langs", "Plugins", plugin)
+
+func copy_if_not_exist(user_path: String, res_path: String, file: String) -> void:
+	var path = "user://" + user_path + "/" + file;
+	var current_path = "res://Lua/" + res_path + "/" + file;
+	var exists = FileAccess.file_exists(path);
+
+	if !exists:
+		DirAccess.copy_absolute(current_path, path)
 
 func open_file(path: String) -> void:
 	var src = Fs._load(path)

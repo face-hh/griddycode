@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://2nmb0cwntgpq"]
+
+[ext_resource type="Script" path="res://Scripts/comments.gd" id="1_ng0lx"]
+[ext_resource type="PackedScene" uid="uid://bp8qdakc47pva" path="res://Scenes/comment.tscn" id="1_udget"]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+custom_minimum_size = Vector2(540.41, 500)
+offset_right = 638.0
+offset_bottom = 872.0
+scale = Vector2(0.6, 0.6)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ng0lx")
+
+[node name="Control" parent="." instance=ExtResource("1_udget")]
+layout_mode = 2
+
+[node name="Control2" parent="." instance=ExtResource("1_udget")]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="Control3" parent="." instance=ExtResource("1_udget")]
+auto_translate_mode = 1
+layout_mode = 2

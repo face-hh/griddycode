@@ -1,0 +1,20 @@
+set_keywords("reserved", "e05f49")
+set_keywords("string", "6197da")
+set_keywords("binary", "79c0ff")
+set_keywords("symbol", "ffa198")
+set_keywords("variable", "ffa34d")
+set_keywords("operator", "79c0ff")
+set_keywords("comments", "8b949e")
+set_keywords("error", "d31820")
+set_keywords("function", "d2a8ff")
+set_keywords("member", "79c0ff")
+
+
+set_gui("background_color", "0d1117")
+set_gui("current_line_color", "0d1117") --- github's themes don't highlight current line
+set_gui("selection_color", "1e4273")
+set_gui("font_color", "eef4fa")
+set_gui("word_highlighted_color", "234879")
+set_gui("completion_background_color", "161b22")
+set_gui("completion_selected_color", "393f48")
+set_gui("caret_color", "e6edf3")

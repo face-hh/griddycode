@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bj6s526sep4xw"]
+[gd_scene load_steps=21 format=3 uid="uid://bj6s526sep4xw"]
 
 [ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="1_cd7xi"]
 [ext_resource type="Script" path="res://Scripts/file_manager.gd" id="1_x00ag"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://Scripts/theme_chooser.gd" id="9_ba634"]
 [ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="11_m1mse"]
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="12_x8fwh"]
+[ext_resource type="PackedScene" uid="uid://bjnhor4pywtgc" path="res://Scenes/comments.tscn" id="14_r0w3a"]
 [ext_resource type="AudioStream" uid="uid://bw4elmrq7utxl" path="res://Music/ES_Social Feedia - Heyson.wav" id="14_tdfqv"]
 
 [sub_resource type="Environment" id="Environment_7g1iw"]
@@ -298,6 +299,14 @@ stream = ExtResource("14_tdfqv")
 
 [node name="AudioTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="Comments" parent="." instance=ExtResource("14_r0w3a")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_left = 1545.0
+offset_top = 2.0
+offset_right = 1545.0
+offset_bottom = 2.0
 
 [connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]
 [connection signal="code_completion_requested" from="Code" to="Code" method="_on_code_completion_requested"]

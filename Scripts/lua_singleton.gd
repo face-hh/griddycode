@@ -192,6 +192,7 @@ var keywords: Dictionary = {
 
 var keywords_to_highlight: Dictionary = {}
 var color_regions_to_highlight: Array = []
+var comments: Array = []
 
 const SUNLIGHT = preload("res://Shaders/sunlight.gdshader")
 const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
@@ -301,6 +302,9 @@ func _lua_set_gui(property: String, new_color: String) -> void:
 
 	gui[property] = str_to_clr(new_color)
 
+func _add_comment(comment: String) -> void:
+	comments.append(comment)
+
 func _splitstr(input: String, separator: String):
 	return input.split(separator)
 
@@ -310,12 +314,14 @@ func _trim(input: String):
 func setup_extension(extension):
 	keywords_to_highlight = {}
 	color_regions_to_highlight = []
+	comments = []
 
 	# FILE EXTENSIONS
 	lua.bind_libraries(["base", "table", "string"])
 
 	lua.push_variant("highlight", _lua_highlight)
 	lua.push_variant("highlight_region", _lua_highlight_region)
+	lua.push_variant("add_comment", _add_comment)
 
 	lua.push_variant("splitstr", _splitstr)
 	lua.push_variant("trim", _trim)
