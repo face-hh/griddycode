@@ -311,6 +311,7 @@ offset_bottom = 2.0
 
 [connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]
 [connection signal="code_completion_requested" from="Code" to="Code" method="_on_code_completion_requested"]
+[connection signal="gui_input" from="Code" to="Code" method="_on_gui_input"]
 [connection signal="text_changed" from="Code" to="Code" method="_on_text_changed"]
 [connection signal="ui_close" from="FileDialog" to="Code" method="_on_file_dialog_ui_close"]
 [connection signal="timeout" from="AutoSaveTimer" to="." method="_on_auto_save_timer_timeout"]

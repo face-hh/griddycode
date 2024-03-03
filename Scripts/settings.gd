@@ -175,14 +175,6 @@ func _on_file_dialog_ui_close():
 	toggle(%FileDialog)
 
 
-func _process(_delta) -> void:
-	if Input.is_action_just_pressed("ui_open"):      toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_settings"):  toggle(%Settings, true, (18 * 7.5) * 2)
-	if Input.is_action_just_pressed("ui_info"):      toggle(%Info, true, 1500)
-	if Input.is_action_just_pressed("ui_theme"):     toggle(%ThemeChooser, false, (18 * 28))
-	if Input.is_action_just_pressed("ui_cancel"):    toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_comments"):  toggle(%Comments, false, -(18 * 7.5))
-
 # MISC
 
 func get_longest_line(lines: Array = text.split("\n")) -> String:
@@ -193,3 +185,11 @@ func get_longest_line(lines: Array = text.split("\n")) -> String:
 			longestLine = line
 
 	return longestLine
+
+func _on_gui_input(event):
+	if Input.is_action_just_pressed("ui_open"):      accept_event(); toggle(%FileDialog)
+	if Input.is_action_just_pressed("ui_settings"):  accept_event(); toggle(%Settings, true, (18 * 7.5) * 2)
+	if Input.is_action_just_pressed("ui_info"):      accept_event(); toggle(%Info, true, 1500)
+	if Input.is_action_just_pressed("ui_theme"):     accept_event(); toggle(%ThemeChooser, false, (18 * 28))
+	if Input.is_action_just_pressed("ui_cancel"):    accept_event(); toggle(%FileDialog)
+	if Input.is_action_just_pressed("ui_comments"):  accept_event(); toggle(%Comments, false, -(18 * 7.5))

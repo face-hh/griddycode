@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 Tools/target
+Builds/Linux/*
+Builds/Windows/*
