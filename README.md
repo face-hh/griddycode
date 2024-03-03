@@ -33,11 +33,11 @@ GriddyCode allows you to extend its functionality via **Lua**.
 
 ## Where?
 To open the folder with Lua scripts, go to:
-- Windows: `%APPDATA%\Bussin GriddyCode`
+- Windows: `%APPDATA%\Godot\app_userdata\Bussin GriddyCode`
 - macOS: `~/Library/Application Support/Bussin GriddyCode`
-- Linux: `~/.local/share/Bussin GriddyCode`
+- Linux: `~/.local/share/godot/app_userdata/Bussin GriddyCode`
 
-*Note: since the paths might change, we recommend you manually search for GriddyCode in the AppData of your OS.*
+*Note: the paths are not accurate, we recommend you manually search for GriddyCode in the AppData of your OS.*
 
 ## How?
 You may see the folders **"langs"** and **"themes"**.
