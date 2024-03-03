@@ -16,9 +16,7 @@ script = ExtResource("1_ng0lx")
 layout_mode = 2
 
 [node name="Control2" parent="." instance=ExtResource("1_udget")]
-auto_translate_mode = 1
 layout_mode = 2
 
 [node name="Control3" parent="." instance=ExtResource("1_udget")]
-auto_translate_mode = 1
 layout_mode = 2

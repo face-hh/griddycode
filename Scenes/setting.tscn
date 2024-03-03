@@ -54,11 +54,9 @@ offset_right = 322.0
 offset_bottom = 23.0
 
 [node name="Control4" type="Control" parent="."]
-auto_translate_mode = 1
 layout_mode = 2
 
 [node name="Value" type="RichTextLabel" parent="Control4"]
-auto_translate_mode = 1
 layout_mode = 2
 offset_left = 449.0
 offset_top = 3.0

@@ -54,8 +54,8 @@ color = Color(0, 0, 0, 1)
 unique_name_in_owner = true
 offset_right = 2044.0
 offset_bottom = 44630.0
-theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
 theme_override_colors/background_color = Color(0, 0, 0, 1)
+theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
 theme_override_colors/caret_color = Color(0.321569, 0.545098, 1, 1)
 theme_override_fonts/font = ExtResource("2_wpuu1")
 theme_override_font_sizes/font_size = 0
@@ -143,7 +143,6 @@ unique_name_in_owner = true
 visible = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Intro"]
-auto_translate_mode = 1
 offset_left = 836.0
 offset_top = 112.0
 offset_right = 3336.0
@@ -155,7 +154,6 @@ bbcode_enabled = true
 text = "Greetings!"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Intro"]
-auto_translate_mode = 1
 offset_left = 841.0
 offset_top = 244.0
 offset_right = 3341.0
@@ -167,7 +165,6 @@ bbcode_enabled = true
 text = "You're currently using [color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="Intro"]
-auto_translate_mode = 1
 offset_left = 841.0
 offset_top = 380.0
 offset_right = 3341.0
@@ -218,7 +215,6 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(-1691.12, 0)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Info"]
-auto_translate_mode = 1
 offset_left = 285.0
 offset_top = 28.0
 offset_right = 4821.0
@@ -230,7 +226,6 @@ bbcode_enabled = true
 text = "[color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Info"]
-auto_translate_mode = 1
 offset_left = 293.0
 offset_top = 165.0
 offset_right = 6395.0

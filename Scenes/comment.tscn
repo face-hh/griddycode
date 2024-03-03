@@ -37,7 +37,6 @@ bbcode_enabled = true
 text = "kgpoakgp3 3d"
 
 [node name="Comment" type="RichTextLabel" parent="."]
-auto_translate_mode = 1
 layout_mode = 2
 offset_left = 215.0
 offset_top = 85.0
