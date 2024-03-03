@@ -8,24 +8,22 @@ https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-ce
 
 
 # Table of Contents
-1. [GriddyCode](#griddycode)
-   - [Lua modding](#lua-modding)
+   - [Lua modding](#%EF%B8%8F-lua-modding)
 	  - [Where?](#where)
 	  - [How?](#how)
-	  - [Docs?](#docs)
+	  - [Docs](#docs)
 		 - [Langs](#langs)
 			- [Introduction](#introduction)
 			- [Methods](#methods)
 		 - [Themes](#themes)
 			- [Introduction](#introduction-1)
 			- [Methods](#methods-1)
-2. [Known issues](#known-issues)
-   - [Visual bugs](#visual-bugs)
-3. [Contributions](#contributions)
-   - [Current bugs/needed features](#current-bugsneeded-features)
-	  - [HIGH PRIORITY](#high-priority)
-	  - [MEDIUM PRIORITY](#medium-priority)
-	  - [LOW PRIORITY](#low-priority)
+	  - [Publishing](#publishing)
+   - [Contributions](#contributions)
+      - [Current bugs/needed features](#-current-bugsneeded-features)
+	  	- [HIGH PRIORITY](#high-priority)
+		- [MEDIUM PRIORITY](#medium-priority)
+		- [LOW PRIORITY](#low-priority)
 
 
 # ⌨️ Lua modding
@@ -73,6 +71,9 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 | `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
 
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
+## Publishing
+If you want to use a theme/plugin for **yourself**, you can put it into your [AppData](#how).
+If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/Plugins` or `Lua/Themes` respectively. If merged, it will be included in the next build.
 
 # Contributions
 Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
