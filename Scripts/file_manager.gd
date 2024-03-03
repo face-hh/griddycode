@@ -114,7 +114,24 @@ func load_game():
 		current_file = node_data["current_file"]
 		LuaSingleton.theme = node_data["theme"]
 
-		LuaSingleton.settings = node_data["settings"]
+		var settings = node_data["settings"];
+
+		for dic: Dictionary in settings:
+			var index = -1;
+
+			for setting in settings:
+				index += 1;
+				if setting.property == dic.property:
+					return
+
+			LuaSingleton.settings.remove_at(index)
+			LuaSingleton.settings.append(dic);
+
+		# this is a hack, it should not be here.
+		Music.set_enabled(LuaSingleton.settings.filter(func(setting):
+			return setting.property == "music"
+		)[0].value)
+		# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 		LuaSingleton.on_settings_change.emit()
 

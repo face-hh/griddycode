@@ -164,7 +164,7 @@ var settings: Array = [
 		"display": "Music",
 		"options": [],
 		"icon": "󰝚",
-		"value": true,
+		"value": false,
 	},
 	{
 		"property": "music_volume",

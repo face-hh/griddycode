@@ -246,6 +246,7 @@ CTRL + O     - open file picker. Navigate with ↑ ↓ ⏎
 CTRL + ,     - open settings.
 CTRL + T     - open theme picker.
 CTRL + I     - open this panel.
+CTRL + L     - open the comments.
 [font_size=85]
 [color=#b6b6b6] Copyright (c) 2024 Bussin Industries. All Rights Reserved.
 
@@ -303,9 +304,9 @@ wait_time = 0.5
 [node name="Comments" parent="." instance=ExtResource("14_r0w3a")]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
-offset_left = 1545.0
+offset_left = 772.0
 offset_top = 2.0
-offset_right = 1545.0
+offset_right = 772.0
 offset_bottom = 2.0
 
 [connection signal="caret_changed" from="Code" to="Code" method="_on_caret_changed"]

@@ -52,10 +52,11 @@ To extend the functionality of GriddyCode for a specific **file extension**, cre
 | -------- | -------- | -------- | -------- |
 | `highlight(keyword: String, color: String)` | `highlight("const", "reserved")` | Tells GriddyCode to highlight a certain keyword with a preset of colors. | Available colors: `reserved`, `string`, `binary`, `symbol`, `variable`, `operator`, `comments`, `error`, `function`, `member` |
 | `highlight_region(start: String, end: String, color: String, line_only: bool = false)` | `highlight("/*", "*/", "comments", false)` | Tells GriddyCode to highlight a region with a preset of colors. | The `start` must be a symbol. Due to Godot's limited functionality, you can't use RegEx. |
+| `add_comment(comment: String)` | `add_comment("What is blud doing 🗣️🗣️🗣️")` | Adds a comment to be randomly chosen in the `CTRL` + `L` menu. | The username, profile picture, date, and likes are chosen by GriddyCode. |
 | `detect_functions(content: String) -> Array[String]` | `detect_functions("const test = 3; function main() {}; async init() => { main() }")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["main", "init"]). |
 | `detect_variables(content: String) -> Array[String]` | `detect_variables("const test = 3;")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["test"]). |
 
-*Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them as preset values in the array you return. GriddyCode will handle the rest!*
+*Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them already set up in the array you return. GriddyCode will handle the rest!*
 ### Themes
 #### Introduction
 To add a theme, create a file in the **"themes"** folder with any name. (i.e. "dracula.lua"). You will be able to choose it within GriddyCode.
@@ -73,9 +74,9 @@ Contributions are heavily appreciated, whether it's for adding Lua plugins, them
 
 ## 🐛 Current bugs/needed features:
 ### HIGH PRIORITY
-- To apply changes to the settings (i.e. adding a new setting), it's required to delete your save data;
-- The `VHS & CRT` shader, on certain themes (One Dark Pro, etc.), becomes completely white. Works good on GitHub Dark;
+- The `VHS & CRT` shader, on certain themes (One Dark Pro, GitHub Light, etc.), becomes completely white. Works good on GitHub Dark;
 - Light modes get affected by *glow*, while dark modes seem fine.
+- Disabling music is buggy, it can still play on restart.
 
 ### MEDIUM PRIORITY
 - An option in the settings menu (`CTRL` + `,`) to change the font;

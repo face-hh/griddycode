@@ -123,6 +123,9 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 		if node.name == "Settings":
 			future_pos.x += 200
 			future_pos.y += 300
+		if node.name == "Comments":
+			future_pos.x += 200
+			future_pos.y += 300
 
 		%Cam.focus_on(future_pos, node.zoom if ("zoom" in node) else Vector2(1,1))
 		code.release_focus()
@@ -145,6 +148,9 @@ func tween_fade(node: Object, opacity: float, ignore_gui: bool = false) -> void:
 			node.hide()
 
 			if !ignore_gui: active_overlay = null;
+			if node is CommentsOverlay:
+				node.container.setup()
+
 		else:
 			node.show()
 			if !ignore_gui: active_overlay = node;
@@ -175,6 +181,7 @@ func _process(_delta) -> void:
 	if Input.is_action_just_pressed("ui_info"):      toggle(%Info, true, 1500)
 	if Input.is_action_just_pressed("ui_theme"):     toggle(%ThemeChooser, false, (18 * 28))
 	if Input.is_action_just_pressed("ui_cancel"):    toggle(%FileDialog)
+	if Input.is_action_just_pressed("ui_comments"):  toggle(%Comments, false, -(18 * 7.5))
 
 # MISC
 
