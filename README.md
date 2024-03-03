@@ -52,7 +52,6 @@ You may see the folders **"langs"** and **"themes"**.
 To extend the functionality of GriddyCode for a specific **file extension**, create a file with its name. (i.e. `toml.lua`)
 
 #### Methods
-#### Methods
 
 | Method | Example | Description | Notes |
 | -------- | -------- | -------- | -------- |
