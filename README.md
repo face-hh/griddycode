@@ -73,6 +73,7 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
 ## Publishing
 If you want to use a theme/plugin for **yourself**, you can put it into your [AppData](#how).
+
 If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/Plugins` or `Lua/Themes` respectively. If merged, it will be included in the next build.
 
 # Contributions
