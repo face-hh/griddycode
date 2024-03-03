@@ -117,6 +117,8 @@ func load_game():
 		var settings = node_data["settings"];
 
 		for dic: Dictionary in settings:
+			LuaSingleton.handle_internal_setting_change(dic.property, dic.value)
+
 			var index = LuaSingleton.get_setting(dic.property)[1]
 
 			if index == -1:
@@ -125,10 +127,6 @@ func load_game():
 
 			LuaSingleton.settings.remove_at(index)
 			LuaSingleton.settings.append(dic);
-
-		# this is a hack, it should not be here.
-		Music.set_enabled(LuaSingleton.get_setting("music")[0].value)
-		# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 		LuaSingleton.on_settings_change.emit()
 
