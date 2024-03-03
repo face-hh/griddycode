@@ -117,20 +117,17 @@ func load_game():
 		var settings = node_data["settings"];
 
 		for dic: Dictionary in settings:
-			var index = -1;
+			var index = LuaSingleton.get_setting(dic.property)[1]
 
-			for setting in settings:
-				index += 1;
-				if setting.property == dic.property:
-					return
+			if index == -1:
+				print("WARNING: Omitted setting \"%s\" due to finding operation failing." % dic.property)
+				return
 
 			LuaSingleton.settings.remove_at(index)
 			LuaSingleton.settings.append(dic);
 
 		# this is a hack, it should not be here.
-		Music.set_enabled(LuaSingleton.settings.filter(func(setting):
-			return setting.property == "music"
-		)[0].value)
+		Music.set_enabled(LuaSingleton.get_setting("music")[0].value)
 		# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 		LuaSingleton.on_settings_change.emit()

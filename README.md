@@ -76,7 +76,6 @@ Contributions are heavily appreciated, whether it's for adding Lua plugins, them
 ### HIGH PRIORITY
 - The `VHS & CRT` shader, on certain themes (One Dark Pro, GitHub Light, etc.), becomes completely white. Works good on GitHub Dark;
 - Light modes get affected by *glow*, while dark modes seem fine.
-- Disabling music is buggy, it can still play on restart.
 
 ### MEDIUM PRIORITY
 - An option in the settings menu (`CTRL` + `,`) to change the font;

@@ -205,6 +205,17 @@ signal done_parsing;
 signal on_theme_load;
 signal on_settings_change;
 
+func get_setting(property: String) -> Array:
+	var i = -1;
+
+	for setting in settings:
+		i += 1;
+
+		if setting["property"] == property:
+			return [setting, i]
+
+	return [{}, -1]
+
 func change_setting(property: String, value: Variant) -> void:
 	for setting in settings:
 		if setting["property"] == property:
