@@ -1,6 +1,8 @@
 # GriddyCode
 Coding has never been more lit!
 
+![preview](Icons/preview.mp4)
+
 # Table of Contents
 1. [GriddyCode](#griddycode)
    - [Lua modding](#lua-modding)
