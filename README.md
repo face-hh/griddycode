@@ -1,7 +1,11 @@
 # GriddyCode
 Coding has never been more lit!
 
-![preview](Icons/preview.mp4)
+
+https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-cea026b12890
+
+
+
 
 # Table of Contents
 1. [GriddyCode](#griddycode)
