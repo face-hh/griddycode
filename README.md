@@ -8,6 +8,7 @@ https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-ce
 
 
 # Table of Contents
+   - [Requirements](#requirements)
    - [Lua modding](#%EF%B8%8F-lua-modding)
 	  - [Where?](#where)
 	  - [How?](#how)
@@ -25,7 +26,11 @@ https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-ce
 		- [MEDIUM PRIORITY](#medium-priority)
 		- [LOW PRIORITY](#low-priority)
 
-
+# Requirements
+| Requirement | Notes |
+| -------- | -------- |
+| [Nerdfont](https://www.nerdfonts.com/) - we use Nerdfont for the file picker. | You'll know it's missing when your icons look like "□" |
+| [Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions) - GriddyCode was tested **only** on Linux | Although it'll work on the Gaming OS, the file picker might not. |
 # ⌨️ Lua modding
 GriddyCode allows you to extend its functionality via **Lua**.
 
