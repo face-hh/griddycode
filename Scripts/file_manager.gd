@@ -8,6 +8,9 @@ var current_file: String;
 var current_dir: String = "/";
 
 func _ready():
+	if (OS.get_name() == "Windows"):
+		current_dir = "C:/"
+	print(current_dir)
 	inject_lua()
 	check_for_reserved()
 
@@ -49,6 +52,8 @@ func inject_lua() -> void:
 		copy_if_not_exist("langs", "Plugins", plugin)
 
 func copy_if_not_exist(user_path: String, res_path: String, file: String) -> void:
+	if !file.contains("lua"): return
+
 	var path = "user://" + user_path + "/" + file;
 	var current_path = "res://Lua/" + res_path + "/" + file;
 	var exists = FileAccess.file_exists(path);

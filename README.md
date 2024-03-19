@@ -21,7 +21,7 @@ https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-ce
 			- [Methods](#methods-1)
 	  - [Publishing](#publishing)
    - [Contributions](#contributions)
-      - [Current bugs/needed features](#-current-bugsneeded-features)
+	  - [Current bugs/needed features](#-current-bugsneeded-features)
 	  	- [HIGH PRIORITY](#high-priority)
 		- [MEDIUM PRIORITY](#medium-priority)
 		- [LOW PRIORITY](#low-priority)
