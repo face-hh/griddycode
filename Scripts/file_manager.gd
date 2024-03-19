@@ -37,6 +37,9 @@ func _on_file_dialog_file_selected(path: String) -> void:
 	%Intro.hide()
 
 func inject_lua() -> void:
+	DirAccess.make_dir_absolute("user://themes")
+	DirAccess.make_dir_absolute("user://langs")
+
 	var themes = DirAccess.open("res://Lua/Themes").get_files()
 	var plugins = DirAccess.open("res://Lua/Plugins").get_files()
 
