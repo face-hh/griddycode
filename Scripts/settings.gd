@@ -71,15 +71,12 @@ func _on_code_completion_requested() -> void:
 	var function_names = LuaSingleton.lua.call_function("detect_functions", [text])
 	var variable_names = LuaSingleton.lua.call_function("detect_variables", [text])
 
-	if \
-		typeof(function_names) != Variant.Type.TYPE_ARRAY or \
-		typeof(variable_names) != Variant.Type.TYPE_ARRAY:
-			return;
-
-	for each in function_names:
-		add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each+"()", LuaSingleton.keywords.function, FUNCTION)
-	for each in variable_names:
-		add_code_completion_option(CodeEdit.KIND_VARIABLE, each, each, LuaSingleton.keywords.variable, VARIABLE)
+	if typeof(function_names) == Variant.Type.TYPE_ARRAY:
+		for each in function_names:
+			add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each+"()", LuaSingleton.keywords.function, FUNCTION)
+	if typeof(variable_names) == Variant.Type.TYPE_ARRAY:
+		for each in variable_names:
+			add_code_completion_option(CodeEdit.KIND_VARIABLE, each, each, LuaSingleton.keywords.variable, VARIABLE)
 
 	update_code_completion_options(true)
 

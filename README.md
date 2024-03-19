@@ -8,36 +8,39 @@ https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-ce
 
 
 # Table of Contents
-1. [GriddyCode](#griddycode)
-   - [Lua modding](#lua-modding)
+   - [Requirements](#requirements)
+   - [Lua modding](#%EF%B8%8F-lua-modding)
 	  - [Where?](#where)
 	  - [How?](#how)
-	  - [Docs?](#docs)
+	  - [Docs](#docs)
 		 - [Langs](#langs)
 			- [Introduction](#introduction)
 			- [Methods](#methods)
 		 - [Themes](#themes)
 			- [Introduction](#introduction-1)
 			- [Methods](#methods-1)
-2. [Known issues](#known-issues)
-   - [Visual bugs](#visual-bugs)
-3. [Contributions](#contributions)
-   - [Current bugs/needed features](#current-bugsneeded-features)
-	  - [HIGH PRIORITY](#high-priority)
-	  - [MEDIUM PRIORITY](#medium-priority)
-	  - [LOW PRIORITY](#low-priority)
+	  - [Publishing](#publishing)
+   - [Contributions](#contributions)
+      - [Current bugs/needed features](#-current-bugsneeded-features)
+	  	- [HIGH PRIORITY](#high-priority)
+		- [MEDIUM PRIORITY](#medium-priority)
+		- [LOW PRIORITY](#low-priority)
 
-
+# Requirements
+| Requirement | Notes |
+| -------- | -------- |
+| [Nerdfont](https://www.nerdfonts.com/) - we use Nerdfont for the file picker. | You'll know it's missing when your icons look like "□" |
+| [Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions) - GriddyCode was tested **only** on Linux | Although it'll work on the Gaming OS, the file picker might not. |
 # ⌨️ Lua modding
 GriddyCode allows you to extend its functionality via **Lua**.
 
 ## Where?
 To open the folder with Lua scripts, go to:
-- Windows: `%APPDATA%\Bussin GriddyCode`
+- Windows: `%APPDATA%\Godot\app_userdata\Bussin GriddyCode`
 - macOS: `~/Library/Application Support/Bussin GriddyCode`
-- Linux: `~/.local/share/Bussin GriddyCode`
+- Linux: `~/.local/share/godot/app_userdata/Bussin GriddyCode`
 
-*Note: since the paths might change, we recommend you manually search for GriddyCode in the AppData of your OS.*
+*Note: the paths are not accurate, we recommend you manually search for GriddyCode in the AppData of your OS.*
 
 ## How?
 You may see the folders **"langs"** and **"themes"**.
@@ -51,7 +54,6 @@ You may see the folders **"langs"** and **"themes"**.
 #### Introduction
 To extend the functionality of GriddyCode for a specific **file extension**, create a file with its name. (i.e. `toml.lua`)
 
-#### Methods
 #### Methods
 
 | Method | Example | Description | Notes |
@@ -74,9 +76,18 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 | `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
 
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
+## Publishing
+If you want to use a theme/plugin for **yourself**, you can put it into your [AppData](#where).
+
+If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/Plugins` or `Lua/Themes` respectively. If merged, it will be included in the next build.
 
 # Contributions
 Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
+
+## Notice
+- You will need to install the [Godot Engine](https://godotengine.org/) to run your proposed change & make sure it runs flawlessly.
+- You don't have to submit executables.
+- Use the v4.2 of the engine (currently Latest)
 
 ## 🐛 Current bugs/needed features:
 ### HIGH PRIORITY
