@@ -66,4 +66,4 @@ highlight_region("'", "'", "string")
 highlight_region('"', '"', "string")
 
 --- Comments
-highlight_region("#", "\n", "comments", true)
+highlight_region("#", "", "comments", true)
