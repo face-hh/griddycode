@@ -36,19 +36,12 @@ GriddyCode allows you to extend its functionality via **Lua**.
 
 ## Where?
 To open the folder with Lua scripts, go to:
-<<<<<<< Updated upstream
+
 - Windows: `%APPDATA%\Godot\app_userdata\Bussin GriddyCode`
 - macOS: `~/Library/Application Support/Bussin GriddyCode`
 - Linux: `~/.local/share/godot/app_userdata/Bussin GriddyCode`
 
 *Note: the paths are not accurate, we recommend you manually search for GriddyCode in the AppData of your OS.*
-=======
-- Windows: `%APPDATA%\Bussin GriddyCode`
-- macOS: `~/Library/Application Support/Bussin GriddyCode`
-- Linux: `~/.local/share/Bussin GriddyCode`
-
-*Note: since the paths might change, we recommend you manually search for GriddyCode in the AppData of your OS.*
->>>>>>> Stashed changes
 
 ## How?
 You may see the folders **"langs"** and **"themes"**.
@@ -72,11 +65,8 @@ To extend the functionality of GriddyCode for a specific **file extension**, cre
 | `detect_functions(content: String) -> Array[String]` | `detect_functions("const test = 3; function main() {}; async init() => { main() }")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["main", "init"]). |
 | `detect_variables(content: String) -> Array[String]` | `detect_variables("const test = 3;")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["test"]). |
 
-<<<<<<< Updated upstream
 *Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them already set up in the array you return. GriddyCode will handle the rest!*
-=======
-*Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them as preset values in the array you return. GriddyCode will handle the rest!*
->>>>>>> Stashed changes
+
 ### Themes
 #### Introduction
 To add a theme, create a file in the **"themes"** folder with any name. (i.e. "dracula.lua"). You will be able to choose it within GriddyCode.
@@ -88,22 +78,15 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 | `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
 
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
-<<<<<<< Updated upstream
+
 ## Publishing
 If you want to use a theme/plugin for **yourself**, you can put it into your [AppData](#where).
 
 If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/Plugins` or `Lua/Themes` respectively. If merged, it will be included in the next build.
-=======
-
-# Known issues
-## Visual bugs
-- The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
->>>>>>> Stashed changes
 
 # Contributions
 Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
 
-<<<<<<< Updated upstream
 ## Notice
 - You will need to install the [Godot Engine](https://godotengine.org/) to run your proposed change & make sure it runs flawlessly.
 - You don't have to submit executables.
@@ -123,7 +106,7 @@ Contributions are heavily appreciated, whether it's for adding Lua plugins, them
 - `CTRL` + `P` to open a **quick file picker**, similar to [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.).
 - Selecting a setting with the property "shader" *should* disable previously-enabled settings with "shader".
 - The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
-=======
+
 Stuff we are currently looking for: (this doesn't mean you can't contribute with other stuff!)
 - `CTRL` + `P` to open a **quick file picker**, similar to [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.)
 - An option in the settings menu (`CTRL` + `,`) to change the font!
@@ -132,4 +115,3 @@ Stuff we are currently looking for: (this doesn't mean you can't contribute with
 - The file picker (`CTRL` + `O`) stores the position of the selected item even after entering/exiting a directory. However, if the directory's file size is lower than it, it will disappear until you move it up. This can be fixed by setting its selected item to the last item if it exceeds dirs.size()
 
 Please note that creating a Pull Request to fix these features does *not* guarantee its merge. Please don't open a Pull Request unless you are confident you've done a good job.
->>>>>>> Stashed changes
