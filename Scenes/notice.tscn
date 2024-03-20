@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8njeludg1ajk"]
+
+[ext_resource type="Script" path="res://Scripts/notice.gd" id="1_dlyuf"]
+[ext_resource type="Shader" path="res://Shaders/border_radius.gdshader" id="1_m2ntv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_in2wo"]
+shader = ExtResource("1_m2ntv")
+shader_parameter/radius = 1.0
+shader_parameter/animate = false
+shader_parameter/square_scale = 0.07
+
+[node name="Notice" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dlyuf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_in2wo")
+layout_mode = 0
+offset_right = 487.0
+offset_bottom = 88.0
+color = Color(0.101961, 0.101961, 0.101961, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 491.0
+offset_bottom = 124.0
+bbcode_enabled = true
+text = "[color=yellow]WARNING[/color]: This file isn’t supported. Highlighting, autocomplete and comments won’t work properly."

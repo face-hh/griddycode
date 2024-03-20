@@ -13,7 +13,6 @@ var files: Array[String]
 var zoom: Vector2;
 
 var active: bool = false;
-
 signal ui_close
 
 func change_dir(path) -> void:
@@ -31,7 +30,7 @@ func change_dir(path) -> void:
 		%Cam.focus_on(gp(), zoom)
 
 func setup() -> void:
-	active = false
+	active = true
 	change_dir(editor.current_dir)
 
 	update_ui()

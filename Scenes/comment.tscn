@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bp8qdakc47pva"]
+[gd_scene load_steps=5 format=3 uid="uid://bp8qdakc47pva"]
 
 [ext_resource type="Shader" path="res://Shaders/circle_mask.gdshader" id="1_1jr08"]
 [ext_resource type="Script" path="res://Scripts/comment.gd" id="1_b8ga8"]
 [ext_resource type="Texture2D" uid="uid://dqsmye2lux7vl" path="res://Icons/Comments/quincetart10.png" id="3_gt38f"]
-[ext_resource type="FontFile" uid="uid://d1v66naqhhggj" path="res://Fonts/FiraCode-Regular.ttf" id="3_r26eh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gok1n"]
 shader = ExtResource("1_1jr08")
@@ -31,7 +30,6 @@ offset_left = 212.245
 offset_top = 18.295
 offset_right = 1112.24
 offset_bottom = 918.295
-theme_override_fonts/normal_font = ExtResource("3_r26eh")
 theme_override_font_sizes/normal_font_size = 41
 bbcode_enabled = true
 text = "kgpoakgp3 3d"
@@ -43,9 +41,8 @@ offset_top = 85.0
 offset_right = 5682.0
 offset_bottom = 7405.0
 scale = Vector2(0.075, 0.075)
-theme_override_fonts/normal_font = ExtResource("3_r26eh")
 theme_override_font_sizes/normal_font_size = 300
 bbcode_enabled = true
 text = "This is a placeholder. If you are seeing this:
 1. Your extension does not provide comments.
-2. GriddyCode failed to properly load."
+2. GriddyCode failed to properly load. 🔥"

@@ -1,6 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cshkyynl6dffr"]
-
-[ext_resource type="FontFile" uid="uid://d1v66naqhhggj" path="res://Fonts/FiraCode-Regular.ttf" id="1_t6bjo"]
+[gd_scene load_steps=3 format=3 uid="uid://cshkyynl6dffr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wffyp"]
 
@@ -19,7 +17,6 @@ offset_top = 3.0
 offset_right = 1315.0
 offset_bottom = 131.0
 scale = Vector2(0.235, 0.235)
-theme_override_fonts/normal_font = ExtResource("1_t6bjo")
 theme_override_font_sizes/normal_font_size = 66
 bbcode_enabled = true
 text = "Scroll Speed"

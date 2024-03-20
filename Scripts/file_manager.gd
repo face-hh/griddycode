@@ -3,6 +3,8 @@ extends Node2D
 
 @onready var Code: CodeEdit = %Code;
 @onready var file_dialog = %FileDialog
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
+const NOTICE = preload("res://Scenes/notice.tscn")
 
 var current_file: String;
 var current_dir: String = "/";
@@ -10,7 +12,7 @@ var current_dir: String = "/";
 func _ready():
 	if (OS.get_name() == "Windows"):
 		current_dir = "C:/"
-	print(current_dir)
+
 	inject_lua()
 	check_for_reserved()
 
@@ -27,6 +29,7 @@ func _ready():
 	if !current_file:
 		Code.toggle(%FileDialog)
 		%Intro.show()
+		warn("Welcome to [color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]! Please select a file, then press CTRL + I to get started! :D")
 
 func check_for_reserved() -> void:
 	var folders = ["langs", "themes"]
@@ -60,6 +63,17 @@ func copy_if_not_exist(user_path: String, res_path: String, file: String) -> voi
 
 	if !exists:
 		DirAccess.copy_absolute(current_path, path)
+
+func warn(notice: String) -> void:
+	var node = NOTICE.instantiate()
+
+	canvas_layer.add_child(node)
+
+	node.set_notice(notice)
+
+	get_tree().create_timer(3).timeout.connect(func():
+		node.queue_free()
+	)
 
 func open_file(path: String) -> void:
 	var src = Fs._load(path)
@@ -135,6 +149,8 @@ func load_game():
 
 			LuaSingleton.settings.remove_at(index)
 			LuaSingleton.settings.append(dic);
+
+		LuaSingleton.settings = node_data["settings"]
 
 		LuaSingleton.on_settings_change.emit()
 

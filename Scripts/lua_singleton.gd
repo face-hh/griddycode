@@ -197,6 +197,7 @@ var comments: Array = []
 const SUNLIGHT = preload("res://Shaders/sunlight.gdshader")
 const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
 
+@onready var editor: FileManager = $/root/Editor;
 @onready var code: CodeEdit = $/root/Editor/Code;
 @onready var world_environment: WorldEnvironment = $/root/Editor/WorldEnvironment
 @onready var shader_layer: ColorRect = $/root/Editor/ShaderLayer
@@ -339,6 +340,7 @@ func setup_extension(extension):
 
 	var err: LuaError = lua.do_file("user://langs/" + extension + ".lua")
 	if err is LuaError:
+		editor.warn("[color=yellow]WARNING[/color]: This file isn’t supported. Highlighting, autocomplete, comments and other features won’t work properly.")
 		print("ERROR %d: %s" % [err.type, err.message])
 		return
 
@@ -352,6 +354,8 @@ func setup_theme(given_theme: String) -> void:
 
 	var theme_err: LuaError = theme_lua.do_file("user://themes/" + given_theme + ".lua")
 	if theme_err is LuaError:
+		editor.warn("[color=yellow]WARNING[/color]: Failed to load theme: " + theme_err.message)
+
 		print("ERROR %d: %s" % [theme_err.type, theme_err.message])
 		return
 
