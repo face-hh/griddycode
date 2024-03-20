@@ -20,6 +20,9 @@ var d := 0.0;
 var radius := 4.0
 var speed := 2.0
 
+func _ready() -> void:
+	limit_right = code.size.x
+
 func _process(delta: float) -> void:
 	d += delta;
 
