@@ -5,7 +5,7 @@ highlight("while", "reserved")
 highlight("yall", "reserved")
 
 highlight("sus", "reserved")
-highlight("imposter", "reserved")
+highlight("impostor", "reserved")
 highlight("fuck_around", "reserved")
 highlight("find_out", "reserved")
 
