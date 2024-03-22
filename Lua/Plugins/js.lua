@@ -100,7 +100,9 @@ add_comment("tip: decrease your chance at errors: Number.MAX_SAFE_INTEGER += Num
 --- autocomplete
 
 function detect_functions(content)
-    local functionNames = {}
+    local functionNames = {
+        "require"
+    }
 
     local lines = {}
     for line in content:gmatch("[^\r\n]+") do
@@ -108,7 +110,7 @@ function detect_functions(content)
     end
 
     for _, line in ipairs(lines) do
-        if (string.find(line, "function ") or string.find(line, "async ")) and string.find(line, "%(") then
+        if trim(line):find("^function ") or trim(line):find("^async function ") and string.find(line, "%(") then
             local functionName =
                 string.match(trim(line):gsub("{", ""), "function%s+(.-)%s*%(") or
                 string.match(trim(line):gsub("{", ""), "async%s+(.-)%s*%(")
@@ -120,11 +122,20 @@ function detect_functions(content)
 end
 
 function detect_variables(content)
-    local variable_names = {}
+    local variable_names = {
+        "global",
+        "process",
+        "console",
+        "Buffer",
+        "__dirname",
+        "__filename",
+        "module",
+        "exports"
+    }
     local lines = content:gmatch("[^\r\n]+")
 
     for line in lines do
-        if line:find("let ") or line:find("var ") or line:find("const ") then
+        if trim(line):find("^let ") or trim(line):find("^var ") or trim(line):find("^const ") then
             local parts = splitstr(line, "=")
             if #parts > 0 then
                 local variable_name = trim(splitstr(trim(parts[1]), " ")[2])
