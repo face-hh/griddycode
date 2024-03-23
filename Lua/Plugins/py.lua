@@ -2,7 +2,6 @@
 highlight("import", "reserved")
 highlight("from", "reserved")
 highlight("while", "reserved")
-highlight("input", "reserved")
 highlight("if", "reserved")
 highlight("else", "reserved")
 highlight("elif", "reserved")
