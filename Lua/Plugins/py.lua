@@ -1,4 +1,4 @@
---- highligths for keywords
+--- Highlight keywords
 highlight("import", "reserved")
 highlight("from", "reserved")
 highlight("while", "reserved")
