@@ -10,7 +10,6 @@ highlight("if-else", "reserved")
 highlight("false", "binary")
 highlight("true", "binary")
 highlight("None", "binary")
-highlight("undefined", "binary")
 
 --- Arithmetic Operators
 highlight("+", "operator")
