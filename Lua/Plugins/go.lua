@@ -24,7 +24,6 @@ highlight("continue", "reserved")
 highlight("import", "reserved")
 highlight("return", "reserved")
 
--- built in data types
 highlight("byte", "reserved")
 highlight("rune", "reserved")
 highlight("string", "reserved")
@@ -69,13 +68,8 @@ highlight("%", "operator")
 highlight("==", "operator")
 highlight("!=", "operator")
 
-highlight("{", "binary")
-highlight("}", "binary")
-highlight("[", "binary")
-highlight("]", "binary")
-
 highlight_region('"', '"', "string")
-highlight_region("'", "'", "string")
+highlight_region("'", "'", "reserved")
 highlight_region('`', '`', "string")
 highlight_region('/*', '*/', "comments")
 highlight_region('//', '', "comments", true)
@@ -95,28 +89,14 @@ add_comment("that's just a skill issue at this point")
 add_comment("ain't no way 💀")
 add_comment("how do you do a while loop in go?")
 
---- autocomplete
----@param content string
 function detect_functions(content)
     local function_names = {
-        "min",
-        "max",
-        "println",
-        "print",
-        "make",
-        "new",
-        "clear",
-        "append",
-        "copy",
-        "close",
-        "complex",
-        "real",
-        "imag",
-        "delete",
-        "len",
-        "cap",
-        "panic",
-        "recover",
+        "min", "max", "println",
+        "print", "make", "new",
+        "clear", "append", "copy",
+        "close", "complex", "real",
+        "imag", "delete", "len",
+        "cap", "panic", "recover",
     }
 
     local patterns = {
@@ -133,12 +113,9 @@ function detect_functions(content)
         end
     end
 
-
     return function_names
 end
 
----@param content string
----@return table<string>
 function detect_variables(content)
     local variable_names = {}
 
