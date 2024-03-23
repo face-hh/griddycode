@@ -3,6 +3,9 @@ extends Node
 var themes: Array = ["One Dark Pro Darker"];
 var theme: String = "One Dark Pro Darker"; # default
 
+# TODO: change me each version
+var version: String = "v1.1.0";
+
 var gui: Dictionary = {
 	"background_color":            str_to_clr("#23272e"),
 	"current_line_color":          str_to_clr("#23272e"),
@@ -175,24 +178,34 @@ var settings: Array = [
 		"unit": "%",
 		"min": 0, "max": 100,
 	},
+	{
+		"property": "discord_sdk",
+		"display": "Discord SDK",
+		"options": [],
+		"icon": "󰙯",
+		"value": true,
+	},
 ];
 
 var keywords: Dictionary = {
-	"reserved": str_to_clr("c678cc"),
-	"string":   str_to_clr("98c379"),
-	"binary":   str_to_clr("d19a66"),
-	"symbol":   str_to_clr("839fb6"),
-	"variable": str_to_clr("e5c07b"),
-	"operator": str_to_clr("56b6c2"),
-	"comments": str_to_clr("7f848e"),
-	"error":    str_to_clr("d31820"),
-	"function": str_to_clr("437ed9"),
-	"member":   str_to_clr("e06c75")
+	"reserved":   str_to_clr("c678cc"),
+	"annotation": str_to_clr("a2b429"),
+	"string":     str_to_clr("98c379"),
+	"binary":     str_to_clr("d19a66"),
+	"symbol":     str_to_clr("839fb6"),
+	"variable":   str_to_clr("e5c07b"),
+	"operator":   str_to_clr("56b6c2"),
+	"comments":   str_to_clr("7f848e"),
+	"error":      str_to_clr("d31820"),
+	"function":   str_to_clr("437ed9"),
+	"member":     str_to_clr("e06c75")
 }
 
 var keywords_to_highlight: Dictionary = {}
 var color_regions_to_highlight: Array = []
 var comments: Array = []
+
+var discord_sdk: bool = true;
 
 const SUNLIGHT = preload("res://Shaders/sunlight.gdshader")
 const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
@@ -277,6 +290,15 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		Music.set_enabled(value)
 	if p == "music_volume":
 		Music.set_volume(value)
+	if p == "discord_sdk":
+		discord_sdk = value;
+
+func setup_discord_sdk(detail: String, state: String) -> void:
+	if !discord_sdk: return
+	DiscordSDK.details = detail
+	DiscordSDK.state = state
+
+	DiscordSDK.refresh()
 
 # LUA
 var lua: LuaAPI = LuaAPI.new()
@@ -324,10 +346,6 @@ func _trim(input: String):
 	return input.strip_edges()
 
 func setup_extension(extension):
-	keywords_to_highlight = {}
-	color_regions_to_highlight = []
-	comments = []
-
 	# FILE EXTENSIONS
 	lua.bind_libraries(["base", "table", "string"])
 

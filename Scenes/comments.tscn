@@ -22,7 +22,7 @@ script = ExtResource("1_8hvfh")
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_onjnb")
 layout_mode = 0
-offset_right = 392.0
+offset_right = 429.0
 offset_bottom = 534.0
 color = Color(0, 0, 0, 1)
 

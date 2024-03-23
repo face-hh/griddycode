@@ -17,6 +17,8 @@ signal ui_close
 
 func change_dir(path) -> void:
 	if !dir: dir = DirAccess.open(path)
+	#dir.include_hidden = true
+	# WARNING: this will heavily affect performance if de-commented
 
 	dirs = [".."];
 	dirs.append_array(dir.get_directories())
@@ -30,7 +32,7 @@ func change_dir(path) -> void:
 		%Cam.focus_on(gp(), zoom)
 
 func setup() -> void:
-	active = true
+	active = false
 	change_dir(editor.current_dir)
 
 	update_ui()
@@ -66,10 +68,12 @@ func show_item(item: String) -> void:
 	else:
 		push_bgcolor(Color(0, 0, 0, 0))  # Reset background color if not selected
 
+	var is_dir = dir.get_directories().find(item) != -1;
+
 	if item == "..":
 		push_color(LuaSingleton.gui.font_color)
 		add_text("󰕌")
-	elif dir.get_directories().find(item) != -1:
+	elif is_dir:
 		push_color(LuaSingleton.gui.completion_selected_color)
 		add_text("")
 	else:
@@ -80,9 +84,22 @@ func show_item(item: String) -> void:
 		add_text(data.icon)
 
 	pop()
-	add_text(" " + item + '\n')
 
-	if active: %Cam.focus_on(Vector2(gp().x, global_position.y + (selected_index * 30)), zoom)
+	var filename = item.split(".")[0];
+
+	if is_dir: filename = item
+
+	if filename.length() > 30:
+		filename = filename.left(30) + "..." + filename.right(3)
+
+	if item == "..":
+		add_text(" %s\n" % [ item ])
+	elif is_dir or !item.contains("."):
+		add_text(" %s\n" % [ filename ] )
+	else:
+		add_text(" %s.%s\n" % [ filename, item.split(".")[1] ] )
+
+	if active: %Cam.focus_on(Vector2(gp().x, global_position.y + (selected_index * 23)), zoom)
 
 # i gave up at that point, sorry for what you're about to witness
 func is_selected(item: String) -> bool:
@@ -105,10 +122,13 @@ func handle_enter_key() -> void:
 		editor.current_dir = dir.get_current_dir();
 		editor.open_file(editor.current_dir + "/" + item)
 
-		%Intro.hide()
 		LuaSingleton.setup_extension(item.split(".")[-1])
 
 		code.setup_highlighter()
+		get_tree().create_timer(.1).timeout.connect(func():
+			code.grab_focus()
+		)
+
 		ui_close.emit()
 	else:
 		selected_index = 0;

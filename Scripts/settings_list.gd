@@ -1,6 +1,7 @@
 extends VBoxContainer
 
 const SETTING = preload("res://Scenes/setting.tscn")
+const UPDATE = preload("res://Scenes/update.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,6 +22,10 @@ func setup_settings() -> void:
 		var precision = setting.precision if setting.has("precision") else false;
 
 		create_setting(setting.display, setting.icon, setting.value, setting.options, setting.property, unit, _min, _max, precision)
+
+	var child = UPDATE.instantiate()
+
+	add_child(child)
 
 func create_setting(text: String, icon: String, value: Variant, options: Array, property: String, unit: String, _min: float, _max: float, precision: bool) -> void:
 	var node = SETTING.instantiate()

@@ -1,15 +1,13 @@
 extends CodeEdit
 
 @onready var code: CodeEdit = %Code
+@onready var editor: FileManager = $".."
 
 const VARIABLE = preload("res://Icons/variable.png")
 const FUNCTION = preload("res://Icons/function.png")
 
 @onready var rich_text_labels: Array[RichTextLabel] = [
 	%FileDialog,
-	$"../Intro/RichTextLabel",
-	$"../Intro/RichTextLabel2",
-	$"../Intro/RichTextLabel3"
 ];
 
 var file_modified = false;
@@ -19,6 +17,8 @@ var active_overlay: Variant;
 var node_is_transitioning: bool;
 
 func _ready() -> void:
+	grab_focus()
+
 	LuaSingleton.on_theme_load.connect(setup_theme)
 
 	tween_fade(%FileDialog, 0)
@@ -64,12 +64,14 @@ func setup_highlighter() -> void:
 		CH.add_keyword_color(key, LuaSingleton.keywords[kth[key]])
 
 	for entry in crth:
+		if CH.has_color_region(entry[0]): continue
+
 		CH.add_color_region(entry[0], entry[1], LuaSingleton.keywords[entry[2]], entry[3])
 
 # CodeEdit functionality
 func _on_code_completion_requested() -> void:
-	var function_names = LuaSingleton.lua.call_function("detect_functions", [text])
-	var variable_names = LuaSingleton.lua.call_function("detect_variables", [text])
+	var function_names = LuaSingleton.lua.call_function("detect_functions", [text, get_caret_line(), get_caret_column()])
+	var variable_names = LuaSingleton.lua.call_function("detect_variables", [text, get_caret_line(), get_caret_column()])
 
 	if typeof(function_names) == Variant.Type.TYPE_ARRAY:
 		for each in function_names:
@@ -105,6 +107,9 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 	if node is FileDialogType:
 		node.active = !_show;
 
+		if _show && !editor.current_file:
+			editor.warn("[color=yellow]WARNING[/color]: You are currently in an empty file. No autosave will be performed.")
+
 	if apply_background:
 		tween_fade(%Background, opacity, !_show)
 	elif not apply_background and !_show:
@@ -112,7 +117,8 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 
 	if _show:
 		%Cam.focus_die()
-		code.grab_focus()
+		if !node is FileDialogType:
+			code.grab_focus()
 	else:
 		if node.name == "Info":
 			future_pos.x += 700
@@ -183,7 +189,7 @@ func get_longest_line(lines: Array = text.split("\n")) -> String:
 
 	return longestLine
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_open"):      toggle(%FileDialog)
 	if Input.is_action_just_pressed("ui_settings"):  toggle(%Settings, true, (18 * 7.5) * 2)
 	if Input.is_action_just_pressed("ui_info"):      toggle(%Info, true, 1500)
@@ -191,7 +197,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):    toggle(%FileDialog)
 	if Input.is_action_just_pressed("ui_comments"):  toggle(%Comments, false, -(18 * 7.5))
 
-func _on_gui_input(event):
+func _on_gui_input(_event):
 	if Input.is_action_just_pressed("ui_open"):      accept_event(); toggle(%FileDialog)
 	if Input.is_action_just_pressed("ui_settings"):  accept_event(); toggle(%Settings, true, (18 * 7.5) * 2)
 	if Input.is_action_just_pressed("ui_info"):      accept_event(); toggle(%Info, true, 1500)

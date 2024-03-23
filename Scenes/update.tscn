@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkx02j85qa1rm"]
+
+[ext_resource type="Script" path="res://Scripts/update.gd" id="1_ug1sp"]
+[ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="2_w1buf"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ug1sp")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 23.0
+offset_right = 256.0
+offset_bottom = 63.0
+text = "Current version: v1.0.3"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_top = 56.0
+offset_right = 257.0
+offset_bottom = 108.0
+text = "💾 Check updates"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 0
+offset_top = 7.0
+offset_right = 271.0
+offset_bottom = 11.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 294.0
+offset_top = 58.0
+offset_right = 765.0
+offset_bottom = 98.0
+bbcode_enabled = true
+text = "Nothing new..."
+scroll_active = false
+script = ExtResource("2_w1buf")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

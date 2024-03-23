@@ -9,14 +9,37 @@ const NOTICE = preload("res://Scenes/notice.tscn")
 var current_file: String;
 var current_dir: String = "/";
 
+var time_start = 0
+var time_now = 0
+
 func _ready():
-	if (OS.get_name() == "Windows"):
+	if LuaSingleton.discord_sdk:
+		DiscordSDK.app_id = 1220393467738591242 # Application ID
+
+		DiscordSDK.large_image = "griddycode" # Image key from "Art Assets"
+		DiscordSDK.large_image_text = "https://github.com/face-hh/griddycode"
+		DiscordSDK.start_timestamp = int(Time.get_unix_time_from_system())
+
+	if OS.get_name() == "Windows":
 		current_dir = "C:/"
+
+	var args = OS.get_cmdline_args()
+	var is_debug = OS.is_debug_build()
+	var path = OS.get_executable_path().get_base_dir()
+
+	if args.size() > 0 and !is_debug:
+		if args[0] != ".":
+			current_file = path + "/" + args[0]
+		current_dir = path
+
+	var is_cli = args.size() > 0 and !is_debug
+
+	print("INFO: Running inside CLI mode: ", is_cli)
 
 	inject_lua()
 	check_for_reserved()
 
-	load_game()
+	load_game(is_cli)
 	open_file(current_file)
 
 	LuaSingleton.themes = list_themes()
@@ -27,8 +50,8 @@ func _ready():
 	file_dialog.setup()
 
 	if !current_file:
+		LuaSingleton.setup_discord_sdk("Idle", "")
 		Code.toggle(%FileDialog)
-		%Intro.show()
 		warn("Welcome to [color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]! Please select a file, then press CTRL + I to get started! :D")
 
 func check_for_reserved() -> void:
@@ -40,7 +63,6 @@ func check_for_reserved() -> void:
 
 func _on_file_dialog_file_selected(path: String) -> void:
 	open_file(path)
-	%Intro.hide()
 
 func inject_lua() -> void:
 	DirAccess.make_dir_absolute("user://themes")
@@ -54,15 +76,21 @@ func inject_lua() -> void:
 	for plugin in plugins:
 		copy_if_not_exist("langs", "Plugins", plugin)
 
+func copy_from_res(from: String, to: String) -> void:
+	var file_from = FileAccess.open(from, FileAccess.READ)
+	var file_to = FileAccess.open(to, FileAccess.WRITE)
+	file_to.store_buffer(file_from.get_buffer(file_from.get_length()))
+	file_to = null
+	file_from = null
+
 func copy_if_not_exist(user_path: String, res_path: String, file: String) -> void:
 	if !file.contains("lua"): return
 
 	var path = "user://" + user_path + "/" + file;
 	var current_path = "res://Lua/" + res_path + "/" + file;
-	var exists = FileAccess.file_exists(path);
 
-	if !exists:
-		DirAccess.copy_absolute(current_path, path)
+	DirAccess.remove_absolute(path)
+	copy_from_res(current_path, path)
 
 func warn(notice: String) -> void:
 	var node = NOTICE.instantiate()
@@ -76,6 +104,8 @@ func warn(notice: String) -> void:
 	)
 
 func open_file(path: String) -> void:
+	LuaSingleton.setup_discord_sdk("Editing " + path.split("/")[-1], "In " + current_dir.split("/")[-1])
+
 	var src = Fs._load(path)
 
 	Code.text = src
@@ -100,6 +130,8 @@ func _notification(what):
 			"settings": LuaSingleton.settings,
 			"theme": LuaSingleton.theme
 		}
+
+
 		save_data(save_dict)
 		Fs.save(current_file, Code.text)
 
@@ -115,7 +147,7 @@ func save_data(dict: Dictionary):
 
 	save_game.store_line(json_string)
 
-func load_game():
+func load_game(cli: bool = false):
 	if not FileAccess.file_exists("user://data.save"):
 		return # Error! We don't have a save to load.
 
@@ -132,11 +164,14 @@ func load_game():
 
 		var node_data = json.get_data()
 
-		current_dir = node_data["current_dir"]
-		current_file = node_data["current_file"]
+		if !cli:
+			current_dir = node_data["current_dir"]
+			current_file = node_data["current_file"]
+
 		LuaSingleton.theme = node_data["theme"]
 
-		var settings = node_data["settings"];
+		var settings = node_data["settings"]
+		var new_settings = []
 
 		for dic: Dictionary in settings:
 			LuaSingleton.handle_internal_setting_change(dic.property, dic.value)
@@ -148,11 +183,15 @@ func load_game():
 				return
 
 			LuaSingleton.settings.remove_at(index)
-			LuaSingleton.settings.append(dic);
+			new_settings.append(dic)
 
-		LuaSingleton.settings = node_data["settings"]
+		for setting in LuaSingleton.settings:
+			if not new_settings.has(setting):
+				new_settings.append(setting)
 
+		LuaSingleton.settings = new_settings
 		LuaSingleton.on_settings_change.emit()
+
 
 func _on_auto_save_timer_timeout():
 	if !current_file: return

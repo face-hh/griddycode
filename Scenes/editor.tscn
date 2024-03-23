@@ -101,10 +101,11 @@ script = ExtResource("2_7x3ll")
 
 [node name="Background" type="ColorRect" parent="."]
 unique_name_in_owner = true
-visible = false
 modulate = Color(1, 1, 1, 0)
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_left = -368.0
+offset_top = -207.0
+offset_right = 2263.0
+offset_bottom = 1342.0
 
 [node name="FileDialog" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
@@ -135,40 +136,6 @@ script = ExtResource("5_bhd70")
 [node name="AutoSaveTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
-
-[node name="Intro" type="Node2D" parent="."]
-unique_name_in_owner = true
-visible = false
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Intro"]
-offset_left = 836.0
-offset_top = 112.0
-offset_right = 3336.0
-offset_bottom = 2112.0
-scale = Vector2(0.235, 0.235)
-theme_override_font_sizes/normal_font_size = 376
-bbcode_enabled = true
-text = "Greetings!"
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="Intro"]
-offset_left = 841.0
-offset_top = 244.0
-offset_right = 3341.0
-offset_bottom = 2244.0
-scale = Vector2(0.235, 0.235)
-theme_override_font_sizes/normal_font_size = 146
-bbcode_enabled = true
-text = "You're currently using [color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
-
-[node name="RichTextLabel3" type="RichTextLabel" parent="Intro"]
-offset_left = 841.0
-offset_top = 380.0
-offset_right = 3341.0
-offset_bottom = 2380.0
-scale = Vector2(0.235, 0.235)
-theme_override_font_sizes/normal_font_size = 106
-bbcode_enabled = true
-text = "To get started, please choose a file."
 
 [node name="Settings" type="Node2D" parent="."]
 unique_name_in_owner = true
