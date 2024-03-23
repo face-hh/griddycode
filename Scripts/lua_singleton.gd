@@ -4,7 +4,7 @@ var themes: Array = ["One Dark Pro Darker"];
 var theme: String = "One Dark Pro Darker"; # default
 
 # TODO: change me each version
-var version: String = "v1.1.0";
+var version: String = "v1.1.1";
 
 var gui: Dictionary = {
 	"background_color":            str_to_clr("#23272e"),

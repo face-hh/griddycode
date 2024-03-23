@@ -13,6 +13,7 @@ var time_start = 0
 var time_now = 0
 
 func _ready():
+	print(OS.get_cmdline_args())
 	if LuaSingleton.discord_sdk:
 		DiscordSDK.app_id = 1220393467738591242 # Application ID
 
@@ -25,15 +26,18 @@ func _ready():
 
 	var args = OS.get_cmdline_args()
 	var is_debug = OS.is_debug_build()
-	var path = OS.get_executable_path().get_base_dir()
+	var path = []
 
-	if args.size() > 0 and !is_debug:
+	OS.execute("pwd", [], path)
+
+	path = path[0].replace("\n", "")
+
+	if args.size() > 0:
 		if args[0] != ".":
 			current_file = path + "/" + args[0]
 		current_dir = path
 
-	var is_cli = args.size() > 0 and !is_debug
-
+	var is_cli = args.size() > 0
 	print("INFO: Running inside CLI mode: ", is_cli)
 
 	inject_lua()
