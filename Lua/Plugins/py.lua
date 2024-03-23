@@ -1,7 +1,6 @@
 --- highligths for keywords
 highlight("import", "reserved")
 highlight("from", "reserved")
-highlight("print", "reserved")
 highlight("while", "reserved")
 highlight("input", "reserved")
 highlight("if", "reserved")
