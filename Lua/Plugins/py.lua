@@ -5,7 +5,6 @@ highlight("while", "reserved")
 highlight("if", "reserved")
 highlight("else", "reserved")
 highlight("elif", "reserved")
-highlight("if-else", "reserved")
 
 highlight("false", "binary")
 highlight("true", "binary")
