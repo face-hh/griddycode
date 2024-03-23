@@ -52,7 +52,7 @@ highlight("not", "reserved")
 highlight("in", "reserved")
 highlight("not in", "reserved")
 
---- Special Charachters
+--- Special Characters
 highlight("{", "binary")
 highlight("}", "binary")
 highlight("[", "binary")
