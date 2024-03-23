@@ -9,7 +9,7 @@ highlight("if-else", "reserved")
 
 highlight("false", "binary")
 highlight("true", "binary")
-highlight("null", "binary")
+highlight("None", "binary")
 highlight("undefined", "binary")
 
 --- Arithmetic Operators
