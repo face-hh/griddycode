@@ -106,11 +106,13 @@ function detect_functions(content)
 
     for line in content:gmatch("[^\r\n]+") do
         for _, pattern in ipairs(patterns) do
-            local match = line:match(pattern)
+            local match = trim(line):match(pattern)
             if match ~= nil then
                 table.insert(function_names, match)
+                goto continue
             end
         end
+        ::continue::
     end
 
     return function_names
@@ -123,7 +125,12 @@ function detect_variables(content)
     local patterns = {
         "^var%s+([%a%d_]+)%s*=",
         "^const%s+([%a%d_]+)%s*=",
-        "^([%a%d_]+)%s*:="
+        "^([%a%d_]+)%s*:=",
+    }
+
+    local function_patterns = {
+        "^func%s+[%a%d_]+%s*%((.*)%)",
+        "^func%s*%(.+%)%s*[%a%d_]+%s*%((.*)%)",
     }
 
     for line in content:gmatch("[^\r\n]+") do
@@ -131,8 +138,20 @@ function detect_variables(content)
             local match = trim(line):match(pattern)
             if match ~= nil then
                 table.insert(variable_names, match)
+                goto continue
             end
         end
+        for _, func_pat in ipairs(function_patterns) do
+            local args = line:match(func_pat)
+            if args ~= nil then
+                for arg in args:gmatch("%s*([^,]+)%s*,?") do
+                    local arg_name = arg:match("%s*(%w+)%s*")
+                    table.insert(variable_names, arg_name)
+                end
+                goto continue
+            end
+        end
+        ::continue::
     end
 
     return variable_names
