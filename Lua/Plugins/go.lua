@@ -104,24 +104,12 @@ end
 
 function detect_functions(content)
     local function_names = {
-        ["min"] = "min",
-        ["max"] = "max",
-        ["println"] = "println",
-        ["print"] = "print",
-        ["make"] = "make",
-        ["new"] = "new",
-        ["clear"] = "clear",
-        ["append"] = "append",
-        ["copy"] = "copy",
-        ["close"] = "close",
-        ["complex"] = "complex",
-        ["real"] = "real",
-        ["imag"] = "imag",
-        ["delete"] = "delete",
-        ["len"] = "len",
-        ["cap"] = "cap",
-        ["panic"] = "panic",
-        ["recover"] = "recover",
+        "min", "max", "println",
+        "print", "make", "new",
+        "clear", "append", "copy",
+        "close", "complex", "real",
+        "imag", "delete", "len",
+        "cap", "panic", "recover",
     }
 
     local patterns = {
