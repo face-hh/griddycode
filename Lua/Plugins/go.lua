@@ -104,24 +104,12 @@ end
 
 function detect_functions(content)
     local function_names = {
-        ["min"] = "min",
-        ["max"] = "max",
-        ["println"] = "println",
-        ["print"] = "print",
-        ["make"] = "make",
-        ["new"] = "new",
-        ["clear"] = "clear",
-        ["append"] = "append",
-        ["copy"] = "copy",
-        ["close"] = "close",
-        ["complex"] = "complex",
-        ["real"] = "real",
-        ["imag"] = "imag",
-        ["delete"] = "delete",
-        ["len"] = "len",
-        ["cap"] = "cap",
-        ["panic"] = "panic",
-        ["recover"] = "recover",
+        "min", "max", "println",
+        "print", "make", "new",
+        "clear", "append", "copy",
+        "close", "complex", "real",
+        "imag", "delete", "len",
+        "cap", "panic", "recover",
     }
 
     local patterns = {
@@ -133,9 +121,7 @@ function detect_functions(content)
         for _, pattern in ipairs(patterns) do
             local match = trim(line):match(pattern)
             if match ~= nil then
-                if not table.has(function_names, match) then
-                    table.insert(function_names, match)
-                end
+                table.insert(function_names, match)
                 goto continue
             end
         end
@@ -164,9 +150,7 @@ function detect_variables(content)
         for _, pattern in ipairs(patterns) do
             local match = trim(line):match(pattern)
             if match ~= nil then
-                if not table.has(variable_names, match) then
-                    table.insert(variable_names, match)
-                end
+                table.insert(variable_names, match)
                 goto continue
             end
         end
@@ -175,9 +159,7 @@ function detect_variables(content)
             if args ~= nil then
                 for arg in args:gmatch("%s*([^,]+)%s*,?") do
                     local arg_name = arg:match("%s*(%w+)%s*")
-                    if not table.has(variable_names, arg_name) then
-                        table.insert(variable_names, arg_name)
-                    end
+                    table.insert(variable_names, arg_name)
                 end
                 goto continue
             end
