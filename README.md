@@ -107,11 +107,4 @@ Contributions are heavily appreciated, whether it's for adding Lua plugins, them
 - Selecting a setting with the property "shader" *should* disable previously-enabled settings with "shader".
 - The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
 
-Stuff we are currently looking for: (this doesn't mean you can't contribute with other stuff!)
-- `CTRL` + `P` to open a **quick file picker**, similar to [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.)
-- An option in the settings menu (`CTRL` + `,`) to change the font!
-- Making the cat jumping video in the settings menu fade in/out along the actual menu. Currently it ignores the transition
-- Heavy cleanup of `settings.gd`!
-- The file picker (`CTRL` + `O`) stores the position of the selected item even after entering/exiting a directory. However, if the directory's file size is lower than it, it will disappear until you move it up. This can be fixed by setting its selected item to the last item if it exceeds dirs.size()
-
 Please note that creating a Pull Request to fix these features does *not* guarantee its merge. Please don't open a Pull Request unless you are confident you've done a good job.
