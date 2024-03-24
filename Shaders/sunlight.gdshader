@@ -71,7 +71,7 @@ void fragment()
 	// Rotate, skew and move the UVs
 	vec2 transformed_uv = ( rotate(angle) * (UV - position) )  / ( (UV.y + spread) - (UV.y * spread) );
 
-	// Animate the ray according the the new transformed UVs
+	// Animate the ray according the new transformed UVs
 	vec2 ray1 = vec2(transformed_uv.x * ray1_density + sin(TIME * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
 	vec2 ray2 = vec2(transformed_uv.x * ray2_density + sin(TIME * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
 
