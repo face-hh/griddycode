@@ -126,15 +126,20 @@ func list_themes() -> Array:
 
 	return curated;
 
+func get_property_value(settings: Array) -> Array:
+	var out := []
+	for setting in settings:
+		out.append({ "property": setting.property, "value": setting.value })
+	return out
+
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		var save_dict = {
 			"current_file": current_file,
 			"current_dir": current_dir,
-			"settings": LuaSingleton.settings,
+			"settings": get_property_value(LuaSingleton.settings),
 			"theme": LuaSingleton.theme
 		}
-
 
 		save_data(save_dict)
 		Fs.save(current_file, Code.text)
@@ -175,7 +180,6 @@ func load_game(cli: bool = false):
 		LuaSingleton.theme = node_data["theme"]
 
 		var settings = node_data["settings"]
-		var new_settings = []
 
 		for dic: Dictionary in settings:
 			LuaSingleton.handle_internal_setting_change(dic.property, dic.value)
@@ -186,14 +190,8 @@ func load_game(cli: bool = false):
 				print("WARNING: Omitted setting \"%s\" due to finding operation failing." % dic.property)
 				return
 
-			LuaSingleton.settings.remove_at(index)
-			new_settings.append(dic)
+			LuaSingleton.settings[index].value = dic.value
 
-		for setting in LuaSingleton.settings:
-			if not new_settings.has(setting):
-				new_settings.append(setting)
-
-		LuaSingleton.settings = new_settings
 		LuaSingleton.on_settings_change.emit()
 
 
