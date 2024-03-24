@@ -31,7 +31,7 @@ highlight("nah", "operator")
 highlight("{", "binary")
 highlight("}", "binary")
 
-highlight_region("\"", "\"", "string")
+highlight_region("\"", "\"", "string", true)
 
 add_comment("yo code aint sigma bro 🗣️🔥")
 add_comment("quit the bussin syntax")

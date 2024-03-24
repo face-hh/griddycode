@@ -31,7 +31,7 @@ highlight("!=", "operator")
 highlight("{", "binary")
 highlight("}", "binary")
 
-highlight_region("\"", "\"", "string")
+highlight_region("\"", "\"", "string", true)
 
 add_comment("💀 use Bussin X lil bro")
 add_comment("who tf told you to add another \"else if\"")

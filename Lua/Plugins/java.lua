@@ -43,7 +43,7 @@ highlight("static", "reserved")
 highlight("transient", "reserved")
 highlight("volatile", "reserved")
 
-highlight_region("\"", "\"", "string")
+highlight_region("\"", "\"", "string", true)
 highlight_region("//", "", "comments", true)
 highlight_region("/*", "*/", "comments")
 

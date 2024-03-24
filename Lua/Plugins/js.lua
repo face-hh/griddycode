@@ -70,8 +70,8 @@ highlight("]", "binary")
 
 highlight("this", "variable")
 
-highlight_region("\"", "\"", "string")
-highlight_region("'", "'", "string")
+highlight_region("\"", "\"", "string", true)
+highlight_region("'", "'", "string", true)
 highlight_region("`", "`", "string")
 highlight_region("/*", "*/", "comments")
 highlight_region("//", "", "comments", true)
