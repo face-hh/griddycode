@@ -74,14 +74,19 @@ func _on_code_completion_requested() -> void:
 	var variable_names = LuaSingleton.lua.call_function("detect_variables", [text, get_caret_line(), get_caret_column()])
 	
 	if typeof(function_names) == Variant.Type.TYPE_ARRAY:
-		for each in Set.new(function_names).elements:
+		for each in unique_array(function_names):
 			add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each+"()", LuaSingleton.keywords.function, FUNCTION)
 	if typeof(variable_names) == Variant.Type.TYPE_ARRAY:
-		for each in Set.new(variable_names).elements:
+		for each in unique_array(variable_names):
 			add_code_completion_option(CodeEdit.KIND_VARIABLE, each, each, LuaSingleton.keywords.variable, VARIABLE)
 
 	update_code_completion_options(true)
 
+func unique_array(arr: Array) -> Array:
+	var out := {}
+	for element in arr:
+		out[element] = element
+	return out.values()
 
 func _on_text_changed() -> void:
 	file_modified = true;
