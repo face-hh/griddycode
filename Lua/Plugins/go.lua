@@ -90,14 +90,36 @@ add_comment("that's just a skill issue at this point")
 add_comment("ain't no way 💀")
 add_comment("how do you do a while loop in go?")
 
+---@param tbl table<string, string>
+---@return table<number, string>
+local function to_list(tbl)
+    local out = {}
+    for _, value in pairs(tbl) do
+        table.insert(out, value)
+    end
+    return out
+end
+
 function detect_functions(content)
     local function_names = {
-        "min", "max", "println",
-        "print", "make", "new",
-        "clear", "append", "copy",
-        "close", "complex", "real",
-        "imag", "delete", "len",
-        "cap", "panic", "recover",
+        ["min"] = "min",
+        ["max"] = "max",
+        ["println"] = "println",
+        ["print"] = "print",
+        ["make"] = "make",
+        ["new"] = "new",
+        ["clear"] = "clear",
+        ["append"] = "append",
+        ["copy"] = "copy",
+        ["close"] = "close",
+        ["complex"] = "complex",
+        ["real"] = "real",
+        ["imag"] = "imag",
+        ["delete"] = "delete",
+        ["len"] = "len",
+        ["cap"] = "cap",
+        ["panic"] = "panic",
+        ["recover"] = "recover",
     }
 
     local patterns = {
@@ -109,14 +131,14 @@ function detect_functions(content)
         for _, pattern in ipairs(patterns) do
             local match = trim(line):match(pattern)
             if match ~= nil then
-                table.insert(function_names, match)
+                function_names[match] = match
                 goto continue
             end
         end
         ::continue::
     end
 
-    return function_names
+    return to_list(function_names)
 end
 
 function detect_variables(content)
@@ -138,7 +160,7 @@ function detect_variables(content)
         for _, pattern in ipairs(patterns) do
             local match = trim(line):match(pattern)
             if match ~= nil then
-                table.insert(variable_names, match)
+                variable_names[match] = match
                 goto continue
             end
         end
@@ -147,7 +169,7 @@ function detect_variables(content)
             if args ~= nil then
                 for arg in args:gmatch("%s*([^,]+)%s*,?") do
                     local arg_name = arg:match("%s*(%w+)%s*")
-                    table.insert(variable_names, arg_name)
+                    variable_names[arg_name] = arg_name
                 end
                 goto continue
             end
@@ -155,5 +177,5 @@ function detect_variables(content)
         ::continue::
     end
 
-    return variable_names
+    return to_list(variable_names)
 end
