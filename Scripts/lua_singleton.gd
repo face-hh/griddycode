@@ -373,7 +373,6 @@ func setup_theme(given_theme: String) -> void:
 	var theme_err: LuaError = theme_lua.do_file("user://themes/" + given_theme + ".lua")
 	if theme_err is LuaError:
 		editor.warn("[color=yellow]WARNING[/color]: Failed to load theme: " + theme_err.message)
-
 		print("ERROR %d: %s" % [theme_err.type, theme_err.message])
 		return
 
