@@ -22,7 +22,7 @@ highlight("//", "operator")
 --- Assignment Operators
 highlight("=", "operator")
 highlight("+=", "operator")
-highlight("1=", "operator")
+highlight("!=", "operator")
 highlight("*=", "operator")
 highlight("/=", "operator")
 highlight("%=", "operator")
