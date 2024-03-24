@@ -7,7 +7,7 @@ highlight("else", "reserved")
 highlight("elif", "reserved")
 
 highlight("False", "binary")
-highlight("true", "binary")
+highlight("True", "binary")
 highlight("None", "binary")
 
 --- Arithmetic Operators
