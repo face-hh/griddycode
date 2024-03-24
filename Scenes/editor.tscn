@@ -86,6 +86,7 @@ generateHighlightedText();
 context_menu_enabled = false
 scroll_smooth = true
 scroll_v_scroll_speed = 150.0
+scroll_fit_content_height = true
 minimap_draw = true
 caret_blink = true
 syntax_highlighter = SubResource("CodeHighlighter_p2au2")
