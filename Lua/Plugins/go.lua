@@ -90,14 +90,16 @@ add_comment("that's just a skill issue at this point")
 add_comment("ain't no way 💀")
 add_comment("how do you do a while loop in go?")
 
----@param tbl table<string, string>
----@return table<number, string>
-local function to_list(tbl)
-    local out = {}
-    for _, value in pairs(tbl) do
-        table.insert(out, value)
+---@param tbl table<integer, string>
+---@param element any
+---@return boolean
+function table.has(tbl, element)
+    for _, elem in ipairs(tbl) do
+        if elem == element then
+            return true
+        end
     end
-    return out
+    return false
 end
 
 function detect_functions(content)
@@ -131,14 +133,16 @@ function detect_functions(content)
         for _, pattern in ipairs(patterns) do
             local match = trim(line):match(pattern)
             if match ~= nil then
-                function_names[match] = match
+                if not table.has(function_names, match) then
+                    table.insert(function_names, match)
+                end
                 goto continue
             end
         end
         ::continue::
     end
 
-    return to_list(function_names)
+    return function_names
 end
 
 function detect_variables(content)
@@ -160,7 +164,9 @@ function detect_variables(content)
         for _, pattern in ipairs(patterns) do
             local match = trim(line):match(pattern)
             if match ~= nil then
-                variable_names[match] = match
+                if not table.has(variable_names, match) then
+                    table.insert(variable_names, match)
+                end
                 goto continue
             end
         end
@@ -169,7 +175,9 @@ function detect_variables(content)
             if args ~= nil then
                 for arg in args:gmatch("%s*([^,]+)%s*,?") do
                     local arg_name = arg:match("%s*(%w+)%s*")
-                    variable_names[arg_name] = arg_name
+                    if not table.has(variable_names, arg_name) then
+                        table.insert(variable_names, arg_name)
+                    end
                 end
                 goto continue
             end
@@ -177,5 +185,5 @@ function detect_variables(content)
         ::continue::
     end
 
-    return to_list(variable_names)
+    return variable_names
 end
