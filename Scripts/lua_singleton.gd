@@ -30,6 +30,15 @@ var gui: Dictionary = {
 # Precision = whether or not the slider should go from int to float.
 # Shader = whether or not to disable the previously-enabled shader setting, as they can't be stacked.
 
+var editor_theme = preload("res://theme.tres");
+var fonts = Array(editor_theme.get_font_list("CodeEdit")).map(to_font_option)
+
+
+func to_font_option(name: String) -> Dictionary:
+	var font = editor_theme.get_font(name, "CodeEdit");
+	return { "display": font.get_font_name(), "value": font, "name": name }
+
+
 var settings: Array = [
 	{
 		"property": "caret_type",
@@ -44,6 +53,13 @@ var settings: Array = [
 		"options": [],
 		"icon": "|",
 		"value": true
+	},
+	{
+		"property": "editor_font",
+		"display": "Font",
+		"options": fonts,
+		"icon": "",
+		"value": 0
 	},
 	{
 		"property": "caret_interval",
@@ -214,9 +230,16 @@ const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
 @onready var world_environment: WorldEnvironment = $/root/Editor/WorldEnvironment
 @onready var shader_layer: ColorRect = $/root/Editor/ShaderLayer
 
+
+
+
+
 signal done_parsing;
 signal on_theme_load;
 signal on_settings_change;
+
+
+
 
 func get_setting(property: String) -> Array:
 	var i = -1;
@@ -276,6 +299,8 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		code.minimap_draw = value
 	if p == "minimap_width":
 		code.minimap_width = value
+	if p == "editor_font":
+		code.add_theme_font_override("font", fonts[value].value)
 
 	# SHADERS
 	if p == "glow":
