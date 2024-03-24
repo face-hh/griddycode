@@ -1,7 +1,7 @@
 highlight("false", "binary")
 highlight("true", "binary")
 
-highlight_region('"', '"', "string")
+highlight_region('"', '"', "string", true)
 
 add_comment("object notation 💯🔥")
 add_comment("lower that scope")
