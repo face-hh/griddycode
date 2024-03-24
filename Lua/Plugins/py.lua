@@ -49,7 +49,6 @@ highlight("not", "reserved")
 
 --- Membership Operators
 highlight("in", "reserved")
-highlight("not in", "reserved")
 
 --- Special Characters
 highlight("{", "binary")
