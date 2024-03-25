@@ -185,15 +185,15 @@ end
 ---@return string[]
 function detect_functions(content)
 	-- example match: typeHere something(
-	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+%("
+	local re = "[a-zA-ZA-z]+%s+[a-zA-ZA-z]+%s*%("
 	local functions = {}
 	---@param match string
 	for match in content:gmatch(re) do
-		print("match=", match)
-		local a = match:split(" ")[2]
-		print("a=", a)
+		print("match=", '"' .. match .. '"')
+		local a = trim(match:split(" ")[2])
+		print("a=", '"' .. a .. '"')
 		local name = a:split("(")[1]
-		print("name=", name)
+		print("name=", '"' .. name .. '"')
 		table.insert(functions, name)
 	end
 	return functions
