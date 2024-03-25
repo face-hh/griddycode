@@ -20,15 +20,20 @@ func _ready():
 		DiscordSDK.large_image = "griddycode" # Image key from "Art Assets"
 		DiscordSDK.large_image_text = "https://github.com/face-hh/griddycode"
 		DiscordSDK.start_timestamp = int(Time.get_unix_time_from_system())
-
-	if OS.get_name() == "Windows":
+	var running_on_gaming_os = OS.get_name() == "Windows"
+	if running_on_gaming_os:
 		current_dir = "C:/"
 
 	var args = OS.get_cmdline_args()
 	var is_debug = OS.is_debug_build()
 	var path = []
+	# in order to be compatible with the gayming OS...
+	var pwd_cmd = "pwd"
 
-	OS.execute("pwd", [], path)
+	if running_on_gaming_os:
+		pwd_cmd = "cd" # running "cd" without any args will only print the path
+
+	OS.execute(pwd_cmd, [], path)
 
 	path = path[0].replace("\n", "")
 
