@@ -19,6 +19,6 @@ set_gui("completion_background_color", "434C5E") --- nord2
 set_gui("completion_selected_color", "3B4252") --- nord1
 set_gui("caret_color", "EBCB8B") --- nord13
 
---- Note: nord7, nord10, and nord12 are notused in the Nord theme
+--- Note: nord7, nord10, and nord12 are not used in the Nord theme
 --- Note: There are two colours not in the official Nord palette
 --- Note: There are some colours are used more than once
