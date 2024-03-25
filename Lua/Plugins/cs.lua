@@ -116,6 +116,36 @@ highlight_region("/*", "*/", "comments", false)
 highlight_region("//", "", "comments", true)
 --#endregion
 
+--#region IDE comments (for CTRL+L)
+add_comment("C# Andy detected!")
+add_comment("Holy this C# looks like Java")
+add_comment("Make your C# roleplay Java, turn that i-- to i++")
+add_comment(
+	"I thought I'd never see a Microsoft product be open source or source available."
+		.. " If only Windows was the same way."
+)
+add_comment("Avid Windows user")
+add_comment(
+	"Let's lock you into the Microsoft walled garden even more! "
+	.. "Install Windows and use WPF, UWP, and WinForms."
+)
+add_comment("Probably using Windows making garbage WinForms or UWP tutorials.")
+add_comment("Get locked into the walled garden of Windows with UWP, WinForms, or WPF!")
+add_comment(
+	"UWP? Deprecated. WinForms? Deprecated. WPF? Not deprecated (some people think it's dead). "
+		.. "Microsoft deprecates everything they start except WPF."
+)
+add_comment("C#? More like C-hashtag-please-stop-coding!") -- AI generated
+add_comment("!!! JAVA CLONE !!!")
+add_comment("rewrite in Rust")
+add_comment("NoGet")
+add_comment(
+	"I swear if you're writing a WPF, UWP, "
+		.. "or WinForms app then stop "
+		.. "and think about why you're making the microsoft walled garden bigger."
+)
+--#endregion
+
 ---Detects variables for auto complete
 ---@param content string
 ---@return string[]
