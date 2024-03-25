@@ -1,6 +1,3 @@
--- This code has been @generated with MonarchToGriddyPlug
--- I edited it a little bit to include more stuff
-
 --#region keywords
 highlight("when", "reserved")
 highlight("nameof", "reserved")
@@ -126,8 +123,7 @@ add_comment(
 )
 add_comment("Avid Windows user")
 add_comment(
-	"Let's lock you into the Microsoft walled garden even more! "
-	.. "Install Windows and use WPF, UWP, and WinForms."
+	"Let's lock you into the Microsoft walled garden even more! " .. "Install Windows and use WPF, UWP, and WinForms."
 )
 add_comment("Probably using Windows making garbage WinForms or UWP tutorials.")
 add_comment("Get locked into the walled garden of Windows with UWP, WinForms, or WPF!")
@@ -150,13 +146,16 @@ add_comment(
 ---@param content string
 ---@return string[]
 function detect_variables(content)
-	local variables = {}
+	local variables = {
+		"IsItWorking",
+	}
 	-- example match: int x =
+	--				  (or: int x;)
 	-- the reason why there's a 2nd word match
 	-- is because we only want declarations of variables,
 	-- we want to match `int x =`,
 	-- not `x =`, because `x =` is only re-assigning `x`.
-	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+ ?="
+	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+ ?[=;]"
 	for match in content:gmatch(re) do
 		table.insert(variables, match:split(" ")[2])
 	end
