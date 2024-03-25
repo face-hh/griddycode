@@ -1,4 +1,5 @@
 -- This code has been @generated with MonarchToGriddyPlug
+-- I edited it a little bit to include more stuff
 
 --#region keywords
 highlight("when", "reserved")
@@ -114,3 +115,34 @@ highlight("extern", "reserved")
 highlight_region("/*", "*/", "comments", false)
 highlight_region("//", "", "comments", true)
 --#endregion
+
+---Detects variables for auto complete
+---@param content string
+---@return string[]
+function detect_variables(content)
+	local variables = {}
+	-- example match: int x =
+	-- the reason why there's a 2nd word match
+	-- is because we only want declarations of variables,
+	-- we want to match `int x =`,
+	-- not `x =`, because `x =` is only re-assigning `x`.
+	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+ ?="
+	for match in content:gmatch(re) do
+		table.insert(variables, match:split(" ")[2])
+	end
+
+	return variables
+end
+
+---Detects functions for auto complete
+---@param content string
+---@return string[]
+function detect_functions(content)
+	-- example match: typeHere something(
+	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+%("
+	local functions = {}
+	for match in content:gmatch(re) do
+		table.insert(functions, match:split(" ")[2]:split("(")[1])
+	end
+	return functions
+end
