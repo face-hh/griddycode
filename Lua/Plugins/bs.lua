@@ -31,7 +31,9 @@ highlight("!=", "operator")
 highlight("{", "binary")
 highlight("}", "binary")
 
-highlight_region("\"", "\"", "string", true)
+highlight_region("\"", "\"", "string")
+highlight_region("//", "", "comments", true)
+highlight_region("/*", "*/", "comments")
 
 add_comment("💀 use Bussin X lil bro")
 add_comment("who tf told you to add another \"else if\"")
@@ -43,7 +45,11 @@ function detect_variables(content)
     local variable_names = {
         "error",
         "math",
-        "fs"
+        "fs",
+        "objects",
+        "regex",
+        "args",
+        "error"
     }
     local lines = content:gmatch("[^\r\n]+")
 
@@ -74,7 +80,11 @@ function detect_functions(content)
         "setInterval",
         "exit",
         "fetch",
-        "len"
+        "len",
+        "import",
+        "splitstr",
+        "trim",
+        "time"
     }
     local lines = content:gmatch("[^\r\n]+")
 
