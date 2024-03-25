@@ -47,8 +47,7 @@ highlight_region("\"", "\"", "string", true)
 highlight_region("//", "", "comments", true)
 highlight_region("/*", "*/", "comments")
 
--- annotation but ofc griddy doesn't let me set keywords outside of default ones
-highlight_region("@", "", "comments", true)
+highlight_region("@", "", "annotation", true)
 
 highlight("if", "reserved")
 highlight("else", "reserved")
