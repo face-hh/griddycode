@@ -142,6 +142,12 @@ add_comment(
 )
 --#endregion
 
+---@param s string
+---@return string
+local function trim(s)
+	return s:gsub("%s+", "")
+end
+
 if _VERSION ~= "Luau" then
 	-- Written by Bing Chat, I am using Lua 5.4 against my will...
 	string.split = function(input, sep)
@@ -167,11 +173,12 @@ function detect_variables(content)
 	-- is because we only want declarations of variables,
 	-- we want to match `int x =`,
 	-- not `x =`, because `x =` is only re-assigning `x`.
-	local re = "[a-zA-ZA-z]+ @?[a-zA-ZA-z]+ *[=;]"
+	local re = "[a-zA-ZA-z0-9]+%s+@?[a-zA-ZA-z0-9]+%s*[=;]"
 	---@param match string
 	for match in content:gmatch(re) do
+		print(match)
 		local name = match:split(" ")[2]
-		if name:sub(-1) == " " then
+		if name:sub(-1) == ";" then
 			name = name:sub(1, -2)
 		end
 		table.insert(variables, name)
@@ -185,7 +192,7 @@ end
 ---@return string[]
 function detect_functions(content)
 	-- example match: typeHere something(
-	local re = "[a-zA-ZA-z]+%s+[a-zA-ZA-z]+%s*%("
+	local re = "[a-zA-ZA-z0-9]+%s+[a-zA-ZA-z0-9]+%s*%("
 	local functions = {}
 	---@param match string
 	for match in content:gmatch(re) do
