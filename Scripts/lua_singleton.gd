@@ -30,7 +30,6 @@ var gui: Dictionary = {
 # Precision = whether or not the slider should go from int to float.
 # Shader = whether or not to disable the previously-enabled shader setting, as they can't be stacked.
 
-# BUG: to apply changes to these settings, it's required to delete your save data. Contributions fixing that are appreciated.
 var settings: Array = [
 	{
 		"property": "caret_type",
