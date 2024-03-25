@@ -142,13 +142,25 @@ add_comment(
 )
 --#endregion
 
+if _VERSION ~= "Luau" then
+	-- Written by Bing Chat, I am using Lua 5.4 against my will...
+	string.split = function(input, sep)
+		if sep == nil then
+			sep = "," -- Default separator is whitespace
+		end
+		local t = {}
+		for str in string.gmatch(input, "([^" .. sep .. "]+)") do
+			table.insert(t, str)
+		end
+		return t
+	end
+end
+
 ---Detects variables for auto complete
 ---@param content string
 ---@return string[]
 function detect_variables(content)
-	local variables = {
-		"IsItWorking",
-	}
+	local variables = {}
 	-- example match: int x =
 	--				  (or: int x;)
 	-- the reason why there's a 2nd word match
@@ -156,8 +168,13 @@ function detect_variables(content)
 	-- we want to match `int x =`,
 	-- not `x =`, because `x =` is only re-assigning `x`.
 	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+ ?[=;]"
+	---@param match string
 	for match in content:gmatch(re) do
-		table.insert(variables, match:split(" ")[2])
+		local name = match:split(" ")[2]
+		if name:sub(-1) == ";" then
+			name = name:sub(1, -2)
+		end
+		table.insert(variables, name)
 	end
 
 	return variables
@@ -170,8 +187,14 @@ function detect_functions(content)
 	-- example match: typeHere something(
 	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+%("
 	local functions = {}
+	---@param match string
 	for match in content:gmatch(re) do
-		table.insert(functions, match:split(" ")[2]:split("(")[1])
+		print("match=", match)
+		local a = match:split(" ")[2]
+		print("a=", a)
+		local name = a:split("(")[1]
+		print("name=", name)
+		table.insert(functions, name)
 	end
 	return functions
 end
