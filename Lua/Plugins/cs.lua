@@ -167,11 +167,11 @@ function detect_variables(content)
 	-- is because we only want declarations of variables,
 	-- we want to match `int x =`,
 	-- not `x =`, because `x =` is only re-assigning `x`.
-	local re = "[a-zA-ZA-z]+ [a-zA-ZA-z]+ ?[=;]"
+	local re = "[a-zA-ZA-z]+ @?[a-zA-ZA-z]+ *[=;]"
 	---@param match string
 	for match in content:gmatch(re) do
 		local name = match:split(" ")[2]
-		if name:sub(-1) == ";" then
+		if name:sub(-1) == " " then
 			name = name:sub(1, -2)
 		end
 		table.insert(variables, name)
