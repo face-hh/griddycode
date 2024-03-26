@@ -7,7 +7,7 @@ https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-ce
 Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 
 
-# Table of Contents
+# Tablo İçeriği
    - [Gereksinimler](#Gereksinimler)
    - [Lua modlama](#%EF%B8%8F-Lua-Modlama)
 	  - [Nerede?](#Nerede)
