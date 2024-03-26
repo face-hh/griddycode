@@ -9,7 +9,7 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 
 # Table of Contents
    - [Gereksinimler](#Gereksinimler)
-   - [Lua modlama](#%EF%B8%8F Lua Modlama)
+   - [Lua modlama](#%EF%B8%8F-Lua Modlama)
 	  - [Where?](#where)
 	  - [How?](#how)
 	  - [Docs](#docs)
