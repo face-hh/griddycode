@@ -63,9 +63,9 @@ func _process(delta: float) -> void:
 # process user key input
 func _input(_event):
 	if Input.is_key_pressed(KEY_CTRL):
-		if Input.is_key_pressed(KEY_PLUS):
+		if Input.is_key_pressed(KEY_PLUS) or Input.is_key_pressed(KEY_BRACKETRIGHT):
 			user_zoom += 0.25
-		if Input.is_key_pressed(KEY_MINUS):
+		if Input.is_key_pressed(KEY_MINUS)or Input.is_key_pressed(KEY_BRACKETLEFT):
 			user_zoom -= 0.25
 		
 		if user_zoom > 6: user_zoom = 6.0
