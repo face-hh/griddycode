@@ -19,9 +19,9 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 		 - [Temalar](#Temalar)
 			- [Giriş](#Giriş-1)
 			- [Yöntemler](#Yöntemler-1)
-	  - [Publishing](#publishing)
-   - [Contributions](#contributions)
-	  - [Current bugs/needed features](#-current-bugsneeded-features)
+	  - [Yayınlama](#Yayınlama)
+   - [Katkıda Bulunma](#Katkıda-Bulunma)
+	  - [Mevcut hatalar/gerekli özellikler](#-Mevcut-hatalargerekli-özellikler)
 	  	- [HIGH PRIORITY](#high-priority)
 		- [MEDIUM PRIORITY](#medium-priority)
 		- [LOW PRIORITY](#low-priority)
@@ -93,7 +93,7 @@ Katkılarınız çok önemlidir, ister Lua eklentileri, temalar, Lua'ya daha faz
 - Çalıştırılabilir dosyaları göndermek zorunda değilsiniz.
 - Motorun 4.2. sürümünü kullanın (şu an ki en son sürüm)
 
-## 🐛 Current bugs/needed features:
+## 🐛 Mevcut hatalar/gerekli özellikler:
 ### HIGH PRIORITY
 - The `VHS & CRT` shader, on certain themes (One Dark Pro, GitHub Light, etc.), becomes completely white. Works good on GitHub Dark;
 - Light modes get affected by *glow*, while dark modes seem fine.
