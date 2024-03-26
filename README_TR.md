@@ -75,10 +75,10 @@ Tema ekleme için, **"themes"** klasörü içinde herhangi bir adla bir dosya ol
 #### Yöntemler
 | Yöntem | Örnek | Açıklama | Notlar |
 | -------- | -------- | -------- | -------- |
-| `set_keywords(property: String, new_color: String)` | `set_keywords("reserved", "#ff00ff")` | Set the color of syntax highlighting. | The second argument must be a hex, `#` being optional. Available colors/properties listed above at `langs`. |
-| `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
+| `set_keywords(property: String, new_color: String)` | `set_keywords("reserved", "#ff00ff")` | Sözdizimi önizlemesinin rengini ayarlar. | İkinci argüman bir hex olmalıdır, `#` işareti isteğe bağlıdır. Mevcut renkler/seçenekler yukarıda `langs` ta belirtilmiştir. |
+| `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | Bu yöntem GriddyCode'un genel GUI yönünde adanmıştır. | Mevcut seçenekler: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. "background_color" dışındaki özellikler, sağlanmadığı takdirde "background_color"un biraz değiştirilmiş bir sürümüne ayarlanacaktır. Mümkün olmasına rağmen bunlara güvenmenizi ve bunun yerine tüm değerleri ayarlamanızı önermiyoruz. |
 
-*Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
+*Note: Eğer girdiğin HEX hatalıysa, Varsayılan olarak #ff0000 (kırmızı)'ya dönecek.*
 
 ## Yayınlama
 Eğer eklentinizi/temanızı **kendiniz** için kullanmak istiyorsanız, [AppData](#where)'nızın içine koyabilirsiniz.
@@ -86,12 +86,12 @@ Eğer eklentinizi/temanızı **kendiniz** için kullanmak istiyorsanız, [AppDat
 Eğer bir tema/eklenti **göndermek** istiyorsanız, saygılı bir biçimde `Lua/Plugins` veya `Lua/Themes` içine eklemek için çekme isteği açın. Eğer birleştirilirse, bir sonraki yapıda dahil edilecektir.
 
 # Katkıda Bulunma
-Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
+Katkılarınız çok önemlidir, ister Lua eklentileri, temalar, Lua'ya daha fazla özelliği güvenli bir biçimde sunmak, veya doğrudan GriddyCode'a özellik eklemek olsun!
 
-## Notice
-- You will need to install the [Godot Engine](https://godotengine.org/) to run your proposed change & make sure it runs flawlessly.
-- You don't have to submit executables.
-- Use the v4.2 of the engine (currently Latest)
+## Hatırlatma
+- Yaptığınız değişiklikleri çalıştırmak ve kusursuz çalıştığından emin olmak için [Godot Engine'i](https://godotengine.org/) kurmanız gerek.
+- Çalıştırılabilir dosyaları göndermek zorunda değilsiniz.
+- Motorun 4.2. sürümünü kullanın (şu an ki en son sürüm)
 
 ## 🐛 Current bugs/needed features:
 ### HIGH PRIORITY
