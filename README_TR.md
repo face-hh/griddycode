@@ -34,30 +34,31 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 # ⌨️ Lua modlama
 GriddyCode, **Lua** ile fonksiyonunu genişletmene izin verir.
 
-## Where?
-To open the folder with Lua scripts, go to:
+## Nerede?
+Lua betikleriyle klasör açmak için:
 
 - Windows: `%APPDATA%\Godot\app_userdata\Bussin GriddyCode`
 - macOS: `~/Library/Application Support/Bussin GriddyCode`
 - Linux: `~/.local/share/godot/app_userdata/Bussin GriddyCode`
+klasörüne gidin.
 
-*Note: the paths are not accurate, we recommend you manually search for GriddyCode in the AppData of your OS.*
+*Not: yollar birebir doğru değil, işletim sisteminizdeki AppData'da GriddyCode'u elle bulmanızı öneririz.*
 
-## How?
-You may see the folders **"langs"** and **"themes"**.
-- **"langs"** holds a bunch of `.lua` files that power GriddyCode's syntax highlighting & autocomplete.
-- **"themes"** holds a bunch of `.lua` files that change GriddyCode's appearance.
+## Nasıl?
+**"langs"** ve  **"themes"** adlı klasörler görebilirsiniz.
+- **"langs"** GriddyCode'un sözdizimi vurgulamasını ve otomatik tamamlamasını destekleyen bir grup `.lua` dosyasını barındırır.
+- **"themes"** GriddyCode'un görünümünü değiştiren bir grup `.lua` dosyasını barındırır.
 
-*Note: the Lua scripts are reloaded only if you switch from a different file extension (i.e. "README.md" -> "main.ts"), or if GriddyCode is restarted.*
+*Not: Lua komut dosyaları yalnızca farklı bir dosya uzantısından geçiş yaptığınızda (ör. "README.md" -> "main.ts") veya GriddyCode yeniden başlatıldığında yeniden yüklenir.*
 
-## Docs?
-### Langs
-#### Introduction
-To extend the functionality of GriddyCode for a specific **file extension**, create a file with its name. (i.e. `toml.lua`)
+## Dökümanlar?
+### Diller
+#### Giriş
+GriddyCode'un belir bir **dosya uzantısı** için fonksiyonelliğini artırmak için, kendi adında bir dosya oluşturun. (örneğin, `toml.lua`)
 
-#### Methods
+#### Yöntemler
 
-| Method | Example | Description | Notes |
+| Yöntem | Örnek | Açıklama | Notlar |
 | -------- | -------- | -------- | -------- |
 | `highlight(keyword: String, color: String)` | `highlight("const", "reserved")` | Tells GriddyCode to highlight a certain keyword with a preset of colors. | Available colors: `reserved`, `annotation`, `string`, `binary`, `symbol`, `variable`, `operator`, `comments`, `error`, `function`, `member` |
 | `highlight_region(start: String, end: String, color: String, line_only: bool = false)` | `highlight("/*", "*/", "comments", false)` | Tells GriddyCode to highlight a region with a preset of colors. | The `start` must be a symbol. Due to Godot's limited functionality, you can't use RegEx. |
@@ -67,24 +68,24 @@ To extend the functionality of GriddyCode for a specific **file extension**, cre
 
 *Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them already set up in the array you return. GriddyCode will handle the rest!*
 
-### Themes
-#### Introduction
-To add a theme, create a file in the **"themes"** folder with any name. (i.e. "dracula.lua"). You will be able to choose it within GriddyCode.
+### Temalar
+#### Giriş
+Tema ekleme için, **"themes"** klasörü içinde herhangi bir adla bir dosya oluşturun. (örneğin, "dracula.lua"). GriddyCode ile onu seçebileceksiniz.
 
-#### Methods
-| Method | Example | Description | Notes |
+#### Yöntemler
+| Yöntem | Örnek | Açıklama | Notlar |
 | -------- | -------- | -------- | -------- |
 | `set_keywords(property: String, new_color: String)` | `set_keywords("reserved", "#ff00ff")` | Set the color of syntax highlighting. | The second argument must be a hex, `#` being optional. Available colors/properties listed above at `langs`. |
 | `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
 
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
 
-## Publishing
-If you want to use a theme/plugin for **yourself**, you can put it into your [AppData](#where).
+## Yayınlama
+Eğer eklentinizi/temanızı **kendiniz** için kullanmak istiyorsanız, [AppData](#where)'nızın içine koyabilirsiniz.
 
-If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/Plugins` or `Lua/Themes` respectively. If merged, it will be included in the next build.
+Eğer bir tema/eklenti **göndermek** istiyorsanız, saygılı bir biçimde `Lua/Plugins` veya `Lua/Themes` içine eklemek için çekme isteği açın. Eğer birleştirilirse, bir sonraki yapıda dahil edilecektir.
 
-# Contributions
+# Katkıda Bulunma
 Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
 
 ## Notice
