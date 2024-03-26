@@ -31,7 +31,9 @@ highlight("nah", "operator")
 highlight("{", "binary")
 highlight("}", "binary")
 
-highlight_region("\"", "\"", "string", true)
+highlight_region("\"", "\"", "string")
+highlight_region("//", "", "comments", true)
+highlight_region("/*", "*/", "comments")
 
 add_comment("yo code aint sigma bro 🗣️🔥")
 add_comment("quit the bussin syntax")
@@ -51,7 +53,11 @@ function detect_variables(content)
     local variable_names = {
         "error",
         "nerd",
-        "fs"
+        "fs",
+        "objects",
+        "regex",
+        "args",
+        "error"
     }
     local lines = content:gmatch("[^\r\n]+")
 
@@ -82,6 +88,9 @@ function detect_functions(content)
         "format",
         "fetch",
         "len",
+        "import",
+        "splitstr",
+        "trim",
         "time"
     }
     local lines = content:gmatch("[^\r\n]+")
