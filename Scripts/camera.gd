@@ -14,11 +14,13 @@ var min_zoom = Vector2(1.0, 1.0);
 var busy = false;
 var boundaries_exceeded = null;
 
-var shake_strength: float = 15.0;
+var shake_strength: float = 10.0;
 
 var d := 0.0;
 var radius := 4.0
-var speed := 2.0
+var speed := 5.0
+
+var user_zoom := 1.0
 
 func _ready() -> void:
 	limit_right = code.size.x
@@ -41,8 +43,13 @@ func _process(delta: float) -> void:
 
 	target_zoom = max_zoom.x - target_zoom
 
+	# this is where user zoom is taken into consideration. for future records.
+	if(target_zoom < 1): target_zoom = 1
+	target_zoom *= user_zoom
+
 	if(target_zoom < min_zoom.x):
 		target_zoom = min_zoom.x
+	
 
 	tween.parallel().tween_property(self, "zoom", Vector2(target_zoom, target_zoom), 1.0);
 
@@ -52,6 +59,17 @@ func _process(delta: float) -> void:
 	_gp.y += 20
 
 	tween.parallel().tween_property(self, "global_position", _gp, 1.0)
+
+# process user key input
+func _input(_event):
+	if Input.is_key_pressed(KEY_CTRL):
+		if Input.is_key_pressed(KEY_PLUS):
+			user_zoom += 0.25
+		if Input.is_key_pressed(KEY_MINUS):
+			user_zoom -= 0.25
+		
+		if user_zoom > 6: user_zoom = 6.0
+		if user_zoom < 0.25: user_zoom = 0.25
 
 # Returns the Global Position of the Caret
 func gp() -> Vector2:
