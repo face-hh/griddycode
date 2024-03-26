@@ -8,7 +8,7 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 
 
 # Table of Contents
-   - [Requirements](#requirements)
+   - [Gereksinimler](#Gereksinimler)
    - [Lua modding](#%EF%B8%8F-lua-modding)
 	  - [Where?](#where)
 	  - [How?](#how)
