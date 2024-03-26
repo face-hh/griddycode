@@ -27,14 +27,25 @@ func _ready():
 	var args = OS.get_cmdline_args()
 	var is_debug = OS.is_debug_build()
 	var path = []
+
 	# in order to be compatible with the gayming OS...
 	var pwd_cmd = "pwd"
+	# I didn't know that godot doesn't execute
+	# commands within batch on Windows...
+	var exec_args = []
 
 	if running_on_gaming_os:
-		pwd_cmd = "cd" # running "cd" without any args will only print the path
+		# running "cd" (in batch) without any args will only print the path
+		pwd_cmd = "cmd.exe"
+		exec_args.append("/C")
+		exec_args.append("cd")
 
-	OS.execute(pwd_cmd, [], path)
+	OS.execute(pwd_cmd, exec_args, path)
 
+	if running_on_gaming_os:
+		# EWW GROSS
+		# why are we still using CRLF?
+		path[0] = path[0].replace("\r", "")
 	path = path[0].replace("\n", "")
 
 	if args.size() > 0:
