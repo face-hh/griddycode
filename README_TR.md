@@ -61,13 +61,12 @@ GriddyCode'un belir bir **dosya uzantısı** için fonksiyonelliğini artırmak 
 | Yöntem | Örnek | Açıklama | Notlar |
 | -------- | -------- | -------- | -------- |
 | `highlight(keyword: String, color: String)` | `highlight("const", "reserved")` | GriddyCode'a bir anahtar kelimeyi öntanımlı renklerle öne çıkarmasını söyler. | Mevcut renkler: `reserved`, `annotation`, `string`, `binary`, `symbol`, `variable`, `operator`, `comments`, `error`, `function`, `member` |
-| `highlight_region(start: String, end: String, color: String, line_only: bool = false)` | `highlight("/*", "*/", "comments", false)` | GriddyCode'a bir ülkeyi öntanımlı renklerle öne çıkarmasını söyler. | `start` bir sembol olmalıdır. Due to Godot's limited functionality, you can't use RegEx. |
-| `add_comment(comment: String)` | `add_comment("What is blud doing 🗣️🗣️🗣️")` | Adds a comment to be randomly chosen in the `CTRL` + `L` menu. | The username, profile picture, date, and likes are chosen by GriddyCode. |
-| `detect_functions(content: String, line: int, column: int) -> Array[String]` | `detect_functions("const test = 3; function main() {}; async init() => { main() }")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["main", "init"]). "line" and "column" are the position of the cursor when the autocomplete was requested. |
-| `detect_variables(content: String, line: int, column: int) -> Array[String]` | `detect_variables("const test = 3;")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["test"]). "line" and "column" are the position of the cursor when the autocomplete was requested. |
+| `highlight_region(start: String, end: String, color: String, line_only: bool = false)` | `highlight("/*", "*/", "comments", false)` | GriddyCode'a bir ülkeyi öntanımlı renklerle öne çıkarmasını söyler. | `start` bir sembol olmalıdır. Godot'un sınırlı işlevselliği nedeniyle, RegEX kullanamazsınız. |
+| `add_comment(comment: String)` | `add_comment("What is blud doing 🗣️🗣️🗣️")` |`CTRL` + `L` menüsünde rastgele seçilebilmesi için bir yorum ekler. | Kullanıcı adı, profil resmi, tarih ve beğeniler GriddyCode tarafından seçilir. |
+| `detect_functions(content: String, line: int, column: int) -> Array[String]` | `detect_functions("const test = 3; function main() {}; async init() => { main() }")` | Giriş üzerine GriddyCode tarafından çağrılır. Sonuçlar otomatik tamamlama özelliğinde gösterilir. | Bu, Lua betiği tarafından sağlanmalıdır. Bir dizi string döndürmelidir (yani ["main", "init"]). "satır" ve "sütun", otomatik tamamlama istendiğinde imlecin konumudur. |
+| `detect_variables(content: String, line: int, column: int) -> Array[String]` | `detect_variables("const test = 3;")` | Giriş üzerine GriddyCode tarafından çağrılır. Sonuçlar otomatik tamamlama özelliğinde gösterilir. | Bu, Lua betiği tarafından sağlanmalıdır. Bir dizi string döndürmelidir (yani ["test"]). "satır" ve "sütun", otomatik tamamlama istendiğinde imlecin konumudur. |
 
-*Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them already set up in the array you return. GriddyCode will handle the rest!*
-
+*Not: ayrılmış değişkenler/fonksiyonlar sağlamak için (örn. `Math`/`parseInt()` JS'de) döndürdüğünüz dizide bunları zaten ayarlamış olabilirsiniz. Gerisini GriddyCode halledecektir!*
 ### Temalar
 #### Giriş
 Tema ekleme için, **"themes"** klasörü içinde herhangi bir adla bir dosya oluşturun. (örneğin, "dracula.lua"). GriddyCode ile onu seçebileceksiniz.
@@ -94,18 +93,18 @@ Katkılarınız çok önemlidir, ister Lua eklentileri, temalar, Lua'ya daha faz
 - Motorun 4.2. sürümünü kullanın (şu an ki en son sürüm)
 
 ## 🐛 Mevcut hatalar/gerekli özellikler:
-### HIGH PRIORITY
-- The `VHS & CRT` shader, on certain themes (One Dark Pro, GitHub Light, etc.), becomes completely white. Works good on GitHub Dark;
-- Light modes get affected by *glow*, while dark modes seem fine.
+### YÜKSEK ÖNCELİKLİ
+- `VHS & CRT` gölgelendirici, belirli temalarda (One Dark Pro, GitHub Light, vb.) tamamen beyaz olur. GitHub Dark üzerinde iyi çalışıyor;
+- Açık modlar *glow*'dan etkilenirken, karanlık modlar iyi görünüyor.
 
-### MEDIUM PRIORITY
-- An option in the settings menu (`CTRL` + `,`) to change the font;
-- The current limit for lines is ~1600. If the cursor moves past that amount, the `CodeEdit` node will activate its scrolling, making the camera bug & go out of view. A limit should be implemented so that the camera won't go out of screen.
+### ORTA ÖNCELIKLI
+- Ayarlar menüsündeki bir seçenek (`CTRL` + `,`) yazı tipini değiştirmek için;
+- Satırlar için geçerli sınır ~1600'dür. İmleç bu miktarı geçerse, `CodeEdit` düğümü kaydırmayı etkinleştirecek ve kamera bug & görünümden çıkacaktır. Kameranın ekranın dışına çıkmaması için bir sınır uygulanmalıdır.
+  
+### DÜŞÜK ÖNCELİKLİ
+- Ayarlar menüsündeki kedi zıplama videosunun gerçek menü boyunca soluklaşmasını / kapanmasını sağlamak. Şu anda geçişi yok sayıyor;
+- `CTRL` + `P` açmak için bir **hızlı dosya seçici**, [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.).
+- "shader" *özelliğine sahip bir ayarın seçilmesi* "shader" ile önceden etkinleştirilmiş ayarları devre dışı bırakmalıdır.
+- Her bir `CheckButton` düğümü için `setting` sahnesi tema ile değişmez. Bu özellikle hafif temaları etkiler.
 
-### LOW PRIORITY
-- Making the cat jumping video in the settings menu fade in/out along the actual menu. Currently it ignores the transition;
-- `CTRL` + `P` to open a **quick file picker**, similar to [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.).
-- Selecting a setting with the property "shader" *should* disable previously-enabled settings with "shader".
-- The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
-
-Please note that creating a Pull Request to fix these features does *not* guarantee its merge. Please don't open a Pull Request unless you are confident you've done a good job.
+Lütfen bu özellikleri düzeltmek için bir Çekme İsteği oluşturmanın birleştirilmesini garanti **etmediğini** unutmayın. Lütfen iyi bir iş çıkardığınızdan emin olmadıkça bir Çekme İsteği açmayın.
