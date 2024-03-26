@@ -22,9 +22,9 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 	  - [Yayınlama](#Yayınlama)
    - [Katkıda Bulunma](#Katkıda-Bulunma)
 	  - [Mevcut hatalar/gerekli özellikler](#-Mevcut-hatalargerekli-özellikler)
-	  	- [HIGH PRIORITY](#high-priority)
-		- [MEDIUM PRIORITY](#medium-priority)
-		- [LOW PRIORITY](#low-priority)
+	  	- [YÜKSEK ÖNCELİKLİ](#YÜKSEK-ÖNCELİKLİ)
+		- [ORTA ÖNCELİKLİ](#ORTA-ÖNCELİKLİ)
+		- [DÜŞÜK ÖNCELİKLİ](#DÜŞÜK-ÖNCELİKLİ)
 
 # Gereksinimler
 | Gereksinim | Notlar |
@@ -97,7 +97,7 @@ Katkılarınız çok önemlidir, ister Lua eklentileri, temalar, Lua'ya daha faz
 - `VHS & CRT` gölgelendirici, belirli temalarda (One Dark Pro, GitHub Light, vb.) tamamen beyaz olur. GitHub Dark üzerinde iyi çalışıyor;
 - Açık modlar *glow*'dan etkilenirken, karanlık modlar iyi görünüyor.
 
-### ORTA ÖNCELIKLI
+### ORTA ÖNCELİKLİ
 - Ayarlar menüsündeki bir seçenek (`CTRL` + `,`) yazı tipini değiştirmek için;
 - Satırlar için geçerli sınır ~1600'dür. İmleç bu miktarı geçerse, `CodeEdit` düğümü kaydırmayı etkinleştirecek ve kamera bug & görünümden çıkacaktır. Kameranın ekranın dışına çıkmaması için bir sınır uygulanmalıdır.
   
