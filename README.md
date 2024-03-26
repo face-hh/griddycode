@@ -1,5 +1,6 @@
 # GriddyCode  
 **Translations**: [🇹🇷](/README_TR.md)
+
 Coding has never been more lit!
 
 
