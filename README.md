@@ -1,4 +1,4 @@
-# GriddyCode
+# GriddyCode  [🇹🇷](/master/README_TR.md)
 Coding has never been more lit!
 
 
