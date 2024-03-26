@@ -9,7 +9,7 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 
 # Table of Contents
    - [Gereksinimler](#Gereksinimler)
-   - [Lua modding](#%EF%B8%8F-lua-modding)
+   - [Lua modlama](#⌨️ Lua modlama)
 	  - [Where?](#where)
 	  - [How?](#how)
 	  - [Docs](#docs)
@@ -29,7 +29,7 @@ Not: Editörün hızlı bir sunumu için `CTRL` + `I` yapın :)
 # Gereksinimler
 | Gereksinim | Notlar |
 | -------- | -------- |
-| [Nerdfont](https://www.nerdfonts.com/) - Dosya seçici için Nerdfont kullanıyoruz. | Simgelerin "□" gibi göründüğünde eksik olduğuu bileceksin |
+| [Nerdfont](https://www.nerdfonts.com/) - Dosya seçici için Nerdfont kullanıyoruz. | Simgelerin "□" gibi göründüğünde eksik olduğunu bileceksin |
 | [Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions) - GriddyCode **sadece** Linux'ta test edilmişti | Gaming OS'te çalışsa bile dosya seçici çalışmayabilir. |
 # ⌨️ Lua modlama
 GriddyCode, **Lua** ile fonksiyonunu genişletmene izin verir.
