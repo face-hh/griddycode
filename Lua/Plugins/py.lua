@@ -106,7 +106,7 @@ end
 
 
 function detect_variables(content)
-    local variable_names = {}
+    local variable_names = {"self", "__name__", "__annotations__", "__build_class__", "__builtins__", "__cached__", "__dict__", "__doc__", "__file__", "__import__", "__loader__", "__name__", "__package__", "__path__", "__spec__"}
     local lines = content:gmatch("[^\r\n]+")
 
     for line in lines do
