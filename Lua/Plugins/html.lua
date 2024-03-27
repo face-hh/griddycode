@@ -131,15 +131,11 @@ highlight("/", "reserved")
 highlight("<", "binary")
 highlight(">", "binary")
 
---- Comments
-add_comment('<div class="Money"> doesnt work')
-add_comment('https://getFreeMoney.com Works!!!! 🗣️🗣️🗣️')
-add_comment('What language is this: Jag är en jävla Cp-skadad idiot!')
-add_comment('Its absolutely not Swedish!')
-add_comment('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
-add_comment('Nullam lacinia erat quis nisi mollis feugiat. Praesent sed orci rutrum, faucibus lorem vehicula, volutpat ante.')
-add_comment('Why use HTML, it is a fucking waste of time, Use PHP, REACT or NEXT.js')
+--- User Comments
+highlight_region("<!--", "-->", "comments", false)
 
+--- Comments
+-- HELLP ME
 
 function detect_variables(content)
     local variable_names = {}
