@@ -135,7 +135,10 @@ highlight(">", "binary")
 highlight_region("<!--", "-->", "comments", false)
 
 --- Comments
--- HELLP ME
+-- Made by @assasin-1234
+add_comment("HTML more like hyper text MID language LMFAO")
+add_comment("please for the love of god use reactjs instead")
+add_comment("they speak HTML in mexico. HOT TAMALES for MY LADIES 🥁💃🪕🕺🥁💃🪕🫔🫔🫔")
 
 function detect_variables(content)
     local variable_names = {}
