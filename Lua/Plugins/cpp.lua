@@ -154,7 +154,7 @@ highlight_region("'", "'", "string")
 
 --- Comments
 add_comment("//", "", "comments", true)
-add_comment("/*", "*/", "comments", true)
+add_comment("/*", "*/", "comments", false)
 
 --- Autocomplete
 
