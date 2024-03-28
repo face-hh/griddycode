@@ -31,12 +31,34 @@ var gui: Dictionary = {
 # Shader = whether or not to disable the previously-enabled shader setting, as they can't be stacked.
 
 var editor_theme = preload("res://theme.tres");
-var fonts = Array(editor_theme.get_font_list("CodeEdit")).map(to_font_option)
+var fonts = load_available_fonts()
 
 
-func to_font_option(name: String) -> Dictionary:
-	var font = editor_theme.get_font(name, "CodeEdit");
-	return { "display": font.get_font_name(), "value": font, "name": name }
+func load_available_fonts() -> Array:
+	var built_ins = load_built_in_fonts()
+	var system = load_system_fonts()
+	built_ins.append_array(system)
+	return built_ins
+
+
+func load_built_in_fonts() -> Array:
+	return Array(editor_theme.get_font_list("CodeEdit")).map(load_built_in_font)
+
+
+func load_built_in_font(_name: String) -> Dictionary:
+	var font = editor_theme.get_font(_name, "CodeEdit");
+	return { "display": font.get_font_name(), "value": font, "name": _name }
+
+
+func load_system_font(font_name: String):
+	var font = SystemFont.new()
+	font.multichannel_signed_distance_field = true
+	font.font_names = [font_name]
+	return { "display": font.get_font_name(), "value": font, "name": font_name }
+
+
+func load_system_fonts() -> Array:
+	return Array(OS.get_system_fonts()).map(load_system_font)
 
 
 var settings: Array = [
@@ -56,7 +78,7 @@ var settings: Array = [
 	},
 	{
 		"property": "editor_font",
-		"display": "Font",
+		"display": "Editor Font",
 		"options": fonts,
 		"icon": "",
 		"value": 0
@@ -266,6 +288,8 @@ func toggle_shader(shader: Shader, value: bool) -> void:
 	else:
 		shader_layer.material.shader = null
 		shader_layer.hide()
+
+
 
 func handle_internal_setting_change(property: String, value: Variant) -> void:
 	# oh my god he's about to do it
