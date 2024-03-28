@@ -1,16 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://bj6s526sep4xw"]
+[gd_scene load_steps=15 format=3 uid="uid://bdgbhk76vmfr4"]
 
 [ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="1_cd7xi"]
 [ext_resource type="Script" path="res://Scripts/file_manager.gd" id="1_x00ag"]
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="2_7x3ll"]
-[ext_resource type="FontFile" uid="uid://d1v66naqhhggj" path="res://Fonts/FiraCode-Regular.ttf" id="2_wpuu1"]
 [ext_resource type="PackedScene" uid="uid://dk43uvvc3j228" path="res://Scenes/settings_list.tscn" id="5_6usn0"]
 [ext_resource type="Script" path="res://Scripts/file_dialog.gd" id="5_bhd70"]
 [ext_resource type="PackedScene" uid="uid://c2gyvklbna1ss" path="res://Scenes/theme_chooser.tscn" id="6_10xx2"]
-[ext_resource type="VideoStream" path="res://output.ogv" id="7_aq7lb"]
+[ext_resource type="VideoStream" path="res://Videos/jumping_cat.ogv" id="7_aq7lb"]
 [ext_resource type="Shader" path="res://Shaders/greenscreen.gdshader" id="7_gkiie"]
 [ext_resource type="Script" path="res://Scripts/theme_chooser.gd" id="9_ba634"]
 [ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="11_m1mse"]
+
+[sub_resource type="Theme" id="Theme_1rere"]
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_p2au2"]
 
@@ -23,17 +24,17 @@ shader_parameter/similarity = 0.18
 shader_parameter/smoothness = 0.08
 shader_parameter/spill = 0.04
 
-[node name="Editor" type="Node2D"]
+[node name="Editor2" type="Node2D"]
 script = ExtResource("1_x00ag")
 
 [node name="Code" type="CodeEdit" parent="."]
 unique_name_in_owner = true
 offset_right = 1920.0
 offset_bottom = 1080.0
-theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
+theme = SubResource("Theme_1rere")
 theme_override_colors/background_color = Color(0, 0, 0, 1)
+theme_override_colors/current_line_color = Color(0.168627, 0.168627, 0.168627, 1)
 theme_override_colors/caret_color = Color(0.321569, 0.545098, 1, 1)
-theme_override_fonts/font = ExtResource("2_wpuu1")
 text = "function getRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -118,7 +119,6 @@ unique_name_in_owner = true
 visible = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Intro"]
-auto_translate_mode = 1
 offset_left = 836.0
 offset_top = 112.0
 offset_right = 3336.0
@@ -130,7 +130,6 @@ bbcode_enabled = true
 text = "Greetings!"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Intro"]
-auto_translate_mode = 1
 offset_left = 841.0
 offset_top = 244.0
 offset_right = 3341.0
@@ -142,7 +141,6 @@ bbcode_enabled = true
 text = "You're currently using [color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="Intro"]
-auto_translate_mode = 1
 offset_left = 841.0
 offset_top = 380.0
 offset_right = 3341.0
@@ -191,7 +189,6 @@ unique_name_in_owner = true
 position = Vector2(-1289, 0)
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Info"]
-auto_translate_mode = 1
 offset_left = 285.0
 offset_top = 28.0
 offset_right = 4821.0
@@ -203,7 +200,6 @@ bbcode_enabled = true
 text = "[color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Info"]
-auto_translate_mode = 1
 offset_left = 293.0
 offset_top = 165.0
 offset_right = 6395.0

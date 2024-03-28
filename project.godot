@@ -40,7 +40,6 @@ enabled=PackedStringArray("res://addons/discord-sdk-gd/plugin.cfg")
 
 [gui]
 
-theme/custom_font="res://Fonts/FiraCode-Regular.ttf"
 theme/default_font_antialiasing=2
 theme/default_font_hinting=0
 theme/default_font_multichannel_signed_distance_field=true
