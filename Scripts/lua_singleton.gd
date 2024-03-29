@@ -30,7 +30,7 @@ var gui: Dictionary = {
 # Precision = whether or not the slider should go from int to float.
 # Shader = whether or not to disable the previously-enabled shader setting, as they can't be stacked.
 
-var editor_theme = preload("res://theme.tres");
+var editor_theme: Theme = load("res://theme.tres");
 var fonts = load_available_fonts()
 
 
@@ -42,11 +42,11 @@ func load_available_fonts() -> Array:
 
 
 func load_built_in_fonts() -> Array:
-	return Array(editor_theme.get_font_list("CodeEdit")).map(load_built_in_font)
+	return Array(editor_theme.get_font_list("MyType")).map(load_built_in_font)
 
 
 func load_built_in_font(_name: String) -> Dictionary:
-	var font = editor_theme.get_font(_name, "CodeEdit");
+	var font = editor_theme.get_font(_name, "MyType");
 	return { "display": font.get_font_name(), "value": font, "name": _name }
 
 
@@ -324,7 +324,10 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 	if p == "minimap_width":
 		code.minimap_width = value
 	if p == "editor_font":
-		code.add_theme_font_override("font", fonts[value].value)
+		editor_theme.set_font("normal_font", "RichTextLabel", fonts[value].value)
+		editor_theme.set_font("font", "Label", fonts[value].value)
+		editor_theme.set_font("font", "CodeEdit", fonts[value].value)
+
 
 	# SHADERS
 	if p == "glow":
