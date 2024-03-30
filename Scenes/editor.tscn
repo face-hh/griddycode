@@ -122,6 +122,7 @@ offset_right = -30.0
 offset_bottom = 8889.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("2_bh428")
 text = "gpake
 gka
 ekga
@@ -183,6 +184,7 @@ offset_top = 28.0
 offset_right = 4821.0
 offset_bottom = 1219.0
 scale = Vector2(0.235, 0.235)
+theme = ExtResource("2_bh428")
 theme_override_font_sizes/normal_font_size = 376
 bbcode_enabled = true
 text = "[color=#c9daf8]Bussin[/color] [color=#85c6ff]GriddyCode[/color]"
@@ -193,6 +195,7 @@ offset_top = 165.0
 offset_right = 6395.0
 offset_bottom = 4616.0
 scale = Vector2(0.235, 0.235)
+theme = ExtResource("2_bh428")
 theme_override_font_sizes/normal_font_size = 121
 bbcode_enabled = true
 text = "Created by [url=https://youtube.com/facedevstuff][color=#b4a7d6]Face[/color][/url] & the contributors at [url=https://github.com/face-hh/griddycode][color=#b4a7d6]GitHub[/color][/url]
