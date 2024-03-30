@@ -30,6 +30,37 @@ var gui: Dictionary = {
 # Precision = whether or not the slider should go from int to float.
 # Shader = whether or not to disable the previously-enabled shader setting, as they can't be stacked.
 
+var editor_theme: Theme = load("res://theme.tres");
+var fonts = load_available_fonts()
+
+
+func load_available_fonts() -> Array:
+	var built_ins = load_built_in_fonts()
+	var system = load_system_fonts()
+	built_ins.append_array(system)
+	return built_ins
+
+
+func load_built_in_fonts() -> Array:
+	return Array(editor_theme.get_font_list("MyType")).map(load_built_in_font)
+
+
+func load_built_in_font(_name: String) -> Dictionary:
+	var font = editor_theme.get_font(_name, "MyType");
+	return { "display": font.get_font_name(), "value": font, "name": _name }
+
+
+func load_system_font(font_name: String):
+	var font = SystemFont.new()
+	font.multichannel_signed_distance_field = true
+	font.font_names = [font_name]
+	return { "display": font.get_font_name(), "value": font, "name": font_name }
+
+
+func load_system_fonts() -> Array:
+	return Array(OS.get_system_fonts()).map(load_system_font)
+
+
 var settings: Array = [
 	{
 		"property": "caret_type",
@@ -44,6 +75,13 @@ var settings: Array = [
 		"options": [],
 		"icon": "|",
 		"value": true
+	},
+	{
+		"property": "editor_font",
+		"display": "Editor Font",
+		"options": fonts,
+		"icon": "",
+		"value": 0
 	},
 	{
 		"property": "caret_interval",
@@ -214,9 +252,16 @@ const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
 @onready var world_environment: WorldEnvironment = $/root/Editor/WorldEnvironment
 @onready var shader_layer: ColorRect = $/root/Editor/ShaderLayer
 
+
+
+
+
 signal done_parsing;
 signal on_theme_load;
 signal on_settings_change;
+
+
+
 
 func get_setting(property: String) -> Array:
 	var i = -1;
@@ -243,6 +288,8 @@ func toggle_shader(shader: Shader, value: bool) -> void:
 	else:
 		shader_layer.material.shader = null
 		shader_layer.hide()
+
+
 
 func handle_internal_setting_change(property: String, value: Variant) -> void:
 	# oh my god he's about to do it
@@ -276,6 +323,11 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		code.minimap_draw = value
 	if p == "minimap_width":
 		code.minimap_width = value
+	if p == "editor_font":
+		editor_theme.set_font("normal_font", "RichTextLabel", fonts[value].value)
+		editor_theme.set_font("font", "Label", fonts[value].value)
+		editor_theme.set_font("font", "CodeEdit", fonts[value].value)
+
 
 	# SHADERS
 	if p == "glow":

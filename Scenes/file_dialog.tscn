@@ -1,12 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://ccqsbvh4swj5p"]
 
-[ext_resource type="FontFile" uid="uid://drrhlpxmc4pq4" path="res://Fonts/FiraCode-VariableFont_wght.ttf" id="2_ohrru"]
+[ext_resource type="Theme" uid="uid://daiset8sjhqyc" path="res://theme.tres" id="1_w7vsw"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("1_w7vsw")
 
 [node name="DirList" type="RichTextLabel" parent="."]
 unique_name_in_owner = true
@@ -22,5 +23,5 @@ offset_right = 452.0
 offset_bottom = 603.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_fonts/normal_font = ExtResource("2_ohrru")
+theme = ExtResource("1_w7vsw")
 autowrap_mode = 0
