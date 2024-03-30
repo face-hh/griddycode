@@ -30,7 +30,8 @@ P.S. Press `CTRL` + `I` for a quick introduction in the Editor :)
 | Requirement | Notes |
 | -------- | -------- |
 | [Nerdfont](https://www.nerdfonts.com/) - we use Nerdfont for the file picker. | You'll know it's missing when your icons look like "□" |
-| [Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions) - GriddyCode was tested **only** on Linux | Although it'll work on the Gaming OS, the file picker might not. |
+| [Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions) - GriddyCode is tested **mainly** on Linux | No, macOS won't be supported. Gaming OS works. |
+
 # ⌨️ Lua modding
 GriddyCode allows you to extend its functionality via **Lua**.
 
