@@ -1,5 +1,7 @@
 extends Node
 
+const NOTO_COLOR_EMOJI_REGULAR: FontFile = preload("res://Fonts/NotoColorEmoji-Regular.ttf")
+
 var themes: Array = ["One Dark Pro Darker"];
 var theme: String = "One Dark Pro Darker"; # default
 
@@ -47,13 +49,15 @@ func load_built_in_fonts() -> Array:
 
 func load_built_in_font(_name: String) -> Dictionary:
 	var font = editor_theme.get_font(_name, "MyType");
+
 	return { "display": font.get_font_name(), "value": font, "name": _name }
 
 
 func load_system_font(font_name: String):
-	var font = SystemFont.new()
+	var font: SystemFont = SystemFont.new()
 	font.multichannel_signed_distance_field = true
 	font.font_names = [font_name]
+
 	return { "display": font.get_font_name(), "value": font, "name": font_name }
 
 
@@ -324,9 +328,12 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 	if p == "minimap_width":
 		code.minimap_width = value
 	if p == "editor_font":
+		fonts[value].value.set_fallbacks([NOTO_COLOR_EMOJI_REGULAR])
+
 		editor_theme.set_font("normal_font", "RichTextLabel", fonts[value].value)
 		editor_theme.set_font("font", "Label", fonts[value].value)
 		editor_theme.set_font("font", "CodeEdit", fonts[value].value)
+		editor_theme.set_font("font", "Button", fonts[value].value)
 
 
 	# SHADERS

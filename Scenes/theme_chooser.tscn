@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://c2gyvklbna1ss"]
 
-[ext_resource type="FontFile" uid="uid://d1v66naqhhggj" path="res://Fonts/FiraCode-Regular.ttf" id="1_wo2x4"]
+[ext_resource type="Theme" uid="uid://daiset8sjhqyc" path="res://theme.tres" id="1_v6oin"]
 
 [node name="OptionButton" type="OptionButton"]
 offset_right = 477.0
 offset_bottom = 47.0
-theme_override_fonts/font = ExtResource("1_wo2x4")
+theme = ExtResource("1_v6oin")

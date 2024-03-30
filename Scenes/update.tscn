@@ -26,6 +26,7 @@ layout_mode = 0
 offset_top = 56.0
 offset_right = 257.0
 offset_bottom = 108.0
+theme = ExtResource("2_qh5es")
 text = "💾 Check updates"
 
 [node name="HSeparator" type="HSeparator" parent="."]
