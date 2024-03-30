@@ -1,3 +1,5 @@
+disable_glow()
+
 set_keywords("reserved", "8839ef") --- Mauve
 set_keywords("string", "40a02b") --- Green
 set_keywords("binary", "fe640b") --- Peach

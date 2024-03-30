@@ -119,7 +119,7 @@ func warn(notice: String) -> void:
 
 	node.set_notice(notice)
 
-	get_tree().create_timer(3).timeout.connect(func():
+	get_tree().create_timer(5).timeout.connect(func():
 		node.queue_free()
 	)
 

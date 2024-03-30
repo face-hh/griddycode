@@ -1,3 +1,5 @@
+disable_glow()
+
 set_keywords("reserved", "bb9af7")
 set_keywords("string", "9ece6a")
 set_keywords("binary", "ff9e64")

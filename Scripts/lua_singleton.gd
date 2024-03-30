@@ -6,7 +6,7 @@ var themes: Array = ["One Dark Pro Darker"];
 var theme: String = "One Dark Pro Darker"; # default
 
 # TODO: change me each version
-var version: String = "v1.1.1";
+var version: String = "v1.2.0";
 
 var gui: Dictionary = {
 	"background_color":            str_to_clr("#23272e"),
@@ -335,7 +335,6 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		editor_theme.set_font("font", "CodeEdit", fonts[value].value)
 		editor_theme.set_font("font", "Button", fonts[value].value)
 
-
 	# SHADERS
 	if p == "glow":
 		world_environment.environment.glow_enabled = value
@@ -387,6 +386,10 @@ func _lua_set_keywords(property: String, new_color: String) -> void:
 
 	keywords[property] = str_to_clr(new_color)
 
+func _lua_disable_glow() -> void:
+	editor.warn("[color=yellow]WARNING[/color]: This theme disabled the \"glow\".")
+	handle_internal_setting_change("glow", false)
+
 func _lua_set_gui(property: String, new_color: String) -> void:
 	if !(property in gui.keys()):
 		print("ERROR: provided color property (\"%s\") in theme (GUI) is invalid." % [property])
@@ -425,6 +428,7 @@ func setup_extension(extension):
 func setup_theme(given_theme: String) -> void:
 	theme_lua.bind_libraries(["base", "table", "string"])
 
+	theme_lua.push_variant("disable_glow", _lua_disable_glow)
 	theme_lua.push_variant("set_keywords", _lua_set_keywords)
 	theme_lua.push_variant("set_gui", _lua_set_gui)
 

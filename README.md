@@ -76,6 +76,7 @@ To add a theme, create a file in the **"themes"** folder with any name. (i.e. "d
 | -------- | -------- | -------- | -------- |
 | `set_keywords(property: String, new_color: String)` | `set_keywords("reserved", "#ff00ff")` | Set the color of syntax highlighting. | The second argument must be a hex, `#` being optional. Available colors/properties listed above at `langs`. |
 | `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
+| `disable_glow()` | `disable_glow()` | Disables the "glow" setting. | This exists because Godot's *glow* seems to mess up on light colors. Not adding this on light themes may result in the entire screen going white. |
 
 *Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
 
