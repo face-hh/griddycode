@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://cshkyynl6dffr"]
 
-[ext_resource type="Theme" uid="uid://daiset8sjhqyc" path="res://theme.tres" id="1_37025"]
+[ext_resource type="Theme" uid="uid://daiset8sjhqyc" path="res://theme.tres" id="1_g3chd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wffyp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dktu"]
 
-[node name="Setting" type="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -19,7 +19,7 @@ offset_top = 3.0
 offset_right = 1315.0
 offset_bottom = 131.0
 scale = Vector2(0.235, 0.235)
-theme = ExtResource("1_37025")
+theme = ExtResource("1_g3chd")
 theme_override_font_sizes/normal_font_size = 66
 bbcode_enabled = true
 text = "Scroll Speed"
@@ -63,6 +63,7 @@ offset_top = 3.0
 offset_right = 1764.0
 offset_bottom = 131.0
 scale = Vector2(0.235, 0.235)
+theme = ExtResource("1_g3chd")
 theme_override_font_sizes/normal_font_size = 66
 bbcode_enabled = true
 

@@ -46,20 +46,20 @@ func _process(delta: float) -> void:
 	if busy: return;
 
 	var tween = create_tween();
-	
+
 	var longest_line: String = code.get_longest_line();
 	var chars: int = longest_line.length();
-	
+
 	var target_zoom = ((chars+1)) / SCALE;
-	
+
 	target_zoom = max_zoom.x - target_zoom;
-	
+
 	var final_zoom = clamp(Vector2(target_zoom, target_zoom), min_zoom, max_zoom);
 	var char_size: Vector2 = get_font_metrics();
 	var gp = code.get_caret_draw_pos();
-	
+
 	gp.x -= 2*char_size.x;
-	
+
 	tween.parallel().tween_property(self, "zoom", final_zoom, 1.0);
 	tween.parallel().tween_property(self, "global_position", gp, 1.0);
 

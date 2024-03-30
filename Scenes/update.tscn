@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkx02j85qa1rm"]
+[gd_scene load_steps=4 format=3 uid="uid://bkx02j85qa1rm"]
 
 [ext_resource type="Script" path="res://Scripts/update.gd" id="1_ug1sp"]
+[ext_resource type="Theme" uid="uid://daiset8sjhqyc" path="res://theme.tres" id="2_qh5es"]
 [ext_resource type="Script" path="res://Scripts/hyperlink.gd" id="2_w1buf"]
 
 [node name="Control" type="Control"]
@@ -17,6 +18,7 @@ layout_mode = 0
 offset_top = 23.0
 offset_right = 256.0
 offset_bottom = 63.0
+theme = ExtResource("2_qh5es")
 text = "Current version: v1.0.3"
 
 [node name="Button" type="Button" parent="."]
@@ -39,6 +41,7 @@ offset_left = 294.0
 offset_top = 58.0
 offset_right = 765.0
 offset_bottom = 98.0
+theme = ExtResource("2_qh5es")
 bbcode_enabled = true
 text = "Nothing new..."
 scroll_active = false
