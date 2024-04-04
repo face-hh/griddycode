@@ -1,7 +1,43 @@
+highlight("connotate", "reserved")
+highlight("derives", "reserved")
+highlight("variable", "reserved")
+highlight("synchronised", "reserved")
+highlight("unsynchronised", "reserved")
+highlight("constant", "reserved")
+highlight("mutable", "reserved")
+highlight("volatile", "reserved")
+highlight("stable", "reserved")
+highlight("independent", "reserved")
+highlight("depdendent", "reserved")
+highlight("invariable", "reserved")
+highlight("void", "reserved")
+highlight("ratify", "reserved")
+highlight("subroutine", "reserved")
+highlight("?", "reserved")
+highlight("transient", "reserved")
+highlight("classification", "reserved")
+highlight("extemporize", "reserved")
+highlight("aforementioned", "variable")
+highlight("epitomise", "reserved")
+highlight("stipulate", "reserved")
+highlight("otherwise", "reserved")
+highlight("compeer", "reserved")
+highlight("towards", "reserved")
+highlight("within", "reserved")
+highlight("nonfulfillment", "reserved")
+
+highlight("neither", "binary")
+highlight("both", "binary")
+highlight("maybe", "binary")
+highlight("trueish", "binary")
+highlight("falseish", "binary")
+highlight("depends", "binary")
+highlight("complicated", "binary")
+--
 highlight("var", "reserved")
+highlight("let", "reserved")
 highlight("const", "reserved")
 highlight("new", "reserved")
-highlight("let", "reserved")
 
 highlight("while", "reserved")
 highlight("for", "reserved")
@@ -33,7 +69,6 @@ highlight("throw", "reserved")
 highlight("continue", "reserved")
 highlight("break", "reserved")
 highlight("yield", "reserved")
-highlight("constructor", "reserved")
 
 highlight("instanceof", "reserved")
 highlight("typeof", "reserved")
@@ -79,32 +114,15 @@ highlight_region("/*", "*/", "comments")
 highlight_region("//", "", "comments", true)
 
 --- comments
-add_comment("JavaScript mentioned 🗣️🗣️🗣️ 3 + \"3\" = 33 🔥🔥🔥")
-add_comment("(await (await fetch())).catch(() => {}) 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️‼️‼️💥💥💥🤯")
-add_comment("When I thought it couldn’t get any worse he added another require() 💀💀💀")
-add_comment("WHAT THE FUCK STOP")
-add_comment("this shi 100% breaking")
-add_comment("do NOT drink battery acid")
-add_comment("Waiter, waiter! One more for loop please!")
-add_comment("RAHHHH JAVASCRIPT +!~-x !+((a,b)=>!!a?!a:!b) 🗣️🗣️🔥🔥🔥🔥🔥🔥🔥")
-add_comment("a ? b ? a : b ? c : d : b ass script")
-add_comment("try {} catch(e) { throw new Error(e) }")
-add_comment("mf the typa guy to trigger \"require is not defined\"")
-add_comment("im scared")
-add_comment("more?.optional?.chaining?.please // LGTM")
-add_comment("tip: remove runtime errors by removing null: rm -rf /dev/null")
-add_comment("JAVASCRIPTTTTTTTTTTTT LETS FUCKING GOOOO ==== X ?? Y ? GOOOO : X 🗣️🗣️🗣️")
-add_comment("wrap it in do {} while(false) 👍👍👍")
-add_comment("\"undefined\" is not defined.")
-add_comment("make your JS roleplay Java, change that i++ to i--")
-add_comment("tip: decrease your chance at errors: Number.MAX_SAFE_INTEGER += Number.MAX_SAFE_INTEGER")
+add_comment("yap yap yap yap yap")
+add_comment("its the funny language 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️‼️‼️💥💥💥🤯")
+add_comment("typescript better 💀💀💀")
+add_comment("lil bro ain't onto something")
 
 --- autocomplete
 
 function detect_functions(content)
-    local functionNames = {
-        "require"
-    }
+    local functionNames = {}
 
     local lines = {}
     for line in content:gmatch("[^\r\n]+") do
@@ -112,10 +130,24 @@ function detect_functions(content)
     end
 
     for _, line in ipairs(lines) do
-        if trim(line):find("^function ") or trim(line):find("^async function ") and string.find(line, "%(") then
+        local trimmedLine = trim(line)
+
+        -- Look for function, async function, subroutine, or ? (class) function definitions
+        if trimmedLine:find("function ") or
+           trimmedLine:find("async ") or
+           trimmedLine:find("subroutine ") or
+           trimmedLine:find("%w%s?") then
             local functionName =
-                string.match(trim(line):gsub("{", ""), "function%s+(.-)%s*%(") or
-                string.match(trim(line):gsub("{", ""), "async%s+(.-)%s*%(")
+                string.match(trimmedLine:gsub("{", ""), "%w+%s+%?") or
+                string.match(trimmedLine:gsub("{", ""), "%.?function%s+(.-)%s*%(") or
+                string.match(trimmedLine:gsub("{", ""), "%.?subroutine%s+(.-)%s*%(") or
+                string.match(trimmedLine:gsub("{", ""), "%.?async%s+(.-)%s*%(")
+
+            if functionName:find("?") then
+                functionName = functionName.gsub(functionName, "?", "")
+                functionName = trim(functionName)
+            end
+
             table.insert(functionNames, functionName)
         end
     end
@@ -132,13 +164,21 @@ function detect_variables(content)
         "__dirname",
         "__filename",
         "module",
-        "exports"highlight("constructor", "reserved")
+        "exports"
+    }
+    local lines = content:gmatch("[^\r\n]+")
 
     for line in lines do
-        if trim(line):find("^let ") or trim(line):find("^var ") or trim(line):find("^const ") then
+      local is_yap = trim(line):find("variable ")
+        if is_yap or trim(line):find("let ") or trim(line):find("var ") or trim(line):find("const ") then
             local parts = splitstr(line, "=")
             if #parts > 0 then
                 local variable_name = trim(splitstr(trim(parts[1]), " ")[2])
+                
+                if is_yap then
+                  variable_name = splitstr(trim(parts[1]), " ")[4]
+                  variable_name = variable_name:gsub("[^a-zA-Z]", "")
+                end
                 table.insert(variable_names, variable_name)
             end
         end
