@@ -134,6 +134,7 @@ function detect_variables(content)
         "module",
         "exports"
 
+    local lines = content:gmatch("[^\r\n]+")
     for line in lines do
         if trim(line):find("^let ") or trim(line):find("^var ") or trim(line):find("^const ") then
             local parts = splitstr(line, "=")
