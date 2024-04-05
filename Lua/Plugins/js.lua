@@ -132,7 +132,7 @@ function detect_variables(content)
         "__dirname",
         "__filename",
         "module",
-        "exports"highlight("constructor", "reserved")
+        "exports"
 
     for line in lines do
         if trim(line):find("^let ") or trim(line):find("^var ") or trim(line):find("^const ") then
