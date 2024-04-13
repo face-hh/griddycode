@@ -164,8 +164,36 @@ function detect_variables(content)
         "__dirname",
         "__filename",
         "module",
-        "exports"
+        "exports",
+        "connotate",
+        "derives",
+        "variable",
+        "synchronised",
+        "unsynchronised",
+        "constant",
+        "mutable",
+        "volatile",
+        "stable",
+        "independent",
+        "dependent",
+        "invariable",
+        "void",
+        "ratify",
+        "subroutine",
+        "?",
+        "transient",
+        "classification",
+        "extemporize",
+        "aforementioned",
+        "epitomise",
+        "stipulate",
+        "otherwise",
+        "compeer",
+        "towards",
+        "within",
+        "nonfulfillment"
     }
+    
     local lines = content:gmatch("[^\r\n]+")
 
     for line in lines do
