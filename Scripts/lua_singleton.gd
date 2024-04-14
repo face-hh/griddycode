@@ -255,6 +255,7 @@ const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
 @onready var code: CodeEdit = $/root/Editor/Code;
 @onready var world_environment: WorldEnvironment = $/root/Editor/WorldEnvironment
 @onready var shader_layer: ColorRect = $/root/Editor/ShaderLayer
+var current_file_extension: String
 
 
 
@@ -405,6 +406,14 @@ func _splitstr(input: String, separator: String):
 
 func _trim(input: String):
 	return input.strip_edges()
+
+
+func _ready():
+	editor.on_open_file.connect(func(file: String):
+		var extension: String = file.get_extension()
+		if extension != current_file_extension:
+			keywords_to_highlight.clear()
+	)
 
 func setup_extension(extension):
 	# FILE EXTENSIONS
