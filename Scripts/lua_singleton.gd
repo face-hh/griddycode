@@ -1,6 +1,6 @@
 extends Node
 
-const NOTO_COLOR_EMOJI_REGULAR: FontFile = preload("res://Fonts/NotoColorEmoji-Regular.ttf")
+const NOTO_COLOR_EMOJI_REGULAR: FontFile = preload ("res://Fonts/NotoColorEmoji-Regular.ttf")
 
 var themes: Array = ["One Dark Pro Darker"];
 var theme: String = "One Dark Pro Darker"; # default
@@ -9,14 +9,14 @@ var theme: String = "One Dark Pro Darker"; # default
 var version: String = "v1.2.1";
 
 var gui: Dictionary = {
-	"background_color":            str_to_clr("#23272e"),
-	"current_line_color":          str_to_clr("#23272e"),
-	"selection_color":             str_to_clr("#23272e"),
-	"font_color":                  str_to_clr("#23272e"),
-	"word_highlighted_color":      str_to_clr("#23272e"),
+	"background_color": str_to_clr("#23272e"),
+	"current_line_color": str_to_clr("#23272e"),
+	"selection_color": str_to_clr("#23272e"),
+	"font_color": str_to_clr("#23272e"),
+	"word_highlighted_color": str_to_clr("#23272e"),
 	"completion_background_color": str_to_clr("#23272e"),
-	"completion_selected_color":   str_to_clr("#23272e"),
-	"caret_color":                 str_to_clr("#23272e")
+	"completion_selected_color": str_to_clr("#23272e"),
+	"caret_color": str_to_clr("#23272e")
 }
 
 # #### SETTINGS ####
@@ -35,35 +35,29 @@ var gui: Dictionary = {
 var editor_theme: Theme = load("res://theme.tres");
 var fonts = load_available_fonts()
 
-
 func load_available_fonts() -> Array:
 	var built_ins = load_built_in_fonts()
 	var system = load_system_fonts()
 	built_ins.append_array(system)
 	return built_ins
 
-
 func load_built_in_fonts() -> Array:
 	return Array(editor_theme.get_font_list("MyType")).map(load_built_in_font)
-
 
 func load_built_in_font(_name: String) -> Dictionary:
 	var font = editor_theme.get_font(_name, "MyType");
 
-	return { "display": font.get_font_name(), "value": font, "name": _name }
-
+	return {"display": font.get_font_name(), "value": font, "name": _name}
 
 func load_system_font(font_name: String):
 	var font: SystemFont = SystemFont.new()
 	font.multichannel_signed_distance_field = true
 	font.font_names = [font_name]
 
-	return { "display": font.get_font_name(), "value": font, "name": font_name }
-
+	return {"display": font.get_font_name(), "value": font, "name": font_name}
 
 func load_system_fonts() -> Array:
 	return Array(OS.get_system_fonts()).map(load_system_font)
-
 
 var settings: Array = [
 	{
@@ -229,17 +223,17 @@ var settings: Array = [
 ];
 
 var keywords: Dictionary = {
-	"reserved":   str_to_clr("c678cc"),
+	"reserved": str_to_clr("c678cc"),
 	"annotation": str_to_clr("a2b429"),
-	"string":     str_to_clr("98c379"),
-	"binary":     str_to_clr("d19a66"),
-	"symbol":     str_to_clr("839fb6"),
-	"variable":   str_to_clr("e5c07b"),
-	"operator":   str_to_clr("56b6c2"),
-	"comments":   str_to_clr("7f848e"),
-	"error":      str_to_clr("d31820"),
-	"function":   str_to_clr("437ed9"),
-	"member":     str_to_clr("e06c75")
+	"string": str_to_clr("98c379"),
+	"binary": str_to_clr("d19a66"),
+	"symbol": str_to_clr("839fb6"),
+	"variable": str_to_clr("e5c07b"),
+	"operator": str_to_clr("56b6c2"),
+	"comments": str_to_clr("7f848e"),
+	"error": str_to_clr("d31820"),
+	"function": str_to_clr("437ed9"),
+	"member": str_to_clr("e06c75")
 }
 
 var keywords_to_highlight: Dictionary = {}
@@ -248,25 +242,18 @@ var comments: Array = []
 
 var discord_sdk: bool = true;
 
-const SUNLIGHT = preload("res://Shaders/sunlight.gdshader")
-const VHS_AND_CRT = preload("res://Shaders/vhs_and_crt.gdshader")
+const SUNLIGHT = preload ("res://Shaders/sunlight.gdshader")
+const VHS_AND_CRT = preload ("res://Shaders/vhs_and_crt.gdshader")
 
-@onready var editor: FileManager = $/root/Editor;
-@onready var code: CodeEdit = $/root/Editor/Code;
-@onready var world_environment: WorldEnvironment = $/root/Editor/WorldEnvironment
-@onready var shader_layer: ColorRect = $/root/Editor/ShaderLayer
+@onready var editor: FileManager = $ / root / Editor;
+@onready var code: CodeEdit = $ / root / Editor / Code;
+@onready var world_environment: WorldEnvironment = $ / root / Editor / WorldEnvironment
+@onready var shader_layer: ColorRect = $ / root / Editor / ShaderLayer
 var current_file_extension: String
-
-
-
-
 
 signal done_parsing;
 signal on_theme_load;
 signal on_settings_change;
-
-
-
 
 func get_setting(property: String) -> Array:
 	var i = -1;
@@ -277,7 +264,7 @@ func get_setting(property: String) -> Array:
 		if setting["property"] == property:
 			return [setting, i]
 
-	return [{}, -1]
+	return [{}, - 1]
 
 func change_setting(property: String, value: Variant) -> void:
 	for setting in settings:
@@ -293,8 +280,6 @@ func toggle_shader(shader: Shader, value: bool) -> void:
 	else:
 		shader_layer.material.shader = null
 		shader_layer.hide()
-
-
 
 func handle_internal_setting_change(property: String, value: Variant) -> void:
 	# oh my god he's about to do it
@@ -365,7 +350,6 @@ var theme_lua: LuaAPI = LuaAPI.new()
 func str_to_clr(string: String) -> Color:
 	return Color.from_string(string, "#ff0000");
 
-
 func _lua_highlight(keyword: String, color: String):
 	if !(color in keywords.keys()):
 		print("ERROR: provided color property (\"%s\") at \"%s\" is invalid." % [color, keyword])
@@ -373,7 +357,7 @@ func _lua_highlight(keyword: String, color: String):
 
 	keywords_to_highlight[keyword] = color;
 
-func _lua_highlight_region(start: String, end: String, color: String, line_only: bool = false):
+func _lua_highlight_region(start: String, end: String, color: String, line_only: bool=false):
 	if !(color in keywords.keys()):
 		print("ERROR: provided color (\"%s\") at color region (start: \"%s\", end: \"%s\") is invalid." % [color, start, end])
 		return
@@ -407,12 +391,13 @@ func _splitstr(input: String, separator: String):
 func _trim(input: String):
 	return input.strip_edges()
 
-
 func _ready():
 	editor.on_open_file.connect(func(file: String):
-		var extension: String = file.get_extension()
+		var extension: String=file.get_extension()
 		if extension != current_file_extension:
 			keywords_to_highlight.clear()
+			color_regions_to_highlight.clear()
+			comments.clear()
 	)
 
 func setup_extension(extension):
