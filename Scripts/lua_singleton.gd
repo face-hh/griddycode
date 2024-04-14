@@ -254,6 +254,7 @@ var current_file_extension: String
 signal done_parsing;
 signal on_theme_load;
 signal on_settings_change;
+signal on_comments_change;
 
 func get_setting(property: String) -> Array:
 	var i = -1;
@@ -398,6 +399,7 @@ func _ready():
 			keywords_to_highlight.clear()
 			color_regions_to_highlight.clear()
 			comments.clear()
+			on_comments_change.emit()
 	)
 
 func setup_extension(extension):

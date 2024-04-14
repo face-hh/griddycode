@@ -6,7 +6,7 @@ const COMMENT = preload ("res://Scenes/comment.tscn")
 
 func _ready():
 	await LuaSingleton.done_parsing
-
+	LuaSingleton.on_comments_change.connect(setup)
 	setup()
 
 func setup():
