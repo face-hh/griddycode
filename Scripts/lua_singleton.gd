@@ -392,6 +392,14 @@ func _splitstr(input: String, separator: String):
 func _trim(input: String):
 	return input.strip_edges()
 
+# wrappers
+
+func detect_functions(text: String, line: int, column: int) -> Array[String]:
+	return lua.call_function("detect_functions", [text, line, column])
+
+func detect_variables(text: String, line: int, column: int) -> Array[String]:
+	return lua.call_function("detect_variables", [text, line, column])
+
 func _ready():
 	editor.on_open_file.connect(func(file: String):
 		var extension: String=file.get_extension()
