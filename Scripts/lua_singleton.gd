@@ -250,6 +250,8 @@ const VHS_AND_CRT = preload ("res://Shaders/vhs_and_crt.gdshader")
 @onready var world_environment: WorldEnvironment = $ / root / Editor / WorldEnvironment
 @onready var shader_layer: ColorRect = $ / root / Editor / ShaderLayer
 var current_file_extension: String
+# used in wrappers to determine if the function should return an empty array (essentially a no-op)
+var no_extension: bool = true
 
 signal done_parsing;
 signal on_theme_load;
@@ -392,12 +394,16 @@ func _splitstr(input: String, separator: String):
 func _trim(input: String):
 	return input.strip_edges()
 
-# wrappers
+# wrappers (no-op if `no_extension` is `true`)
 
 func detect_functions(text: String, line: int, column: int) -> Array[String]:
+	if no_extension:
+		return []
 	return lua.call_function("detect_functions", [text, line, column])
 
 func detect_variables(text: String, line: int, column: int) -> Array[String]:
+	if no_extension:
+		return []
 	return lua.call_function("detect_variables", [text, line, column])
 
 func _ready():
