@@ -251,7 +251,7 @@ const VHS_AND_CRT = preload ("res://Shaders/vhs_and_crt.gdshader")
 @onready var shader_layer: ColorRect = $ / root / Editor / ShaderLayer
 var current_file_extension: String
 # used in wrappers to determine if the function should return an empty array (essentially a no-op)
-var no_extension: bool = true
+var no_extension: bool = false
 
 signal done_parsing;
 signal on_theme_load;
@@ -396,12 +396,12 @@ func _trim(input: String):
 
 # wrappers (no-op if `no_extension` is `true`)
 
-func detect_functions(text: String, line: int, column: int) -> Array[String]:
+func detect_functions(text: String, line: int, column: int) -> Array:
 	if no_extension:
 		return []
 	return lua.call_function("detect_functions", [text, line, column])
 
-func detect_variables(text: String, line: int, column: int) -> Array[String]:
+func detect_variables(text: String, line: int, column: int) -> Array:
 	if no_extension:
 		return []
 	return lua.call_function("detect_variables", [text, line, column])
@@ -431,8 +431,9 @@ func setup_extension(extension):
 	if err is LuaError:
 		editor.warn("[color=yellow]WARNING[/color]: This file isn’t supported. Highlighting, autocomplete, comments and other features won’t work properly.")
 		print("ERROR %d: %s" % [err.type, err.message])
+		no_extension = true
 		return
-
+	no_extension = false
 	done_parsing.emit()
 
 func setup_theme(given_theme: String) -> void:
