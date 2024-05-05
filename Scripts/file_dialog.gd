@@ -10,12 +10,17 @@ var dir: DirAccess
 var dirs: Array[String]
 var files: Array[String]
 
+var query: String = ""
+var search_limit: int = 1000
+var current_dirs_count: int = 0
+
 var zoom: Vector2;
 
 var active: bool = false;
 signal ui_close
 
 func change_dir(path) -> void:
+	query = ""
 	if !dir: dir = DirAccess.open(path)
 	#dir.include_hidden = true
 	# WARNING: this will heavily affect performance if de-commented
@@ -24,7 +29,9 @@ func change_dir(path) -> void:
 	dirs.append_array(dir.get_directories())
 	dirs.append_array(dir.get_files())
 
-	files.append_array(dir.get_files());
+	current_dirs_count = len(dirs)
+
+	files.append_array(dir.get_files())
 
 	zoom = %Cam.to_zoom(code.get_longest_line(dirs).length())
 
@@ -44,13 +51,25 @@ func _input(event: InputEvent) -> void:
 	var key_event = event as InputEventKey
 
 	if !(key_event.is_pressed()): return;
-
 	if key_event.keycode == KEY_UP:
 		selected_index = max(0, selected_index - 1)
 	elif key_event.keycode == KEY_DOWN:
 		selected_index = min(dirs.size() - 1, selected_index + 1)
 	elif key_event.keycode == KEY_ENTER:
 		handle_enter_key()
+	if current_dirs_count <= search_limit:
+		if key_event.keycode == KEY_BACKSPACE:
+			if len(query) > 0:
+				query = query.substr(0, len(query) - 1)
+		elif key_event.as_text() == 'Alt+R':
+			query = ""
+		elif len(key_event.as_text()) == 1:
+			query += key_event.as_text().to_lower()
+			if not dirs[selected_index].begins_with(query):
+				for i in range(len(dirs)):
+					if dirs[i].to_lower().begins_with(query):
+						selected_index = i
+						break
 
 	update_ui()
 
