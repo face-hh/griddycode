@@ -8,11 +8,13 @@ extends RichTextLabel
 var selected_index: int = 0
 var dir: DirAccess
 var dirs: Array[String]
+var bbcode_dirs: Array[String]
 var files: Array[String]
 
 var query: String = ""
 var search_limit: int = 1000
 var current_dirs_count: int = 0
+var handled: bool
 
 var zoom: Vector2;
 
@@ -28,6 +30,9 @@ func change_dir(path) -> void:
 	dirs = [".."];
 	dirs.append_array(dir.get_directories())
 	dirs.append_array(dir.get_files())
+
+	bbcode_dirs = []
+	bbcode_dirs.append_array(dirs)
 
 	current_dirs_count = len(dirs)
 
@@ -49,27 +54,41 @@ func _input(event: InputEvent) -> void:
 	if !(event is InputEventKey): return
 
 	var key_event = event as InputEventKey
+	bbcode_dirs = []
+	bbcode_dirs.append_array(dirs)
 
 	if !(key_event.is_pressed()): return;
+
+	handled = true
 	if key_event.keycode == KEY_UP:
 		selected_index = max(0, selected_index - 1)
+		query = ""
 	elif key_event.keycode == KEY_DOWN:
 		selected_index = min(dirs.size() - 1, selected_index + 1)
+		query = ""
 	elif key_event.keycode == KEY_ENTER:
 		handle_enter_key()
-	if current_dirs_count <= search_limit:
+		query = ""
+	else:
+		handled = false
+	if current_dirs_count <= search_limit and !handled:
 		if key_event.keycode == KEY_BACKSPACE:
 			if len(query) > 0:
 				query = query.substr(0, len(query) - 1)
 		elif key_event.as_text() == 'Alt+R':
 			query = ""
-		elif len(key_event.as_text()) == 1:
+		if len(key_event.as_text()) == 1:
 			query += key_event.as_text().to_lower()
-			if not dirs[selected_index].begins_with(query):
-				for i in range(len(dirs)):
-					if dirs[i].to_lower().begins_with(query):
-						selected_index = i
-						break
+		elif key_event.as_text().to_lower() == "period":
+			query += "."
+		if dirs[selected_index].to_lower().begins_with(query):
+			bbcode_dirs[selected_index] = "[b]"+bbcode_dirs[selected_index].left(len(query))+"[/b]"+bbcode_dirs[selected_index].right(len(dirs[selected_index])-len(query))
+		else:
+			for i in range(1, len(dirs)):
+				if dirs[i].to_lower().begins_with(query):
+					selected_index = i
+					bbcode_dirs[selected_index] = make_bold(dirs[selected_index], len(query))
+					break
 
 	update_ui()
 
@@ -78,16 +97,18 @@ func update_ui() -> void:
 	show_items()
 
 func show_items() -> void:
-	for i in range(dirs.size()):
-		show_item(dirs[i])
+	for i in range(bbcode_dirs.size()):
+		show_item(i)
 
-func show_item(item: String) -> void:
+func show_item(index: int) -> void:
+	var item = dirs[index]
+	var bbcode_item = bbcode_dirs[index]
 	if is_selected(item):
 		push_bgcolor(LuaSingleton.gui.selection_color)
 	else:
 		push_bgcolor(Color(0, 0, 0, 0))  # Reset background color if not selected
 
-	var is_dir = dir.get_directories().find(item) != -1;
+	var is_dir = dir.get_directories().find(item) != -1
 
 	if item == "..":
 		push_color(LuaSingleton.gui.font_color)
@@ -104,19 +125,19 @@ func show_item(item: String) -> void:
 
 	pop()
 
-	var filename = item.split(".")[0];
+	var filename = bbcode_item.split(".")[0];
 
-	if is_dir: filename = item
+	if is_dir: filename = bbcode_item
 
 	if filename.length() > 30:
 		filename = filename.left(30) + "..." + filename.right(3)
 
-	if item == "..":
-		add_text(" %s\n" % [ item ])
+	if bbcode_item == "..":
+		append_text(" %s\n" % [ bbcode_item ])
 	elif is_dir or !item.contains("."):
-		add_text(" %s\n" % [ filename ] )
+		append_text(" %s\n" % [ filename ])
 	else:
-		add_text(" %s.%s\n" % [ filename, item.split(".")[1] ] )
+		append_text(" %s.%s\n" % [ filename, bbcode_item.split(".")[1] ])
 
 	if active: %Cam.focus_on(Vector2(gp().x, global_position.y + (selected_index * 23)), zoom)
 
@@ -154,6 +175,9 @@ func handle_enter_key() -> void:
 		dir.change_dir(item)
 		change_dir(item)
 	update_ui()
+
+func make_bold(string: String, size: int):
+	return "[b]" + string.left(len(query)) + "[/b]" + string.right(len(string)-len(query))
 
 # global_position is slightly off, so we customize it a little.
 func gp() -> Vector2:
