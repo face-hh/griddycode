@@ -34,7 +34,7 @@ func change_dir(path) -> void:
 	dirs = [".."];
 	dirs.append_array(dir.get_directories())
 	dirs.append_array(dir.get_files())
-	
+
 	shortened_dirs = []
 	for dir_ in dirs:
 		if len(dir_) > 30:
@@ -85,7 +85,7 @@ func _input(event: InputEvent) -> void:
 			erased = true
 			if len(query) > 0:
 				query = query.substr(0, len(query) - 1)
-		elif key_event.as_text() == 'Alt+R':
+		elif key_event.as_text() == 'Ctrl+Backspace':
 			erased = true
 			query = ""
 		if len(key_event.as_text()) == 1:
@@ -191,25 +191,31 @@ func make_bold(string: String, indexes: Array) -> String:
 	var new_string: String = ""
 
 	for i in range(len(string)):
-		if i in indexes: new_string += "[b]" + string[i] + "[/b]"
+		if i in indexes: new_string += "[i][color=yellow]" + string[i] + "[/color][/i]"
 		else: new_string += string[i]
 
 	return new_string
 
 func fuzzy_search(string: String, substring: String) -> Array:
-	if len(string) < len(substring): return []
-
 	var indexes: Array = []
-	var pos: int = -1
+	var pos: int = 0
+	var last_index: int = 0
 
-	for letter in substring:
-		while pos < len(substring) - 1:
+	for i in range(string.length()):
+		if string[i] == substring[pos]:
+			indexes.append(i)
 			pos += 1
-			if string[pos] == letter:
-				indexes.append(pos)
+			if pos == substring.length():
 				break
+		else:
+			if last_index < i - 1:
+				i = last_index
+			pos = 0
+			indexes = []
 
-	return indexes if len(indexes) == len(query) else []
+		last_index = i
+
+	return indexes
 
 # Compares 2 fuzzy Arrays and returns if 'new' Array is closer to query than 'old'
 func is_closer(old: Array, new: Array) -> bool:
