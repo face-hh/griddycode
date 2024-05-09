@@ -9,12 +9,16 @@ var selected_index: int = 0
 var dir: DirAccess
 var dirs: Array[String]
 var bbcode_dirs: Array[String]
+var shortened_dirs: Array[String]
 var files: Array[String]
 
 var query: String = ""
 var search_limit: int = 1000
 var current_dirs_count: int = 0
 var handled: bool
+var erased: bool
+var max_coincidence: Array = []
+var coincidence: Array = []
 
 var zoom: Vector2;
 
@@ -30,6 +34,12 @@ func change_dir(path) -> void:
 	dirs = [".."];
 	dirs.append_array(dir.get_directories())
 	dirs.append_array(dir.get_files())
+	
+	shortened_dirs = []
+	for dir_ in dirs:
+		if len(dir_) > 30:
+			dir_ = dir_.left(30) + "..." + dir_.right(3)
+		shortened_dirs.append(dir_)
 
 	bbcode_dirs = []
 	bbcode_dirs.append_array(dirs)
@@ -62,33 +72,36 @@ func _input(event: InputEvent) -> void:
 	handled = true
 	if key_event.keycode == KEY_UP:
 		selected_index = max(0, selected_index - 1)
-		query = ""
 	elif key_event.keycode == KEY_DOWN:
-		selected_index = min(dirs.size() - 1, selected_index + 1)
-		query = ""
+		selected_index = min(len(dirs) - 1, selected_index + 1)
 	elif key_event.keycode == KEY_ENTER:
 		handle_enter_key()
-		query = ""
 	else:
 		handled = false
+
+	erased = false
 	if current_dirs_count <= search_limit and !handled:
 		if key_event.keycode == KEY_BACKSPACE:
+			erased = true
 			if len(query) > 0:
 				query = query.substr(0, len(query) - 1)
 		elif key_event.as_text() == 'Alt+R':
+			erased = true
 			query = ""
 		if len(key_event.as_text()) == 1:
 			query += key_event.as_text().to_lower()
-		elif key_event.as_text().to_lower() == "period":
+		elif key_event.keycode == KEY_PERIOD:
 			query += "."
-		if dirs[selected_index].to_lower().begins_with(query):
-			bbcode_dirs[selected_index] = "[b]"+bbcode_dirs[selected_index].left(len(query))+"[/b]"+bbcode_dirs[selected_index].right(len(dirs[selected_index])-len(query))
-		else:
-			for i in range(1, len(dirs)):
-				if dirs[i].to_lower().begins_with(query):
-					selected_index = i
-					bbcode_dirs[selected_index] = make_bold(dirs[selected_index], len(query))
-					break
+
+	max_coincidence = []
+
+	if len(query) > 0:
+		for i in range(1, len(dirs)):
+			coincidence = fuzzy_search(shortened_dirs[i].to_lower(), query)
+			bbcode_dirs[i] = make_bold(shortened_dirs[i], coincidence)
+			if is_closer(max_coincidence, coincidence):
+				max_coincidence = coincidence
+				if not handled:	selected_index = i
 
 	update_ui()
 
@@ -97,7 +110,7 @@ func update_ui() -> void:
 	show_items()
 
 func show_items() -> void:
-	for i in range(bbcode_dirs.size()):
+	for i in range(len(bbcode_dirs)):
 		show_item(i)
 
 func show_item(index: int) -> void:
@@ -125,12 +138,10 @@ func show_item(index: int) -> void:
 
 	pop()
 
-	var filename = bbcode_item.split(".")[0];
+	var filename = bbcode_item.split(".")[0]
 
 	if is_dir: filename = bbcode_item
 
-	if filename.length() > 30:
-		filename = filename.left(30) + "..." + filename.right(3)
 
 	if bbcode_item == "..":
 		append_text(" %s\n" % [ bbcode_item ])
@@ -151,7 +162,7 @@ func is_selected(item: String) -> bool:
 	return (is_dir_item and is_dir_current)
 
 func handle_enter_key() -> void:
-	if selected_index > dirs.size(): return
+	if selected_index > len(dirs): return
 	# ^^ this happens when the cursor was at, i.e., pos. 6, but arr is only has 4 entries
 
 	var item = dirs[selected_index];
@@ -176,8 +187,42 @@ func handle_enter_key() -> void:
 		change_dir(item)
 	update_ui()
 
-func make_bold(string: String, size: int):
-	return "[b]" + string.left(len(query)) + "[/b]" + string.right(len(string)-len(query))
+func make_bold(string: String, indexes: Array) -> String:
+	var new_string: String = ""
+
+	for i in range(len(string)):
+		if i in indexes: new_string += "[b]" + string[i] + "[/b]"
+		else: new_string += string[i]
+
+	return new_string
+
+func fuzzy_search(string: String, substring: String) -> Array:
+	if len(string) < len(substring): return []
+
+	var indexes: Array = []
+	var pos: int = -1
+
+	for letter in substring:
+		while pos < len(substring) - 1:
+			pos += 1
+			if string[pos] == letter:
+				indexes.append(pos)
+				break
+
+	return indexes if len(indexes) == len(query) else []
+
+# Compares 2 fuzzy Arrays and returns if 'new' Array is closer to query than 'old'
+func is_closer(old: Array, new: Array) -> bool:
+	if len(old) == 0: return true
+	if len(new) == 0: return false
+
+	if old == new: return false
+
+	for i in range(len(old)):
+		if old[i] > new[i]: return true
+		elif old[i] < new[i]: return false
+
+	return false
 
 # global_position is slightly off, so we customize it a little.
 func gp() -> Vector2:
