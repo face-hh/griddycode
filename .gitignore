@@ -2,3 +2,8 @@
 .godot/
 Tools/target
 Builds/*
+theme.tres
+Fonts/FiraCode-Regular.ttf.import
+addons/luaAPI/bin/~libluaapi.windows.template_debug.x86_64.dll
+addons/discord-sdk-gd/bin/windows/~discord_game_sdk_binding_debug.dll
+theme.tres
