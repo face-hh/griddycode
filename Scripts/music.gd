@@ -8,7 +8,7 @@ const ES_SOCIAL_FEEDIA___HEYSON = preload("res://Music/ES_Social Feedia - Heyson
 
 @onready var cam: Camera = $/root/Editor/Misc/Cam
 
-var music_move_intensity: float = 15;
+var music_move_intensity: float = 1;
 
 var enabled: bool = false;
 
@@ -38,8 +38,8 @@ func find_volume():
 func play_effects() -> void:
 	if !enabled: return timer.stop()
 	var res = find_volume()
-	# music_move_intensity goes between 0 and 10 in settings, this is weak.
-	cam.focus_temp(res * music_move_intensity * 20)
+	
+	cam.focus_temp(res * music_move_intensity * 10)
 
 func set_volume(value: float) -> void:
 	var clampedVolume = clamp(value, 0, 100)
