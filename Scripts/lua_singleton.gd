@@ -358,6 +358,7 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		Music.set_volume(value)
 	if p == "music_move_intensity":
 		Music.music_move_intensity = value
+		print(value)
 	if p == "discord_sdk":
 		discord_sdk = value;
 
