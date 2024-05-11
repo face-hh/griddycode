@@ -43,7 +43,7 @@ func play_effects() -> void:
 
 func set_volume(value: float) -> void:
 	var clampedVolume = clamp(value, 0, 100)
-	var decibels = lerp(-60, 0, clampedVolume / 100.0)
+	var decibels = lerp(-100, -30, 1 - (1 - clampedVolume / 100.0) ** 2)
 
 	audio_stream_player.volume_db = decibels
 
