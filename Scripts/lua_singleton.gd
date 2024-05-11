@@ -220,6 +220,15 @@ var settings: Array = [
 		"min": 0, "max": 100,
 	},
 	{
+		"property": "music_move_intensity",
+		"display": "Music: Camera Intensity",
+		"options": [],
+		"icon": "",
+		"value": 1,
+		"unit": "x",
+		"min": 0, "max": 10,
+	},
+	{
 		"property": "discord_sdk",
 		"display": "Discord SDK",
 		"options": [],
@@ -347,6 +356,8 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		Music.set_enabled(value)
 	if p == "music_volume":
 		Music.set_volume(value)
+	if p == "music_move_intensity":
+		Music.music_move_intensity = value
 	if p == "discord_sdk":
 		discord_sdk = value;
 
