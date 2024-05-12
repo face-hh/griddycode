@@ -108,6 +108,57 @@ highlight("alias", "reserved")
 highlight("extern", "reserved")
 --#endregion
 
+-- operators
+
+--- Arithmetic Operators
+highlight("+", "operator")
+highlight("-", "operator")
+highlight("*", "operator")
+highlight("/", "operator")
+highlight("%", "operator")
+highlight("**", "operator")
+highlight("++", "operator")
+highlight("--", "operator")
+
+--- Assignment Operators
+highlight("=", "operator")
+highlight("+=", "operator")
+highlight("-=", "operator")
+highlight("*=", "operator")
+highlight("/=", "operator")
+highlight("%=", "operator")
+
+--- Comparison Operators
+highlight("==", "operator")
+highlight("!=", "operator")
+highlight(">", "operator")
+highlight("<", "operator")
+highlight(">=", "operator")
+highlight("<=", "operator")
+
+--- Logical Operators
+highlight("&&", "operator")
+highlight("||", "operator")
+highlight("!", "operator")
+
+--- Bitwise Operators
+highlight("&", "operator")
+highlight("|", "operator")
+highlight("^", "operator")
+highlight("~", "operator")
+highlight("<<", "operator")
+highlight(">>", "operator")
+
+--- Special Characters
+highlight("{", "binary")
+highlight("}", "binary")
+highlight("[", "binary")
+highlight("]", "binary")
+highlight("(", "binary")
+highlight(")", "binary")
+highlight(";", "binary")
+highlight(",", "binary")
+
 --#region comments
 highlight_region("/*", "*/", "comments", false)
 highlight_region("//", "", "comments", true)
