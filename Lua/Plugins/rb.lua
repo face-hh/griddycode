@@ -2,6 +2,10 @@
 highlight_region("#"              , "", "comments", true)
 highlight_region("=begin"         , "=end", "comments", false)
 
+-- Strings
+highlight_region("\"", "\"", "string")
+highlight_region("'", "'", "string")
+
 -- Keywords
 --- basic
 highlight("BEGIN"                 , "reserved")
