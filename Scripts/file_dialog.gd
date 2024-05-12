@@ -25,6 +25,8 @@ var zoom: Vector2;
 var active: bool = false;
 signal ui_close
 
+var change_disks_regex: RegEx = RegEx.new()
+
 func change_dir(path) -> void:
 	query = ""
 	if !dir: dir = DirAccess.open(path)
@@ -78,6 +80,23 @@ func _input(event: InputEvent) -> void:
 		handle_enter_key()
 	else:
 		handled = false
+
+	change_disks_regex.compile("^Ctrl\\+Alt\\+[A-Za-z]$")
+	if change_disks_regex.search(key_event.as_text()) != null:
+		var disk = key_event.as_text()[-1]
+
+		if disk not in get_all_disks():
+			editor.warn("[color=yellow]WARNING[/color]: There is no disk [b][color=#77f0e8]%s[/color][/b] connected.\nJust warning" % disk)
+		else:
+			editor.save_data({
+				"current_file": '',
+				"current_dir": '%s://' % disk,
+				"settings": editor.get_property_value(LuaSingleton.settings),
+				"theme": LuaSingleton.theme
+			})
+			editor.warn("[color=yellow]WARNING[/color]: You changed disk to [b][color=#77f0e8]%s[/color][/b].\nJust warning" % disk)
+			dir.change_dir("%s://" % disk)
+			change_dir("%s://" % disk)
 
 	erased = false
 	if current_dirs_count <= search_limit and !handled:
@@ -229,6 +248,14 @@ func is_closer(old: Array, new: Array) -> bool:
 		elif old[i] < new[i]: return false
 
 	return false
+
+func get_all_disks():
+	var disks: Array = []
+
+	for i in range(DirAccess.get_drive_count()):
+		disks.append(DirAccess.get_drive_name(i)[0])
+
+	return disks
 
 # global_position is slightly off, so we customize it a little.
 func gp() -> Vector2:
