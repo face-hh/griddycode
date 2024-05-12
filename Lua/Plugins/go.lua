@@ -69,6 +69,18 @@ highlight("%", "operator")
 highlight("==", "operator")
 highlight("!=", "operator")
 
+
+highlight("&&", "operator")
+highlight("||", "operator")
+highlight("!", "operator")
+
+highlight("&", "operator")
+highlight("|", "operator")
+highlight("^", "operator")
+highlight("~", "operator")
+highlight("<<", "operator")
+highlight(">>", "operator")
+
 highlight_region('"', '"', "string", true)
 highlight_region("'", "'", "reserved", true)
 highlight_region('`', '`', "string")

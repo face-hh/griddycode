@@ -65,6 +65,18 @@ highlight("===", "operator")
 highlight("!=", "operator")
 highlight("!==", "operator")
 
+--- Logical Operators
+highlight("&&", "operator")
+highlight("||", "operator")
+highlight("!", "operator")
+
+--- Bitwise Operators
+highlight("&", "operator")
+highlight("|", "operator")
+highlight("^", "operator")
+highlight("<<", "operator")
+highlight(">>", "operator")
+
 highlight("{", "binary")
 highlight("}", "binary")
 highlight("[", "binary")

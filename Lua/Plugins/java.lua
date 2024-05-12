@@ -93,6 +93,20 @@ highlight("when", "reserved")
 highlight("with", "reserved")
 highlight("yield", "reserved")
 
+
+--- Logical Operators
+highlight("&&", "operator")
+highlight("||", "operator")
+highlight("!", "operator")
+
+--- Bitwise Operators
+highlight("&", "operator")
+highlight("|", "operator")
+highlight("^", "operator")
+highlight("~", "operator")
+highlight("<<", "operator")
+highlight(">>", "operator")
+
 add_comment("boiler plate alert!!!")
 add_comment("public static volatile transient transitive synchronized class type language 🗣️🔥")
 add_comment("another semicolon please")
