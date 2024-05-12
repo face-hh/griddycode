@@ -250,16 +250,12 @@ func is_closer(old: Array, new: Array) -> bool:
 	return false
 
 func get_all_disks():
-	var dir_access = DirAccess.open("res://")
-	var disk_list = []
+	var disks: Array = []
 
-	for i in range(65, 91):
-		var disk = String.chr(i)
-		if dir_access.open(disk + ":/") != null:
-			disk_list.append(disk)
-		dir_access.change_dir("res://")
+	for i in range(DirAccess.get_drive_count()):
+		disks.append(DirAccess.get_drive_name(i)[0])
 
-	return disk_list
+	return disks
 
 # global_position is slightly off, so we customize it a little.
 func gp() -> Vector2:
