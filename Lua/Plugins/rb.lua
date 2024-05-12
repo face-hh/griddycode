@@ -46,6 +46,7 @@ highlight("do"                    , "reserved")
 highlight("until"                 , "reserved")
 highlight("while"                 , "reserved")
 highlight("loop"                  , "reserved")
+highlight("in"                  , "reserved")
 
 -- Binary keywords
 highlight("true"                  , "binary")
