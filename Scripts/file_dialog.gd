@@ -81,7 +81,7 @@ func _input(event: InputEvent) -> void:
 	else:
 		handled = false
 
-	change_disks_regex.compile("^Ctrl\\+Alt\\+[A-Z]{1}$")
+	change_disks_regex.compile("^Ctrl\\+Alt\\+[A-Za-z]$")
 	if change_disks_regex.search(key_event.as_text()) != null:
 		var disk = key_event.as_text()[-1]
 
@@ -90,7 +90,7 @@ func _input(event: InputEvent) -> void:
 		else:
 			editor.save_data({
 				"current_file": '',
-				"current_dir": 'D://',
+				"current_dir": '%s://' % disk,
 				"settings": editor.get_property_value(LuaSingleton.settings),
 				"theme": LuaSingleton.theme
 			})
