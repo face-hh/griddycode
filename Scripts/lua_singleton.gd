@@ -254,6 +254,7 @@ var keywords: Dictionary = {
 var keywords_to_highlight: Dictionary = {}
 var color_regions_to_highlight: Array = []
 var comments: Array = []
+var text_extensions: Array = ["txt"]
 
 var discord_sdk: bool = true;
 
@@ -417,7 +418,17 @@ func _splitstr(input: String, separator: String):
 func _trim(input: String):
 	return input.strip_edges()
 
-func setup_extension(extension):
+func setup_extension(file):
+	if len(file.split(".")) == 1:
+		editor.warn("[color=yellow]WARNING[/color]: File has no extension.\nGriddyCode can't recognize it's language.\nFile will be parsed as raw text.")
+		return
+
+	var extension = file.split('.')[-1]
+
+	if extension in text_extensions:
+		editor.warn("[color=yellow]WARNING[/color]: File is text file, not code.")
+		return
+
 	# FILE EXTENSIONS
 	lua.bind_libraries(["base", "table", "string"])
 

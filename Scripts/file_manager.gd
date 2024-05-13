@@ -64,7 +64,7 @@ func _ready():
 
 	LuaSingleton.themes = list_themes()
 
-	LuaSingleton.setup_extension(current_file.split(".")[-1])
+	LuaSingleton.setup_extension(current_file)
 	LuaSingleton.setup_theme(LuaSingleton.theme)
 
 	file_dialog.setup()
