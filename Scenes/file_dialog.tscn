@@ -24,4 +24,5 @@ offset_bottom = 603.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_w7vsw")
+bbcode_enabled = true
 autowrap_mode = 0

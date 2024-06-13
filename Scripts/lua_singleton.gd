@@ -6,7 +6,7 @@ var themes: Array = ["One Dark Pro Darker"];
 var theme: String = "One Dark Pro Darker"; # default
 
 # TODO: change me each version
-var version: String = "v1.2.1";
+var version: String = "v1.2.2";
 
 var gui: Dictionary = {
 	"background_color": str_to_clr("#23272e"),
@@ -214,6 +214,15 @@ var settings: Array = [
 		"min": 0, "max": 100,
 	},
 	{
+		"property": "music_move_intensity",
+		"display": "Music: Camera Intensity",
+		"options": [],
+		"icon": "",
+		"value": 1,
+		"unit": "x",
+		"min": 0, "max": 10,
+	},
+	{
 		"property": "discord_sdk",
 		"display": "Discord SDK",
 		"options": [],
@@ -336,6 +345,8 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		Music.set_enabled(value)
 	if p == "music_volume":
 		Music.set_volume(value)
+	if p == "music_move_intensity":
+		Music.music_move_intensity = value
 	if p == "discord_sdk":
 		discord_sdk = value;
 
