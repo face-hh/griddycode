@@ -153,8 +153,9 @@ highlight_region("\"", "\"", "string")
 highlight_region("'", "'", "string")
 
 --- Comments
-add_comment("//", "", "comments", true)
-add_comment("/*", "*/", "comments", false)
+highlight_region("//", "", "comments", true)
+highlight_region("/*", "*/", "comments", false)
+-- TODO: IDE comments (the ones that appear in the CTRL + L menu)
 
 --- Autocomplete
 
