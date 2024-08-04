@@ -155,7 +155,13 @@ highlight_region("'", "'", "string")
 --- Comments
 highlight_region("//", "", "comments", true)
 highlight_region("/*", "*/", "comments", false)
--- TODO: IDE comments (the ones that appear in the CTRL + L menu)
+
+--- IDE Comments
+add_comment("int ***[**x[9]]")
+add_comment("undefined behavior is a fancy word for i have no idea what going on")
+add_comment("try catch blocks are the place where you throw errors and hope they land on a safe place")
+add_comment("pointers are like relation ship: complicated and need a lot of explaining")
+add_comment("made a class for everything. including coffee maker. now coffee machine has its own API")
 
 --- Autocomplete
 
