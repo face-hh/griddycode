@@ -141,13 +141,10 @@ function detect_functions(content)
 		"xpcall", "tostring", "rawset", "pairs",
 		"loadstring", "pcall", "type", "dofile",
 		"wait", "getmetatable", "load", "next",
-		"rawget", "rawset", "select", "tostring",
-		"tonumber", "unpack", "rawequal", "collectgarbage",
-		
-		-- (if ur gonna plugin dev, un-comment)
-		-- "trim", "splitstr"
-		-- courtesy of bussin industries 🔥🔥
+		"rawget", "select", "tonumber", "unpack",
+		"rawequal", "collectgarbage"
 	};
+	
 	for _, libraryFunction in ipairs(librariesFunctions) do
 		table.insert(functionNames,libraryFunction);
 	end;
@@ -186,7 +183,7 @@ function detect_variables(content)
 		"in", "false", "true", "nil",
 		"userdata", "thread", "end",
 		"local", "function"
-	};
+	};	
 	for _, variable in ipairs(Variables) do
 		table.insert(variable_names,variable);
 	end;
@@ -211,3 +208,4 @@ function detect_variables(content)
 
 	return variable_names;
 end;
+

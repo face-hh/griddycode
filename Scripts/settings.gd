@@ -75,7 +75,7 @@ func _on_code_completion_requested() -> void:
 
 	if typeof(function_names) == Variant.Type.TYPE_ARRAY:
 		for each in unique_array(function_names):
-			add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each+"()", LuaSingleton.keywords.function, FUNCTION)
+			add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each+"", LuaSingleton.keywords.function, FUNCTION)
 	if typeof(variable_names) == Variant.Type.TYPE_ARRAY:
 		for each in unique_array(variable_names):
 			add_code_completion_option(CodeEdit.KIND_VARIABLE, each, each, LuaSingleton.keywords.variable, VARIABLE)

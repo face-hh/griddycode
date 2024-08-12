@@ -106,7 +106,14 @@ end
 
 
 function detect_variables(content)
-    local variable_names = {"self", "__name__", "__annotations__", "__build_class__", "__builtins__", "__cached__", "__dict__", "__doc__", "__file__", "__import__", "__loader__", "__name__", "__package__", "__path__", "__spec__"}
+    local variable_names = {"self", "__name__", "__annotations__", "__build_class__", "__builtins__", "__cached__", "__dict__", "__doc__", "__file__", "__import__", "__loader__", "__name__", "__package__", "__path__", "__spec__",     "abs", "all", "any", "ascii", "bin", "bool", "bytearray", "bytes", "callable", "chr", "classmethod", "compile",
+    "complex", "copyright", "credits", "delattr", "dict", "dir", "divmod", "eval", "exit", "filter", "float", "format",
+    "frozenset", "getattr", "globals", "hasattr", "hash", "help", "hex", "id", "input", "int", "isinstance", "issubclass",
+    "iter", "len", "license", "list", "locals", "map", "max", "memoryview", "min", "next", "object", "oct", "open",
+    "ord", "pow", "print", "property", "quit", "range", "repr", "reversed", "round", "set", "setattr", "slice", "sorted",
+    "staticmethod", "str", "sum", "super", "tuple", "type", "vars", "zip",     "False", "None", "True", "and", "as", "assert", "break", "class", "continue", "def", "del", "elif", "else",
+        "except", "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "nonlocal", "not", "or",
+        "pass", "raise", "return", "try", "while", "with", "yield"}
     local lines = content:gmatch("[^\r\n]+")
 
     for line in lines do
@@ -120,5 +127,4 @@ function detect_variables(content)
 
     return variable_names
 end
-
 

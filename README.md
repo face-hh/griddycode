@@ -5,6 +5,7 @@ Coding has never been more lit!
 https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-cea026b12890
 
 P.S. Press `CTRL` + `I` for a quick introduction in the Editor :)
+The Version is made with AarushKus9
 
 
 # Table of Contents

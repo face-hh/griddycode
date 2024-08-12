@@ -140,18 +140,51 @@ add_comment("HTML more like hyper text MID language LMFAO")
 add_comment("please for the love of god use reactjs instead")
 add_comment("they speak HTML in mexico. HOT TAMALES for MY LADIES 🥁💃🪕🕺🥁💃🪕🫔🫔🫔")
 
+
 function detect_variables(content)
-    local variable_names = {}
+    local variable_names = {"<!DOCTYPE>", "<a>", "<abbr>", "<acronym>", "<address>", "<applet>", "<area>", "<article>",
+        "<aside>", "<audio>", "<b>", "<base>", "<basefont>", "<bdi>", "<bdo>", "<big>",
+        "<blockquote>", "<body>", "<br>", "<button>", "<canvas>", "<caption>", "<center>",
+        "<cite>", "<code>", "<col>", "<colgroup>", "<data>", "<datalist>", "<dd>", "<del>",
+        "<details>", "<dfn>", "<dialog>", "<dir>", "<div>", "<dl>", "<dt>", "<em>", "<embed>",
+        "<fieldset>", "<figcaption>", "<figure>", "<font>", "<footer>", "<form>", "<frame>",
+        "<frameset>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>", "<h6>", "<head>", "<header>",
+        "<hgroup>", "<hr>", "<html>", "<i>", "<iframe>", "<img>", "<input>", "<ins>", "<kbd>",
+        "<label>", "<legend>", "<li>", "<link>", "<main>", "<map>", "<mark>", "<menu>", "<meta>",
+        "<meter>", "<nav>", "<noframes>", "<noscript>", "<object>", "<ol>", "<optgroup>",
+        "<option>", "<output>", "<p>", "<param>", "<picture>", "<pre>", "<progress>", "<q>",
+        "<rp>", "<rt>", "<ruby>", "<s>", "<samp>", "<script>", "<search>", "<section>",
+        "<select>", "<small>", "<source>", "<span>", "<strike>", "<strong>", "<sub>",
+        "<summary>", "<sup>", "<svg>", "<table>", "<tbody>", "<td>", "<template>",
+        "<textarea>", "<tfoot>", "<th>", "<thead>", "<time>", "<title>", "<tr>", "<track>",
+        "<tt>", "<u>", "<ul>", "<var>", "<video>", "<wbr>",
+        "</a>", "</abbr>", "</acronym>", "</address>", "</applet>", "</area>", "</article>",
+        "</aside>", "</audio>", "</b>", "</base>", "</basefont>", "</bdi>", "</bdo>", "</big>",
+        "</blockquote>", "</body>", "</button>", "</canvas>", "</caption>", "</center>",
+        "</cite>", "</code>", "</col>", "</colgroup>", "</data>", "</datalist>", "</dd>", "</del>",
+        "</details>", "</dfn>", "</dialog>", "</dir>", "</div>", "</dl>", "</dt>", "</em>", "</embed>",
+        "</fieldset>", "</figcaption>", "</figure>", "</font>", "</footer>", "</form>", "</frame>",
+        "</frameset>", "</h1>", "</h2>", "</h3>", "</h4>", "</h5>", "</h6>", "</head>", "</header>",
+        "</hgroup>", "</html>", "</i>", "</iframe>", "</img>", "</input>", "</ins>", "</kbd>",
+        "</label>", "</legend>", "</li>", "</link>", "</main>", "</map>", "</mark>", "</menu>", "</meta>",
+        "</meter>", "</nav>", "</noframes>", "</noscript>", "</object>", "</ol>", "</optgroup>",
+        "</option>", "</output>", "</p>", "</param>", "</picture>", "</pre>", "</progress>", "</q>",
+        "</rp>", "</rt>", "</ruby>", "</s>", "</samp>", "</script>", "</search>", "</section>",
+        "</select>", "</small>", "</source>", "</span>", "</strike>", "</strong>", "</sub>",
+        "</summary>", "</sup>", "</svg>", "</table>", "</tbody>", "</td>", "</template>",
+        "</textarea>", "</tfoot>", "</th>", "</thead>", "</time>", "</title>", "</tr>", "</track>",
+        "</tt>", "</u>", "</ul>", "</var>", "</video>", "</wbr>"
+    }
+    
     local lines = content:gmatch("[^\r\n]+")
 
     for line in lines do
-        local tag = line:match("<(.-)[%(>]")
-        if tag then
-            tag_done = "</" .. tag .. ">"
-            table.insert(variable_names, tag_done)
+        -- Check for Python variable assignment syntax
+        local assignment = line:match("(%w+)%s*=%s*.+")
+        if assignment then
+            local variable_name = assignment:match("(%w+)")
+            table.insert(variable_names, variable_name)
         end
     end
 
     return variable_names
-end
--- HTML doesn't have functions

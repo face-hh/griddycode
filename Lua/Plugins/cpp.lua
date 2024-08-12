@@ -1,188 +1,280 @@
---- Highlight Keywords
-highlight("alignas", "reserved")
-highlight("alignof", "reserved")
-highlight("and", "reserved")
-highlight("and_eq", "reserved")
-highlight("asm", "reserved")
-highlight("atomic_cancel", "reserved")
-highlight("atomic_commit", "reserved")
-highlight("atomic_noexcept", "reserved")
-highlight("auto", "reserved")
-highlight("bitand", "reserved")
-highlight("bitor", "reserved")
-highlight("bool", "reserved")
-highlight("break", "reserved")
-highlight("case", "reserved")
-highlight("catch", "reserved")
-highlight("char", "reserved")
-highlight("char8_t", "reserved")
-highlight("char16_t", "reserved")
-highlight("char32_t", "reserved")
-highlight("class", "reserved")
-highlight("compl", "reserved")
-highlight("concept", "reserved")
-highlight("const", "reserved")
-highlight("consteval", "reserved")
-highlight("constexpr", "reserved")
-highlight("constinit", "reserved")
-highlight("const_cast", "reserved")
-highlight("continue", "reserved")
-highlight("co_await", "reserved")
-highlight("co_return", "reserved")
-highlight("co_yield", "reserved")
-highlight("decltype", "reserved")
-highlight("default", "reserved")
-highlight("delete", "reserved")
-highlight("do", "reserved")
-highlight("double", "reserved")
-highlight("dynamic_cast", "reserved")
-highlight("else", "reserved")
+--#region keywords
+highlight("when", "reserved")
+highlight("nameof", "reserved")
+highlight("unsafe", "reserved")
+highlight("stackalloc", "reserved")
+highlight("sizeof", "reserved")
+highlight("fixed", "reserved")
+highlight("await", "reserved")
+highlight("async", "reserved")
+highlight("null", "reserved")
 highlight("enum", "reserved")
+highlight("interface", "reserved")
 highlight("explicit", "reserved")
-highlight("export", "reserved")
-highlight("extern", "reserved")
+highlight("implicit", "reserved")
 highlight("false", "reserved")
-highlight("float", "reserved")
-highlight("for", "reserved")
-highlight("friend", "reserved")
-highlight("goto", "reserved")
-highlight("if", "reserved")
-highlight("import", "reserved")
-highlight("inline", "reserved")
-highlight("int", "reserved")
-highlight("long", "reserved")
-highlight("module", "reserved")
-highlight("mutable", "reserved")
-highlight("namespace", "reserved")
-highlight("new", "reserved")
-highlight("noexcept", "reserved")
-highlight("not", "reserved")
-highlight("not_eq", "reserved")
-highlight("nullptr", "reserved")
+highlight("true", "reserved")
 highlight("operator", "reserved")
-highlight("or", "reserved")
-highlight("or_eq", "reserved")
+highlight("remove", "reserved")
+highlight("add", "reserved")
+highlight("set", "reserved")
+highlight("get", "reserved")
+highlight("params", "reserved")
+highlight("override", "reserved")
+highlight("virtual", "reserved")
+highlight("volatile", "reserved")
+highlight("readonly", "reserved")
+highlight("struct", "reserved")
+highlight("static", "reserved")
+highlight("sealed", "reserved")
+highlight("abstract", "reserved")
 highlight("private", "reserved")
+highlight("internal", "reserved")
 highlight("protected", "reserved")
 highlight("public", "reserved")
-highlight("reflexpr", "reserved")
-highlight("register", "reserved")
-highlight("reinterpret_cast", "reserved")
-highlight("requires", "reserved")
-highlight("return", "reserved")
-highlight("short", "reserved")
-highlight("signed", "reserved")
-highlight("sizeof", "reserved")
-highlight("static", "reserved")
-highlight("static_assert", "reserved")
-highlight("static_cast", "reserved")
-highlight("struct", "reserved")
-highlight("switch", "reserved")
-highlight("synchronized", "reserved")
-highlight("template", "reserved")
-highlight("this", "reserved")
-highlight("thread_local", "reserved")
-highlight("throw", "reserved")
-highlight("true", "reserved")
+highlight("param", "reserved")
+highlight("method", "reserved")
+highlight("event", "reserved")
+highlight("field", "reserved")
+highlight("class", "reserved")
+highlight("partial", "reserved")
+highlight("namespace", "reserved")
+highlight("by", "reserved")
+highlight("group", "reserved")
+highlight("select", "reserved")
+highlight("descending", "reserved")
+highlight("ascending", "reserved")
+highlight("orderby", "reserved")
+highlight("into", "reserved")
+highlight("equals", "reserved")
+highlight("on", "reserved")
+highlight("join", "reserved")
+highlight("where", "reserved")
+highlight("let", "reserved")
+highlight("from", "reserved")
+highlight("yield", "reserved")
+highlight("lock", "reserved")
+highlight("finally", "reserved")
+highlight("catch", "reserved")
 highlight("try", "reserved")
-highlight("typedef", "reserved")
-highlight("typeid", "reserved")
-highlight("typename", "reserved")
-highlight("union", "reserved")
-highlight("unsigned", "reserved")
-highlight("using", "reserved")
-highlight("virtual", "reserved")
-highlight("void", "reserved")
-highlight("volatile", "reserved")
-highlight("wchar_t", "reserved")
+highlight("throw", "reserved")
+highlight("return", "reserved")
+highlight("goto", "reserved")
+highlight("continue", "reserved")
+highlight("break", "reserved")
+highlight("in", "reserved")
+highlight("foreach", "reserved")
+highlight("for", "reserved")
+highlight("do", "reserved")
 highlight("while", "reserved")
-highlight("xor", "reserved")
-highlight("xor_eq", "reserved")
+highlight("case", "reserved")
+highlight("switch", "reserved")
+highlight("else", "reserved")
+highlight("if", "reserved")
+highlight("const", "reserved")
+highlight("var", "reserved")
+highlight("delegate", "reserved")
+highlight("default", "reserved")
+highlight("unchecked", "reserved")
+highlight("checked", "reserved")
+highlight("void", "reserved")
+highlight("typeof", "reserved")
+highlight("new", "reserved")
+highlight("base", "reserved")
+highlight("this", "reserved")
+highlight("out", "reserved")
+highlight("ref", "reserved")
+highlight("as", "reserved")
+highlight("is", "reserved")
+highlight("assembly", "reserved")
+highlight("string", "reserved")
+highlight("dynamic", "reserved")
+highlight("object", "reserved")
+highlight("double", "reserved")
+highlight("float", "reserved")
+highlight("char", "reserved")
+highlight("ulong", "reserved")
+highlight("long", "reserved")
+highlight("uint", "reserved")
+highlight("int", "reserved")
+highlight("ushort", "reserved")
+highlight("short", "reserved")
+highlight("byte", "reserved")
+highlight("sbyte", "reserved")
+highlight("decimal", "reserved")
+highlight("bool", "reserved")
+highlight("using", "reserved")
+highlight("alias", "reserved")
+highlight("extern", "reserved")
+--#endregion
 
---- Arithmetic Operators
-highlight("+", "operator")
-highlight("-", "operator")
-highlight("*", "operator")
-highlight("/", "operator")
-highlight("%", "operator")
-highlight("**", "operator")
-highlight("++", "operator")
-highlight("--", "operator")
+--#region comments
+highlight_region("/*", "*/", "comments", false)
+highlight_region("//", "", "comments", true)
+--#endregion
 
---- Assignment Operators
-highlight("=", "operator")
-highlight("+=", "operator")
-highlight("-=", "operator")
-highlight("*=", "operator")
-highlight("/=", "operator")
-highlight("%=", "operator")
+--#region IDE comments (for CTRL+L)
+add_comment("C# Andy detected!")
+add_comment("Holy this C# looks like Java")
+add_comment("Make your C# roleplay Java, turn that i-- to i++")
+add_comment(
+	"I thought I'd never see a Microsoft product be open source or source available."
+		.. " If only Windows was the same way."
+)
+add_comment("Avid Windows user")
+add_comment(
+	"Let's lock you into the Microsoft walled garden even more! " .. "Install Windows and use WPF, UWP, and WinForms."
+)
+add_comment("Probably using Windows making garbage WinForms or UWP tutorials.")
+add_comment("Get locked into the walled garden of Windows with UWP, WinForms, or WPF!")
+add_comment(
+	"UWP? Deprecated. WinForms? Deprecated. WPF? Not deprecated (some people think it's dead). "
+		.. "Microsoft deprecates everything they start except WPF."
+)
+add_comment("C#? More like C-hashtag-please-stop-coding!") -- AI generated
+add_comment("!!! JAVA CLONE !!!")
+add_comment("rewrite in Rust")
+add_comment("NoGet")
+add_comment(
+	"I swear if you're writing a WPF, UWP, "
+		.. "or WinForms app then stop "
+		.. "and think about why you're making the microsoft walled garden bigger."
+)
+--#endregion
 
---- Comparison Operators
-highlight("==", "operator")
-highlight("!=", "operator")
-highlight(">", "operator")
-highlight("<", "operator")
-highlight(">=", "operator")
-highlight("<=", "operator")
-
---- Logical Operators
-highlight("&&", "operator")
-highlight("||", "operator")
-highlight("!", "operator")
-
---- Bitwise Operators
-highlight("&", "operator")
-highlight("|", "operator")
-highlight("^", "operator")
-highlight("~", "operator")
-highlight("<<", "operator")
-highlight(">>", "operator")
-
---- Special Characters
-highlight("{", "binary")
-highlight("}", "binary")
-highlight("[", "binary")
-highlight("]", "binary")
-highlight("(", "binary")
-highlight(")", "binary")
-highlight(";", "binary")
-highlight(",", "binary")
-
---- Strings
-highlight_region("\"", "\"", "string")
-highlight_region("'", "'", "string")
-
---- Comments
-add_comment("//", "", "comments", true)
-add_comment("/*", "*/", "comments", false)
-
---- Autocomplete
-
-function detect_functions(content)
-    local functionNames = {}
-
-    for line in content:gmatch("[^\r\n]+") do
-        -- Match function declarations
-        local functionName = line:match("%s*([%w_:]+)%s+[%w_:]+%s*%([^%)]*%)%s*%{?")
-        if functionName then
-            table.insert(functionNames, functionName)
-        end
-    end
-
-    return functionNames
+---@param s string
+---@return string
+local function trim(s)
+	return s:gsub("%s+", "")
 end
 
+if _VERSION ~= "Luau" then
+	-- Written by Bing Chat, I am using Lua 5.4 against my will...
+	string.split = function(input, sep)
+		if sep == nil then
+			sep = "," -- Default separator is whitespace
+		end
+		local t = {}
+		for str in string.gmatch(input, "([^" .. sep .. "]+)") do
+			table.insert(t, str)
+		end
+		return t
+	end
+end
+
+---Detects variables for auto complete
+---@param content string
+---@return string[]
 function detect_variables(content)
-    local variable_names = {}
-    local lines = content:gmatch("[^\r\n]+")
+	local variables = {    
+	"bool",
+    "byte",
+    "sbyte",
+    "short",
+    "ushort",
+    "int",
+    "uint",
+    "long",
+    "ulong",
+    "float",
+    "double",
+    "char",
+    "string",
+    "object",
+    "dynamic",
+    "var"}
+	-- example match: int x =
+	--				  (or: int x;)
+	-- the reason why there's a 2nd word match
+	-- is because we only want declarations of variables,
+	-- we want to match `int x =`,
+	-- not `x =`, because `x =` is only re-assigning `x`.
+	local re = "[a-zA-ZA-z0-9]+%s+@?[a-zA-ZA-z0-9]+%s*[=;]"
+	---@param match string
+	for match in content:gmatch(re) do
+		print(match)
+		local name = match:split(" ")[2]
+		if name:sub(-1) == ";" then
+			name = name:sub(1, -2)
+		end
+		table.insert(variables, name)
+	end
 
-    for line in lines do
-        -- Match variable declarations
-        local variable = line:match("%s*([%w_:]+)%s+[%w_:]+%s*[=;%(%),]")
-        if variable then
-            table.insert(variable_names, variable)
-        end
-    end
+	return variables
+end
 
-    return variable_names
+---Detects functions for auto complete
+---@param content string
+---@return string[]
+function detect_functions(content)
+	-- example match: typeHere something(
+	local re = "[a-zA-ZA-z0-9]+%s+[a-zA-ZA-z0-9]+%s*%("
+	local functions = {
+		local methodsList = {    
+			"Console.WriteLine()",
+			"Console.ReadLine()",
+			"Console.Read()",
+			"Console.Clear()",
+			
+			"Math.Abs()",
+			"Math.Pow()",
+			"Math.Sqrt()",
+			"Math.Max()",
+			"Math.Min()",
+			
+			"String.Length",
+			"String.ToUpper()",
+			"String.ToLower()",
+			"String.Substring()",
+			"String.Replace()",
+			
+			"List<T>.Add()",
+			"List<T>.Remove()",
+			"List<T>.Contains()",
+			"List<T>.Sort()",
+			"List<T>.Clear()",
+			
+			"Enumerable.Where()",
+			"Enumerable.Select()",
+			"Enumerable.ToList()",
+			"Enumerable.Aggregate()",
+			"Enumerable.OrderBy()",
+			
+			"File.ReadAllText()",
+			"File.WriteAllText()",
+			"File.Exists()",
+			"File.Delete()",
+			
+			"Directory.GetFiles()",
+			"Directory.GetDirectories()",
+			"Directory.CreateDirectory()",
+			"Directory.Delete()",
+			
+			"Task.Run()",
+			"Task.Wait()",
+			"Task.WhenAll()",
+			"Task.Delay()",
+			
+			"Thread.Sleep()",
+			"Thread.Start()",
+			"Thread.Abort()",
+			"Thread.Join()",
+			
+			"HttpClient.GetAsync()",
+			"HttpClient.PostAsync()",
+			"HttpClient.SendAsync()",
+			"HttpClient.PutAsync()"
+		}
+		
+	}
+	---@param match string
+	for match in content:gmatch(re) do
+		print("match=", '"' .. match .. '"')
+		local a = trim(match:split(" ")[2])
+		print("a=", '"' .. a .. '"')
+		local name = a:split("(")[1]
+		print("name=", '"' .. name .. '"')
+		table.insert(functions, name)
+	end
+	return functions
 end

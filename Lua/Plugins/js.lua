@@ -82,6 +82,7 @@ highlight_region("//", "", "comments", true)
 add_comment("JavaScript mentioned 🗣️🗣️🗣️ 3 + \"3\" = 33 🔥🔥🔥")
 add_comment("(await (await fetch())).catch(() => {}) 🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️🗣️‼️‼️💥💥💥🤯")
 add_comment("When I thought it couldn’t get any worse he added another require() 💀💀💀")
+
 add_comment("WHAT THE FUCK STOP")
 add_comment("this shi 100% breaking")
 add_comment("do NOT drink battery acid")
@@ -103,9 +104,93 @@ add_comment("tip: decrease your chance at errors: Number.MAX_SAFE_INTEGER += Num
 
 function detect_functions(content)
     local functionNames = {
-        "require"
+        -- Existing entries
+        "require()",
+        "alert()",
+        "confirm()",
+        "console.log()",
+        "parseInt()",
+        "parseFloat()",
+        "isNaN()",
+        "isFinite()",
+        "encodeURI()",
+        "decodeURI()",
+        "encodeURIComponent()",
+        "decodeURIComponent()",
+        "eval()",
+        "setTimeout()",
+        "setInterval()",
+        "clearTimeout()",
+        "clearInterval()",
+        "push()",
+        "pop()",
+        "shift()",
+        "unshift()",
+        "splice()",
+        "slice()",
+        "join()",
+        "indexOf()",
+        "lastIndexOf()",
+        "concat()",
+        "reverse()",
+        "sort()",
+        "map()",
+        "filter()",
+        "reduce()",
+        "reduceRight()",
+        "abs()",
+        "ceil()",
+        "floor()",
+        "max()",
+        "min()",
+        "round()",
+        "random()",
+        "sqrt()",
+        "toUpperCase()",
+        "toLowerCase()",
+        "trim()",
+        "split()",
+        "replace()",
+        "charAt()",
+        
+        -- Additional entries
+        "console.error()",
+        "console.warn()",
+        "String.fromCharCode()",
+        "String.raw()",
+        "String.prototype.startsWith()",
+        "String.prototype.endsWith()",
+        "String.prototype.includes()",
+        "Array.prototype.fill()",
+        "Array.prototype.findIndex()",
+        "Array.prototype.flat()",
+        "Array.prototype.flatMap()",
+        "Array.prototype.findLast()",
+        "Array.prototype.findLastIndex()",
+        "Object.keys()",
+        "Object.values()",
+        "Object.entries()",
+        "Object.assign()",
+        "Object.freeze()",
+        "Object.seal()",
+        "Object.create()",
+        "Object.defineProperty()",
+        "Object.defineProperties()",
+        "Reflect.get()",
+        "Reflect.set()",
+        "Reflect.has()",
+        "Reflect.deleteProperty()",
+        "Proxy.revocable()",
+        "Promise.all()",
+        "Promise.allSettled()",
+        "Promise.any()",
+        "Promise.race()",
+        "Promise.resolve()",
+        "Promise.reject()"
     }
-
+    
+    
+    
     local lines = {}
     for line in content:gmatch("[^\r\n]+") do
         table.insert(lines, line)
@@ -124,16 +209,41 @@ function detect_functions(content)
 end
 
 function detect_variables(content)
-    local variable_names = {
-        "global",
-        "process",
+    local variableNames = {
+        "undefined",
+        "null",
+        "true",
+        "false",
+        "NaN",
+        "Infinity",
+        "document",
+        "window",
+        "location",
+        "navigator",
+        "history",
+        "localStorage",
+        "sessionStorage",
         "console",
-        "Buffer",
-        "__dirname",
-        "__filename",
-        "module",
-        "exports"
-    }
+        "fetch",
+        "XMLHttpRequest",
+        "Math",
+        "JSON",
+        "RegExp",
+        "Set",
+        "Map",
+        "WeakSet",
+        "WeakMap",
+        "Promise",
+        "Array",
+        "Object",
+        "Function",
+        "Number",
+        "String",
+        "Boolean",
+        "Symbol",
+        "Reflect",
+        "Proxy"
+    }    
     
     local lines = content:gmatch("[^\r\n]+")
     for line in lines do
