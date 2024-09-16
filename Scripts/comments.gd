@@ -2,11 +2,11 @@ class_name Comments
 
 extends VBoxContainer
 
-const COMMENT = preload("res://Scenes/comment.tscn")
+const COMMENT = preload ("res://Scenes/comment.tscn")
 
 func _ready():
 	await LuaSingleton.done_parsing
-
+	LuaSingleton.on_comments_change.connect(setup)
 	setup()
 
 func setup():
@@ -25,6 +25,7 @@ func setup():
 		add_child(node)
 
 		node.setup(_name, comment)
+
 func get_random_comments() -> Array:
 	LuaSingleton.comments.shuffle()
 

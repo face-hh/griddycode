@@ -11,6 +11,7 @@ var current_dir: String = "/";
 
 var time_start = 0
 var time_now = 0
+signal on_open_file
 
 func _ready():
 	print(OS.get_cmdline_args())
@@ -25,7 +26,7 @@ func _ready():
 		current_dir = "C:/"
 
 	var args = OS.get_cmdline_args()
-	var is_debug = OS.is_debug_build()
+	# var is_debug = OS.is_debug_build()
 	var path = []
 
 	# in order to be compatible with the gayming OS...
@@ -127,6 +128,7 @@ func open_file(path: String) -> void:
 	LuaSingleton.setup_discord_sdk("Editing " + path.split("/")[-1], "In " + current_dir.split("/")[-1])
 
 	var src = Fs._load(path)
+	on_open_file.emit(path.get_file())
 
 	Code.text = src
 

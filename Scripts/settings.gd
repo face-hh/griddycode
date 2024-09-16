@@ -3,8 +3,8 @@ extends CodeEdit
 @onready var code: CodeEdit = %Code
 @onready var editor: FileManager = $".."
 
-const VARIABLE = preload("res://Icons/variable.png")
-const FUNCTION = preload("res://Icons/function.png")
+const VARIABLE = preload ("res://Icons/variable.png")
+const FUNCTION = preload ("res://Icons/function.png")
 
 @onready var rich_text_labels: Array[RichTextLabel] = [
 	%FileDialog,
@@ -21,8 +21,8 @@ func _ready() -> void:
 
 	LuaSingleton.on_theme_load.connect(setup_theme)
 
-	tween_fade(%FileDialog, 0)
-	tween_fade(%Settings, 0)
+	tween_fade( %FileDialog, 0)
+	tween_fade( %Settings, 0)
 
 	setup_theme()
 
@@ -70,12 +70,12 @@ func setup_highlighter() -> void:
 
 # CodeEdit functionality
 func _on_code_completion_requested() -> void:
-	var function_names = LuaSingleton.lua.call_function("detect_functions", [text, get_caret_line(), get_caret_column()])
-	var variable_names = LuaSingleton.lua.call_function("detect_variables", [text, get_caret_line(), get_caret_column()])
+	var function_names = LuaSingleton.detect_functions(text, get_caret_line(), get_caret_column())
+	var variable_names = LuaSingleton.detect_variables(text, get_caret_line(), get_caret_column())
 
 	if typeof(function_names) == Variant.Type.TYPE_ARRAY:
 		for each in unique_array(function_names):
-			add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each+"()", LuaSingleton.keywords.function, FUNCTION)
+			add_code_completion_option(CodeEdit.KIND_FUNCTION, each, each + "()", LuaSingleton.keywords.function, FUNCTION)
 	if typeof(variable_names) == Variant.Type.TYPE_ARRAY:
 		for each in unique_array(variable_names):
 			add_code_completion_option(CodeEdit.KIND_VARIABLE, each, each, LuaSingleton.keywords.variable, VARIABLE)
@@ -93,14 +93,14 @@ func _on_text_changed() -> void:
 	request_code_completion()
 
 # UI animations
-func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7.5)) -> void:
+func toggle(node: Object, apply_background: bool=true, factor: float=(18 * 7.5)) -> void:
 	# fuck me
 	# _show is a boolean to show the editor
 	# _show is NOT a boolean to show the overlay
 
 	# i dont know what the fuck is happening here, but ill try explaining it
 	if active_overlay != node and active_overlay != null: return # we already have an overlay active, and this function call isn't from it trying to hide, so fuck off
-	if active_overlay == node && !_show: return # if the active overlay is the node trying to toggle, and it wants to show even tho it's already shown, it shall fuck off
+	if active_overlay == node&&!_show: return # if the active overlay is the node trying to toggle, and it wants to show even tho it's already shown, it shall fuck off
 	if node_is_transitioning: return # node is already trying to go, stop spamming the keys; DO NOT FUCKING REMOVE.
 
 	var opacity = 0 if _show else 1;
@@ -112,11 +112,11 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 	if node is FileDialogType:
 		node.active = !_show;
 
-		if _show && !editor.current_file:
+		if _show&&!editor.current_file:
 			editor.warn("[color=yellow]WARNING[/color]: You are currently in an empty file. No autosave will be performed.")
 
 	if apply_background:
-		tween_fade(%Background, opacity, !_show)
+		tween_fade( %Background, opacity, !_show)
 	elif not apply_background and !_show:
 		node.grab_focus()
 
@@ -135,12 +135,12 @@ func toggle(node: Object, apply_background: bool = true, factor: float = (18 * 7
 			future_pos.x += 200
 			future_pos.y += 300
 
-		%Cam.focus_on(future_pos, node.zoom if ("zoom" in node) else Vector2(1,1))
+		%Cam.focus_on(future_pos, node.zoom if ("zoom" in node) else Vector2(1, 1))
 		code.release_focus()
 
 	_show = !_show;
 
-func tween_fade(node: Object, opacity: float, ignore_gui: bool = false) -> void:
+func tween_fade(node: Object, opacity: float, ignore_gui: bool=false) -> void:
 	var tween = create_tween()
 	var color = node.modulate;
 
@@ -155,13 +155,13 @@ func tween_fade(node: Object, opacity: float, ignore_gui: bool = false) -> void:
 		if opacity == 0:
 			node.hide()
 
-			if !ignore_gui: active_overlay = null;
+			if !ignore_gui: active_overlay=null;
 			if node is CommentsOverlay:
 				node.container.setup()
 
 		else:
 			node.show()
-			if !ignore_gui: active_overlay = node;
+			if !ignore_gui: active_overlay=node;
 	)
 
 func slide_from_left(node: Object, __show: bool, factor: float) -> Vector2:
@@ -174,18 +174,17 @@ func slide_from_left(node: Object, __show: bool, factor: float) -> Vector2:
 
 	tween.tween_property(node, "position", future_pos, 0.2)
 	tween.tween_callback(func() -> void:
-		node_is_transitioning = false;
+		node_is_transitioning=false;
 	)
 
 	return future_pos
 
 func _on_file_dialog_ui_close():
-	toggle(%FileDialog)
-
+	toggle( %FileDialog)
 
 # MISC
 
-func get_longest_line(lines: Array = text.split("\n")) -> String:
+func get_longest_line(lines: Array=text.split("\n")) -> String:
 	var longestLine := ""
 
 	for line in lines:
@@ -195,17 +194,17 @@ func get_longest_line(lines: Array = text.split("\n")) -> String:
 	return longestLine
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_open"):      toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_settings"):  toggle(%Settings, true, (18 * 7.5) * 2)
-	if Input.is_action_just_pressed("ui_info"):      toggle(%Info, true, 1500)
-	if Input.is_action_just_pressed("ui_theme"):     toggle(%ThemeChooser, false, (18 * 28))
-	if Input.is_action_just_pressed("ui_cancel"):    toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_comments"):  toggle(%Comments, false, -(18 * 7.5))
+	if Input.is_action_just_pressed("ui_open"): toggle( %FileDialog)
+	if Input.is_action_just_pressed("ui_settings"): toggle( %Settings, true, (18 * 7.5) * 2)
+	if Input.is_action_just_pressed("ui_info"): toggle( %Info, true, 1500)
+	if Input.is_action_just_pressed("ui_theme"): toggle( %ThemeChooser, false, (18 * 28))
+	if Input.is_action_just_pressed("ui_cancel"): toggle( %FileDialog)
+	if Input.is_action_just_pressed("ui_comments"): toggle( %Comments, false, -(18 * 7.5))
 
 func _on_gui_input(_event):
-	if Input.is_action_just_pressed("ui_open"):      accept_event(); toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_settings"):  accept_event(); toggle(%Settings, true, (18 * 7.5) * 2)
-	if Input.is_action_just_pressed("ui_info"):      accept_event(); toggle(%Info, true, 1500)
-	if Input.is_action_just_pressed("ui_theme"):     accept_event(); toggle(%ThemeChooser, false, (18 * 28))
-	if Input.is_action_just_pressed("ui_cancel"):    accept_event(); toggle(%FileDialog)
-	if Input.is_action_just_pressed("ui_comments"):  accept_event(); toggle(%Comments, false, -(18 * 7.5))
+	if Input.is_action_just_pressed("ui_open"): accept_event(); toggle( %FileDialog)
+	if Input.is_action_just_pressed("ui_settings"): accept_event(); toggle( %Settings, true, (18 * 7.5) * 2)
+	if Input.is_action_just_pressed("ui_info"): accept_event(); toggle( %Info, true, 1500)
+	if Input.is_action_just_pressed("ui_theme"): accept_event(); toggle( %ThemeChooser, false, (18 * 28))
+	if Input.is_action_just_pressed("ui_cancel"): accept_event(); toggle( %FileDialog)
+	if Input.is_action_just_pressed("ui_comments"): accept_event(); toggle( %Comments, false, -(18 * 7.5))
