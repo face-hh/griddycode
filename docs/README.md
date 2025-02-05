@@ -1,112 +1,137 @@
-# GriddyCode
-Coding has never been more lit!
+ Godot Lua API
+===============
+**Table of contents:**
+  * [About](#about)
+  * [Features](#features)
+  * [Release Builds](#release-builds)
+  * [Compiling](#compiling)
+  * [Getting Started](#getting-started)
+  * [Contributing And Feature Requests](#contributing-and-feature-requests)
 
+About
+-------
+![Logo](.github/LuaAPI.png)
+Art created by [Alex](https://www.instagram.com/redheadalex1)
 
-https://github.com/face-hh/griddycode/assets/69168154/df93830e-6e24-472d-a854-cea026b12890
+This is a Godot addon that adds Lua API support via GDScript, C# or GDExtension. Importantly this is **NOT** meant to be a replacement for or alternative to GDScript. This addon provides no functionality to program your game out of the box. This addon allows you to create custom Modding API's in a sandboxed environment. You have control of what people can and can not do within that sandbox.
 
-P.S. Press `CTRL` + `I` for a quick introduction in the Editor :)
+To use you can either [Compile from source](#compiling) or you can download one of the [release builds](#release-builds).
 
+By default the Lua print function is set to print to the GDEditor console. This can be changed by exposing your own print function as it will overwrite the existing one.
 
-# Table of Contents
-   - [Requirements](#requirements)
-   - [Lua modding](#%EF%B8%8F-lua-modding)
-	  - [Where?](#where)
-	  - [How?](#how)
-	  - [Docs](#docs)
-		 - [Langs](#langs)
-			- [Introduction](#introduction)
-			- [Methods](#methods)
-		 - [Themes](#themes)
-			- [Introduction](#introduction-1)
-			- [Methods](#methods-1)
-	  - [Publishing](#publishing)
-   - [Contributions](#contributions)
-	  - [Current bugs/needed features](#-current-bugsneeded-features)
-	  	- [HIGH PRIORITY](#high-priority)
-		- [MEDIUM PRIORITY](#medium-priority)
-		- [LOW PRIORITY](#low-priority)
+**Some things to note**, this is not the only way to support Modding in your game. It's also not the only way to support Lua Modding in your game. In fact, using this mod to create your Modding API will likely take a lot more work than using native scripts for Modding. However, the advantage using luaAPI over native scripts is that the Lua code is sandboxed. No one can access parts of the engine that you don't explicitly give access to.
 
-# Requirements
-| Requirement | Notes |
-| -------- | -------- |
-| [Nerdfont](https://www.nerdfonts.com/) - we use Nerdfont for the file picker. | You'll know it's missing when your icons look like "□" |
-| [Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions) - GriddyCode is tested **mainly** on Linux | No, macOS won't be supported. Gaming OS works. |
+If you are looking to make your game using Lua or would like to support Modding without worrying about a sandbox, check out one of these projects:
+- [luascript](https://github.com/perbone/luascript) by [perbone](https://github.com/perbone)
+- [godot-lua-pluginscript](https://github.com/gilzoide/godot-lua-pluginscript) by [gilzoide](https://github.com/gilzoide)
+<br />
 
-# ⌨️ Lua modding
-GriddyCode allows you to extend its functionality via **Lua**.
+We will supply a brief overview here. But for more info check out the [wiki](https://luaapi.weaselgames.info/latest).
 
-## Where?
-To open the folder with Lua scripts, go to:
+For discussion related to this project feel free to join the Weasel Games [Discord](https://discord.gg/vGazqdQZ7p) or [Matrix](https://matrix.weaselgames.net/#/room/#weaselgames:weaselgames.net).
 
-- Windows: `%APPDATA%\Godot\app_userdata\Bussin GriddyCode`
-- macOS: `~/Library/Application Support/Bussin GriddyCode`
-- Linux: `~/.local/share/godot/app_userdata/Bussin GriddyCode`
+Features
+--------------------------------
+- Run Lua directly from a string or a text file.
+- Push any Variant as a global.
+- Call Lua functions from GDScript.
+- Choose which libraries you want Lua to have access to.
+- LuaError type which is used to report any errors this addon or Lua run into.
+- LuaCoroutine type which creates a Lua thread. This is not a OS thread but a coroutine.
+- Object passed as userdata. See [wiki](https://luaapi.weaselgames.info/latest/examples/objects/).
+- Objects can override most of the Lua metamethods. I.E. __index by defining a function with the same name.
+- Callables passed as userdata, which allows you to push a Callable as a Lua function.
+- Basic types are passed as userdata (currently: Vector2, Vector3, Color, Rect2, Plane) with a useful metatable. This means you can do things like:
+```lua
+local v1 = Vector2(1,2)
+local v2 = Vector2(100.52,100.83)
+v2 = v2.floor()
+print(v2.x) -- "100"
+print(v1+v2) -- "(101,102)"
+change_my_sprite_color(Color(1,0,0,1)) -- If "change_my_sprite_color" was exposed, in GDScript it will receive a Color variant.
+```
 
-*Note: the paths are not accurate, we recommend you manually search for GriddyCode in the AppData of your OS.*
+If a feature is missing that you would like to see feel free to create a [Feature Request](https://github.com/WeaselGames/godot_luaAPI/issues/new?assignees=&labels=feature%20request&template=feature_request.md&title=) or submit a PR
 
-## How?
-You may see the folders **"langs"** and **"themes"**.
-- **"langs"** holds a bunch of `.lua` files that power GriddyCode's syntax highlighting & autocomplete.
-- **"themes"** holds a bunch of `.lua` files that change GriddyCode's appearance.
+Release Builds
+---------------
+- [⚙️ GDExtension](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/gdextension.zip)
+- [⚙️ GDExtension LuaJIT](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/gdextension-LuaJIT.zip)
+- [🐧 Linux Editor](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/linux-editor.zip)
+- [🐧 Linux Editor LuaJIT](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/linux-editor-luajit.zip)
+- [🐧 Linux Editor Mono](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/linux-editor.zip)
+- [🎨 Windows Editor](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/windows-editor.zip)
+- [🎨 Windows Editor LuaJIT](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/windows-editor-luajit.zip)
+- [🎨 Windows Editor Mono](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/windows-editor-mono.zip)
+- [🍎 MacOS Editor](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/macos-editor.zip)
+- [🍎 MacOS Editor LuaJIT](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/macos-editor-luajit.zip)
+- [🍎 MacOS Editor Mono](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/macos-editor-mono.zip)
+- [🗜️ Export Templates](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/export-templates.zip)
+- [🗜️ Mono Export Templates](https://github.com/WeaselGames/godot_luaAPI/releases/latest/download/export-templates-mono.zip)
+- For previous versions see [releases](https://github.com/WeaselGames/godot_luaAPI/releases)
 
-*Note: the Lua scripts are reloaded only if you switch from a different file extension (i.e. "README.md" -> "main.ts"), or if GriddyCode is restarted.*
+Compiling
+------------
+This build is for godot 4.1.
+- Start by cloning the Godot 4.1 [source](https://github.com/godotengine/godot) with this command `git clone https://github.com/godotengine/godot`
+- Next change directories into the modules folder and clone this repo into a folder named luaAPI with this command `git clone --recurse-submodules https://github.com/WeaselGames/godot_luaAPI luaAPI`. Make sure to use --recurse-submodules to pull the submodules as well.
 
-## Docs?
-### Langs
-#### Introduction
-To extend the functionality of GriddyCode for a specific **file extension**, create a file with its name. (i.e. `toml.lua`)
+- Now you can follow the Godot build instructions on their [site](https://docs.godotengine.org/en/stable/contributing/development/compiling).
 
-#### Methods
+Getting Started
+------------
+If you are looking for more in depth information please refer to our [wiki](https://luaapi.weaselgames.info/latest).
 
-| Method | Example | Description | Notes |
-| -------- | -------- | -------- | -------- |
-| `highlight(keyword: String, color: String)` | `highlight("const", "reserved")` | Tells GriddyCode to highlight a certain keyword with a preset of colors. | Available colors: `reserved`, `annotation`, `string`, `binary`, `symbol`, `variable`, `operator`, `comments`, `error`, `function`, `member` |
-| `highlight_region(start: String, end: String, color: String, line_only: bool = false)` | `highlight("/*", "*/", "comments", false)` | Tells GriddyCode to highlight a region with a preset of colors. | The `start` must be a symbol. Due to Godot's limited functionality, you can't use RegEx. |
-| `add_comment(comment: String)` | `add_comment("What is blud doing 🗣️🗣️🗣️")` | Adds a comment to be randomly chosen in the `CTRL` + `L` menu. | The username, profile picture, date, and likes are chosen by GriddyCode. |
-| `detect_functions(content: String, line: int, column: int) -> Array[String]` | `detect_functions("const test = 3; function main() {}; async init() => { main() }")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["main", "init"]). "line" and "column" are the position of the cursor when the autocomplete was requested. |
-| `detect_variables(content: String, line: int, column: int) -> Array[String]` | `detect_variables("const test = 3;")` | Called by GriddyCode upon input. Results are showed in the autocomplete feature. | This must be provided by the Lua script. It must return an array of strings (i.e. ["test"]). "line" and "column" are the position of the cursor when the autocomplete was requested. |
+Pro Tip: Be sure to download the Export Templates! The Export Templates that come with Godot will not work with this
+Editor/Add-on. Please see [Installing Export Templates](EXPORT.MD) for more information.
 
-*Note: to provide reserved variables/functions (i.e. `Math`/`parseInt()` in JS) you can have them already set up in the array you return. GriddyCode will handle the rest!*
+Dotnet users will also want to refer to [DOTNET.md](DOTNET.md) For additional information and steps that are needed to
+make the Editor/Add-on work.
 
-### Themes
-#### Introduction
-To add a theme, create a file in the **"themes"** folder with any name. (i.e. "dracula.lua"). You will be able to choose it within GriddyCode.
+**Running Lua for you first time:**
+```gdscript
+extends Node
 
-#### Methods
-| Method | Example | Description | Notes |
-| -------- | -------- | -------- | -------- |
-| `set_keywords(property: String, new_color: String)` | `set_keywords("reserved", "#ff00ff")` | Set the color of syntax highlighting. | The second argument must be a hex, `#` being optional. Available colors/properties listed above at `langs`. |
-| `set_gui(property: String, new_color: String)` | `set_gui("background_color", "#ff00ff")` | This method is dedicated to the overall GUI aspect of GriddyCode. | Available properties: `background_color`, `current_line_color`, `selection_color`, `font_color`, `word_highlighted_color`, `selection_background_color`. Properties except `background_color`, if not provided, will be set to a slightly modified version of `background_color`. Although possible, we don't recommend you rely on those & instead set all the values. |
-| `disable_glow()` | `disable_glow()` | Disables the "glow" setting. | This exists because Godot's *glow* seems to mess up on light colors. Not adding this on light themes may result in the entire screen going white. |
+var lua: LuaAPI = LuaAPI.new()
 
-*Note: if the HEX you input is invalid, it will default to #ff0000 (red)*
+func _lua_print(message: String) -> void:
+	print(message)
 
-## Publishing
-If you want to use a theme/plugin for **yourself**, you can put it into your [AppData](#where).
+func _ready() -> void:
+	lua.push_variant("print", _lua_print)
+	lua.push_variant("message", "Hello lua!")
 
-If you want to **submit** a theme/plugin, open a pull request adding it to `Lua/Plugins` or `Lua/Themes` respectively. If merged, it will be included in the next build.
+	# All builtin libraries are available to bind with. Use OS and IO at your own risk.
+	lua.bind_libraries(["base", "table", "string"])
 
-# Contributions
-Contributions are heavily appreciated, whether it's for adding Lua plugins, themes, safely exposing more features to Lua, or adding features directly to GriddyCode!
+	# Most methods return a LuaError in case of an error
+	var err: LuaError = lua.do_string("""
+	for i=1,10,1 do
+		print(message)
+	end
+	function get_message()
+		return "Hello gdScript!"
+	end
+	""")
+	if err is LuaError:
+		print("ERROR %d: %s" % [err.type, err.message])
+		return
 
-## Notice
-- You will need to install the [Godot Engine](https://godotengine.org/) to run your proposed change & make sure it runs flawlessly.
-- You don't have to submit executables.
-- Use the v4.2 of the engine (currently Latest)
+	var val = lua.pull_variant("get_message")
+	if val is LuaError:
+		print("ERROR %d: %s" % [val.type, val.message])
+		return
 
-## 🐛 Current bugs/needed features:
-### HIGH PRIORITY
-- The `VHS & CRT` shader, on certain themes (One Dark Pro, GitHub Light, etc.), becomes completely white. Works good on GitHub Dark;
-- Light modes get affected by *glow*, while dark modes seem fine.
+	var message = val.call([])
+	print(message)
+```
 
-### MEDIUM PRIORITY
-- An option in the settings menu (`CTRL` + `,`) to change the font;
-- The current limit for lines is ~1600. If the cursor moves past that amount, the `CodeEdit` node will activate its scrolling, making the camera bug & go out of view. A limit should be implemented so that the camera won't go out of screen.
+Dotnet (mono) users see example redone in C# in [DOTNET.md](DOTNET.md).
 
-### LOW PRIORITY
-- Making the cat jumping video in the settings menu fade in/out along the actual menu. Currently it ignores the transition;
-- `CTRL` + `P` to open a **quick file picker**, similar to [VSCode](https://code.visualstudio.com/docs/editor/editingevolved#:~:text=Quick%20file%20navigation,-Tip%3A%20You%20can&text=VS%20Code%20provides%20two%20powerful,release%20Ctrl%20to%20open%20it.).
-- Selecting a setting with the property "shader" *should* disable previously-enabled settings with "shader".
-- The `CheckButton` node for each `setting` scene doesn't change with the theme. This affects light themes specifically.
+Contributing And Feature Requests
+---------------
+All contributions are welcome, if you would like to contribute submit a PR.
+<br />
+Additionally if you do not have the time and or the knowledge you can create a [Feature Request](https://github.com/WeaselGames/godot_luaAPI/issues/new?assignees=&labels=feature%20request&template=feature_request.md&title=).
 
-Please note that creating a Pull Request to fix these features does *not* guarantee its merge. Please don't open a Pull Request unless you are confident you've done a good job.
+[![lua logo](https://www.lua.org/images/powered-by-lua.gif)](https://www.lua.org/)
