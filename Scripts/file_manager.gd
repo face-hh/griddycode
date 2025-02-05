@@ -124,13 +124,22 @@ func warn(notice: String) -> void:
 	)
 
 func open_file(path: String) -> void:
-	LuaSingleton.setup_discord_sdk("Editing " + path.split("/")[-1], "In " + current_dir.split("/")[-1])
+    if path.is_empty():
+        warn("[color=yellow]WARNING[/color]: Cannot open empty file path")
+        return
 
-	var src = Fs._load(path)
+    if !FileAccess.file_exists(path):
+        warn("[color=yellow]WARNING[/color]: File does not exist: " + path)
+        return
 
-	Code.text = src
+    var src = Fs._load(path)
+    if src.is_empty() && FileAccess.get_open_error() != OK:
+        warn("[color=red]ERROR[/color]: Failed to load file: " + path)
+        return
 
-	current_file = path;
+    LuaSingleton.setup_discord_sdk("Editing " + path.split("/")[-1], "In " + current_dir.split("/")[-1])
+    Code.text = src
+    current_file = path
 
 func list_themes() -> Array:
 	var themes_folder = DirAccess.open("user://themes");

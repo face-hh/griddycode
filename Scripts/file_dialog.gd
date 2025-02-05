@@ -25,11 +25,22 @@ var zoom: Vector2;
 var active: bool = false;
 signal ui_close
 
+var show_hidden_files: bool = false
+
+func _ready():
+    # Add shortcut for toggling hidden files
+    var shortcut = Shortcut.new()
+    var event = InputEventKey.new()
+    event.keycode = KEY_H
+    event.ctrl_pressed = true
+    shortcut.events.append(event)
+    
+    show_hidden_files = LuaSingleton.get_setting("show_hidden_files")[0].get("value", false)
+
 func change_dir(path) -> void:
 	query = ""
 	if !dir: dir = DirAccess.open(path)
-	#dir.include_hidden = true
-	# WARNING: this will heavily affect performance if de-commented
+	dir.include_hidden = show_hidden_files
 
 	dirs = [".."];
 	dirs.append_array(dir.get_directories())
@@ -46,6 +57,7 @@ func change_dir(path) -> void:
 
 	current_dirs_count = len(dirs)
 
+	files.clear()
 	files.append_array(dir.get_files())
 
 	zoom = %Cam.to_zoom(code.get_longest_line(dirs).length())
@@ -76,6 +88,11 @@ func _input(event: InputEvent) -> void:
 		selected_index = min(len(dirs) - 1, selected_index + 1)
 	elif key_event.keycode == KEY_ENTER:
 		handle_enter_key()
+	elif key_event.keycode == KEY_H && key_event.ctrl_pressed:
+		show_hidden_files = !show_hidden_files
+		LuaSingleton.change_setting("show_hidden_files", show_hidden_files)
+		change_dir(dir.get_current_dir())
+		editor.warn("[color=green]INFO[/color]: Hidden files are now " + ("shown" if show_hidden_files else "hidden"))
 	else:
 		handled = false
 
@@ -107,7 +124,67 @@ func _input(event: InputEvent) -> void:
 
 func update_ui() -> void:
 	clear()
-	show_items()
+    
+    # Add breadcrumb navigation
+    var current_path = dir.get_current_dir()
+    var path_parts = current_path.split("/")
+    var breadcrumb = ""
+    push_color(LuaSingleton.keywords.function)
+    for i in range(len(path_parts)):
+        var part = path_parts[i]
+        if part == "":
+            add_text("/")
+        else:
+            add_text(part)
+            if i < len(path_parts) - 1:
+                push_color(LuaSingleton.keywords.symbol)
+                add_text(" › ")
+                pop()
+    pop()
+    add_text("\n\n")
+
+    # Show search results if there's a query
+    if query != "":
+        push_color(LuaSingleton.keywords.comments)
+        add_text("Search results for: ")
+        pop()
+        push_color(LuaSingleton.keywords.string)
+        add_text("\"" + query + "\"\n\n")
+        pop()
+
+    # Add directories with modern icons
+    var index = 0
+    for dir_name in dirs:
+        var is_file = files.find(dir_name) != -1
+        var icon = Icons.get_icon_data(dir_name.split(".")[-1] if is_file else "folder")
+        
+        # Highlight selected item
+        if index == selected_index:
+            push_color(LuaSingleton.keywords.function)
+            add_text("→ ")
+            pop()
+        else:
+            add_text("  ")
+            
+        # Add icon with color
+        push_color(str_to_color(icon.color))
+        add_text(icon.icon + " ")
+        pop()
+        
+        # Add filename
+        if index == selected_index:
+            push_color(LuaSingleton.keywords.function)
+        add_text(shortened_dirs[index])
+        if index == selected_index:
+            pop()
+            
+        add_text("\n")
+        index += 1
+
+func str_to_color(hex: String) -> Color:
+    if hex.begins_with("#"):
+        hex = hex.substr(1)
+    return Color.from_string(hex, Color.WHITE)
 
 func show_items() -> void:
 	for i in range(len(bbcode_dirs)):
@@ -162,30 +239,53 @@ func is_selected(item: String) -> bool:
 	return (is_dir_item and is_dir_current)
 
 func handle_enter_key() -> void:
-	if selected_index > len(dirs): return
-	# ^^ this happens when the cursor was at, i.e., pos. 6, but arr is only has 4 entries
+    if selected_index >= len(dirs):
+        return
+    
+    var item = dirs[selected_index]
+    var is_file = files.find(item) != -1
 
-	var item = dirs[selected_index];
+    if is_file:
+        # Check file permissions and existence before proceeding
+        var file_path = editor.current_dir + "/" + item
+        if !FileAccess.file_exists(file_path):
+            editor.warn("[color=yellow]WARNING[/color]: File no longer exists: " + file_path)
+            change_dir(editor.current_dir)  # Refresh directory listing
+            return
+            
+        if !OS.is_executable_file_at(file_path) && !FileAccess.file_exists(file_path):
+            editor.warn("[color=yellow]WARNING[/color]: File is not accessible: " + file_path)
+            return
 
-	var is_file = files.find(item) != -1;
+        editor.current_dir = dir.get_current_dir()
+        editor.open_file(file_path)
 
-	if is_file:
-		editor.current_dir = dir.get_current_dir();
-		editor.open_file(editor.current_dir + "/" + item)
+        var extension = item.split(".")[-1]
+        LuaSingleton.setup_extension(extension)
 
-		LuaSingleton.setup_extension(item.split(".")[-1])
+        code.setup_highlighter()
+        get_tree().create_timer(.1).timeout.connect(func():
+            code.grab_focus()
+        )
 
-		code.setup_highlighter()
-		get_tree().create_timer(.1).timeout.connect(func():
-			code.grab_focus()
-		)
+        ui_close.emit()
+    else:
+        selected_index = 0
+        
+        # Check directory permissions before changing
+        if !DirAccess.dir_exists_absolute(item):
+            editor.warn("[color=yellow]WARNING[/color]: Directory no longer exists: " + item)
+            return
+            
+        var access = DirAccess.open(item)
+        if access == null:
+            editor.warn("[color=yellow]WARNING[/color]: Cannot access directory: " + item)
+            return
 
-		ui_close.emit()
-	else:
-		selected_index = 0;
-		dir.change_dir(item)
-		change_dir(item)
-	update_ui()
+        dir.change_dir(item)
+        change_dir(item)
+        
+    update_ui()
 
 func make_bold(string: String, indexes: Array) -> String:
 	var new_string: String = ""

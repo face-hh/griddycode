@@ -235,6 +235,80 @@ var settings: Array = [
 		"icon": "󰙯",
 		"value": true,
 	},
+	{
+		"property": "show_hidden_files",
+		"display": "Show Hidden Files",
+		"options": [],
+		"icon": "",
+		"value": false
+	},
+	{
+		"property": "editor_zoom",
+		"display": "Default Zoom Level",
+		"options": [],
+		"icon": "",
+		"value": 1.0,
+		"unit": "x",
+		"min": 0.5,
+		"max": 2.0,
+		"precision": true
+	},
+	{
+		"property": "custom_theme",
+		"display": "Custom Theme Settings",
+		"options": [],
+		"icon": "󰉼",
+		"value": false
+	},
+	{
+		"property": "theme_background",
+		"display": "Custom Background Color",
+		"options": [],
+		"icon": "",
+		"value": "#23272e"
+	},
+	{
+		"property": "theme_foreground",
+		"display": "Custom Text Color",
+		"options": [],
+		"icon": "",
+		"value": "#abb2bf"
+	},
+	{
+		"property": "theme_selection",
+		"display": "Custom Selection Color",
+		"options": [],
+		"icon": "",
+		"value": "#3e4451"
+	},
+	{
+		"property": "theme_comment",
+		"display": "Custom Comment Color",
+		"options": [],
+		"icon": "",
+		"value": "#5c6370"
+	},
+	{
+		"property": "theme_keyword",
+		"display": "Custom Keyword Color",
+		"options": [],
+		"icon": "",
+		"value": "#c678dd"
+	},
+	{
+		"property": "theme_string",
+		"display": "Custom String Color",
+		"options": [],
+		"icon": "",
+		"value": "#98c379"
+	},
+	{
+		"property": "theme_number",
+		"display": "Custom Number Color",
+		"options": [],
+		"icon": "",
+		"value": "#d19a66"
+	},
 ];
 
 var keywords: Dictionary = {
@@ -305,7 +379,6 @@ func toggle_shader(shader: Shader, value: bool) -> void:
 
 
 func handle_internal_setting_change(property: String, value: Variant) -> void:
-	# oh my god he's about to do it
 	var p = property;
 
 	if p == "caret_type":
@@ -360,13 +433,18 @@ func handle_internal_setting_change(property: String, value: Variant) -> void:
 		Music.music_move_intensity = value
 	if p == "discord_sdk":
 		discord_sdk = value;
-
-func setup_discord_sdk(detail: String, state: String) -> void:
-	if !discord_sdk: return
-	DiscordSDK.details = detail
-	DiscordSDK.state = state
-
-	DiscordSDK.refresh()
+	if p == "custom_theme" && value:
+		# Apply custom theme colors
+		gui.background_color = str_to_clr(get_setting("theme_background")[0].value)
+		gui.font_color = str_to_clr(get_setting("theme_foreground")[0].value)
+		gui.selection_color = str_to_clr(get_setting("theme_selection")[0].value)
+		keywords.comments = str_to_clr(get_setting("theme_comment")[0].value)
+		keywords.reserved = str_to_clr(get_setting("theme_keyword")[0].value)
+		keywords.string = str_to_clr(get_setting("theme_string")[0].value)
+		keywords.binary = str_to_clr(get_setting("theme_number")[0].value)
+		
+		editor.warn("[color=green]INFO[/color]: Applied custom theme colors")
+		on_theme_load.emit()
 
 # LUA
 var lua: LuaAPI = LuaAPI.new()
@@ -417,36 +495,54 @@ func _splitstr(input: String, separator: String):
 func _trim(input: String):
 	return input.strip_edges()
 
-func setup_extension(extension):
-	# FILE EXTENSIONS
-	lua.bind_libraries(["base", "table", "string"])
+func setup_extension(extension: String) -> void:
+    if extension.is_empty():
+        editor.warn("[color=yellow]WARNING[/color]: No file extension provided")
+        return
 
-	lua.push_variant("highlight", _lua_highlight)
-	lua.push_variant("highlight_region", _lua_highlight_region)
-	lua.push_variant("add_comment", _add_comment)
+    # FILE EXTENSIONS
+    lua.bind_libraries(["base", "table", "string"])
 
-	lua.push_variant("splitstr", _splitstr)
-	lua.push_variant("trim", _trim)
+    lua.push_variant("highlight", _lua_highlight)
+    lua.push_variant("highlight_region", _lua_highlight_region)
+    lua.push_variant("add_comment", _add_comment)
 
-	var err: LuaError = lua.do_file("user://langs/" + extension + ".lua")
-	if err is LuaError:
-		editor.warn("[color=yellow]WARNING[/color]: This file isn’t supported. Highlighting, autocomplete, comments and other features won’t work properly.")
-		print("ERROR %d: %s" % [err.type, err.message])
-		return
+    lua.push_variant("splitstr", _splitstr)
+    lua.push_variant("trim", _trim)
 
-	done_parsing.emit()
+    var lang_file = "user://langs/" + extension + ".lua"
+    if !FileAccess.file_exists(lang_file):
+        editor.warn("[color=yellow]WARNING[/color]: Language file not found for extension: " + extension)
+        return
+
+    var err: LuaError = lua.do_file(lang_file)
+    if err is LuaError:
+        editor.warn("[color=red]ERROR[/color]: Failed to load language support: " + err.message)
+        print("ERROR %d: %s" % [err.type, err.message])
+        return
+
+    done_parsing.emit()
 
 func setup_theme(given_theme: String) -> void:
-	theme_lua.bind_libraries(["base", "table", "string"])
+    if given_theme.is_empty():
+        editor.warn("[color=yellow]WARNING[/color]: No theme name provided")
+        return
 
-	theme_lua.push_variant("disable_glow", _lua_disable_glow)
-	theme_lua.push_variant("set_keywords", _lua_set_keywords)
-	theme_lua.push_variant("set_gui", _lua_set_gui)
+    theme_lua.bind_libraries(["base", "table", "string"])
 
-	var theme_err: LuaError = theme_lua.do_file("user://themes/" + given_theme + ".lua")
-	if theme_err is LuaError:
-		editor.warn("[color=yellow]WARNING[/color]: Failed to load theme: " + theme_err.message)
-		print("ERROR %d: %s" % [theme_err.type, theme_err.message])
-		return
+    theme_lua.push_variant("disable_glow", _lua_disable_glow)
+    theme_lua.push_variant("set_keywords", _lua_set_keywords)
+    theme_lua.push_variant("set_gui", _lua_set_gui)
 
-	on_theme_load.emit()
+    var theme_file = "user://themes/" + given_theme + ".lua"
+    if !FileAccess.file_exists(theme_file):
+        editor.warn("[color=yellow]WARNING[/color]: Theme file not found: " + given_theme)
+        return
+
+    var theme_err: LuaError = theme_lua.do_file(theme_file)
+    if theme_err is LuaError:
+        editor.warn("[color=red]ERROR[/color]: Failed to load theme: " + theme_err.message)
+        print("ERROR %d: %s" % [theme_err.type, theme_err.message])
+        return
+
+    on_theme_load.emit()
