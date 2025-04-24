@@ -5,6 +5,7 @@ highlight("while", "reserved")
 highlight("if", "reserved")
 highlight("else", "reserved")
 highlight("elif", "reserved")
+highlight("def", "reserved")
 
 highlight("False", "binary")
 highlight("True", "binary")
