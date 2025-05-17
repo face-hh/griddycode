@@ -1,0 +1,1 @@
+-- Nothing, because nothing is highlighted in `.txt` files.
