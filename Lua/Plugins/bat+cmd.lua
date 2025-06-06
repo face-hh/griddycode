@@ -3,13 +3,14 @@ function main()
     set_extension("cmd")
 
     local commands = {
-        "echo", "set", "if", "else", "exist", "not", "goto", "call", "pause", "exit", "start",
+        "echo", "set", "goto", "call", "pause", "exit", "start",
         "cd", "dir", "del", "copy", "move", "type", "mkdir", "rmdir", "pushd", "popd",
         "for", "in", "do", "choice", "setlocal", "endlocal", "shift", "title", "color", "cls",
         "ver", "time", "date", "chcp", "break", "path", "xcopy", "robocopy", "assoc", "ftype",
         "find", "findstr", "comp", "more", "msg", "timeout", "whoami", "tasklist", "taskkill",
         "wmic", "net", "reg", "sc", "powershell", "pwsh"
-    }
+}
+
 
     -- Highlight all keywords
     for _, cmd in ipairs(commands) do
