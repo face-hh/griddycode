@@ -56,7 +56,7 @@ function main()
         }
 
         for i = 1, 9 do
-            table.insert(vars, "%" .. i .. "%")
+            table.insert(vars, "%" .. i)
         end
 
         local flow_words = {
